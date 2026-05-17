@@ -4,10 +4,13 @@
 #include <csignal>
 #include <vector>
 #include <memory>
+#include <chrono>
 #include <nlohmann/json.hpp>
 #include "../../common/pipeline/ValidationAggregationConsumerPipeline.hpp"
 #include "../../common/protocol/MessageEnvelope.hpp"
-#include "../../common/socket/TCPSocket.hpp"
+#include "../../common/subscribing/TcpSubscriber.hpp"
+#include "../../common/subscribing/InProcessBrokerSubscriber.hpp"
+#include "../../common/subscribing/InProcessBrokerPublisher.hpp"
 
 using json = nlohmann::json;
 
@@ -17,76 +20,45 @@ void handleShutdownSignal(int) {
     running.store(false);
 }
 
-// Listener thread - accepts connections and receives envelopes from the regional gateway
-void listenerThread() {
-    TCPSocket serverSocket;
-    
-    if (!serverSocket.createServer(9201)) {
-        std::cerr << "Failed to create server on port 9201" << std::endl;
-        return;
-    }
-
-    std::vector<std::thread> receiveThreads;
-    auto pipeline = std::make_shared<ValidationAggregationConsumerPipeline>("asia_consumer");
-
-    while (running.load()) {
-        int clientFd = serverSocket.acceptClient(1000);
-        if (clientFd == 0) {
-            continue;
-        }
-        if (clientFd < 0) {
-            if (!running.load()) {
-                break;
-            }
-            std::cerr << "Failed to accept client" << std::endl;
-            continue;
-        }
-
-        receiveThreads.emplace_back([clientFd, pipeline]() {
-            TCPSocket clientSocket;
-            clientSocket.setSocketFd(clientFd);
-            std::string message;
-
-            while (running.load()) {
-                int status = clientSocket.receiveMessage(message, 1000);
-                if (status == 0) {
-                    continue;
-                }
-                if (status < 0) {
-                    break;
-                }
-
-                try {
-                    MessageEnvelope envelope = envelope_from_json(json::parse(message));
-                    if (!pipeline->consume(envelope)) {
-                        continue;
-                    }
-
-                } catch (const std::exception& e) {
-                    std::cerr << "[Asia Consumer] Envelope parse error: " << e.what() << std::endl;
-                }
-            }
-        });
-    }
-
-    for (auto& receiveThread : receiveThreads) {
-        if (receiveThread.joinable()) {
-            receiveThread.join();
-        }
-    }
-}
-
 int main() {
     std::signal(SIGINT, handleShutdownSignal);
     std::signal(SIGTERM, handleShutdownSignal);
 
-    std::cout << "=== Asia Validation/Aggregation Consumer (Port 9201) ===" << std::endl;
-    std::cout << "Consuming canonical envelopes from the regional gateway..." << std::endl;
+    std::cout << "=== Asia Validation/Aggregation Consumer (Broker-backed) ===" << std::endl;
+    std::cout << "TCP Adapter listening on port 9201 -> In-process broker -> Validation pipeline" << std::endl;
+    std::cout << std::endl;
 
-    // Create listener thread
-    std::thread listener(listenerThread);
+    // Create the broker publisher
+    auto brokerPublisher = std::make_shared<InProcessBrokerPublisher>();
 
-    listener.join();
+    // Create the validation/aggregation pipeline
+    auto pipeline = std::make_shared<ValidationAggregationConsumerPipeline>("asia_consumer");
+
+    // Create a TCP adapter that listens on 9201 and publishes to the "asia_events" topic
+    TcpSubscriber tcpAdapter(9201, brokerPublisher, "asia_events", "tcp_adapter");
+
+    // Create the broker subscriber that consumes from the "asia_events" topic
+    InProcessBrokerSubscriber brokerSubscriber("asia_events", pipeline, "broker_consumer");
+
+    std::cout << "[Main] Starting TCP adapter thread..." << std::endl;
+    std::thread tcpAdapterThread([&tcpAdapter]() {
+        tcpAdapter.run(running);
+    });
+
+    std::cout << "[Main] Starting broker consumer thread..." << std::endl;
+    std::thread brokerConsumerThread([&brokerSubscriber]() {
+        brokerSubscriber.run(running);
+    });
+
+    std::cout << "[Main] Waiting for signal to shutdown..." << std::endl;
+    // Keep main thread alive until signal
+    while (running.load()) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+
+    std::cout << "[Main] Shutdown signal received, waiting for threads..." << std::endl;
+    tcpAdapterThread.join();
+    brokerConsumerThread.join();
 
     return 0;
 }

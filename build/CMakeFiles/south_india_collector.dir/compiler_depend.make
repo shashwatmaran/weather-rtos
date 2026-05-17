@@ -6,6 +6,7 @@ CMakeFiles/south_india_collector.dir/collectors/south_india/main.cpp.o: /home/sh
   /home/shash/projects/weather-rtos/common/protocol/MessageEnvelope.hpp \
   /home/shash/projects/weather-rtos/common/protocol/MessageTypes.hpp \
   /home/shash/projects/weather-rtos/common/socket/TCPSocket.hpp \
+  /home/shash/projects/weather-rtos/common/subscribing/IBrokerPublisher.hpp \
   /home/shash/projects/weather-rtos/common/publishing/BrokerPublisher.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
@@ -726,6 +727,12 @@ CMakeFiles/south_india_collector.dir/collectors/south_india/main.cpp.o: /home/sh
 
 /usr/include/nlohmann/byte_container_with_subtype.hpp:
 
+/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
+
+/usr/include/x86_64-linux-gnu/asm/sockios.h:
+
+/usr/include/math.h:
+
 /usr/include/c++/13/bits/stl_numeric.h:
 
 /usr/include/stdio.h:
@@ -878,7 +885,21 @@ CMakeFiles/south_india_collector.dir/collectors/south_india/main.cpp.o: /home/sh
 
 /usr/include/c++/13/bits/hashtable.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/sigval_t.h:
+
+/usr/include/c++/13/bits/stl_map.h:
+
+/usr/include/c++/13/locale:
+
+/usr/include/c++/13/bits/gslice.h:
+
+/usr/include/c++/13/bits/refwrap.h:
+
 /usr/include/c++/13/bits/stl_queue.h:
+
+/usr/include/c++/13/bits/valarray_array.h:
+
+/usr/include/c++/13/bits/atomic_lockfree_defines.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h:
 
@@ -972,43 +993,17 @@ CMakeFiles/south_india_collector.dir/collectors/south_india/main.cpp.o: /home/sh
 
 /usr/include/c++/13/bits/stream_iterator.h:
 
-/usr/include/nlohmann/detail/json_custom_base_class.hpp:
-
-/usr/include/c++/13/bits/stl_raw_storage_iter.h:
-
 /usr/include/c++/13/algorithm:
-
-/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
-
-/usr/include/c++/13/bits/node_handle.h:
-
-/usr/include/c++/13/forward_list:
-
-/usr/include/c++/13/bits/refwrap.h:
-
-/usr/include/c++/13/bits/gslice.h:
-
-/usr/include/c++/13/bits/atomic_lockfree_defines.h:
-
-/usr/include/c++/13/bits/valarray_array.h:
 
 /usr/include/nlohmann/json_fwd.hpp:
 
 /usr/include/c++/13/bits/fstream.tcc:
 
-/usr/include/c++/13/ext/alloc_traits.h:
-
-/usr/include/nlohmann/detail/output/serializer.hpp:
-
-/usr/include/c++/13/bits/atomic_timed_wait.h:
-
-/usr/include/c++/13/tr1/exp_integral.tcc:
-
-/usr/include/asm-generic/socket.h:
-
-/home/shash/projects/weather-rtos/common/models/WeatherPacket.hpp:
-
 /usr/include/c++/13/bits/atomic_base.h:
+
+/usr/include/c++/13/bits/stl_uninitialized.h:
+
+/usr/include/c++/13/bits/new_allocator.h:
 
 /usr/include/nlohmann/detail/conversions/to_chars.hpp:
 
@@ -1022,27 +1017,39 @@ CMakeFiles/south_india_collector.dir/collectors/south_india/main.cpp.o: /home/sh
 
 /usr/include/c++/13/bits/exception_defines.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
-
-/usr/include/x86_64-linux-gnu/asm/sockios.h:
-
-/usr/include/math.h:
-
 /usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
 
 /home/shash/projects/weather-rtos/common/protocol/MessageTypes.hpp:
 
-/usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h:
+/usr/include/c++/13/bits/forward_list.h:
 
-/usr/include/c++/13/bits/ranges_base.h:
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+/usr/include/c++/13/bits/node_handle.h:
+
+/usr/include/c++/13/forward_list:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h:
 
 /usr/include/c++/13/tr1/modified_bessel_func.tcc:
 
-/usr/include/c++/13/new:
+/usr/include/c++/13/bits/ranges_base.h:
+
+/usr/include/c++/13/ext/alloc_traits.h:
 
 /usr/include/c++/13/bits/gslice_array.h:
 
-/usr/include/c++/13/bits/forward_list.h:
+/usr/include/c++/13/new:
+
+/usr/include/asm-generic/socket.h:
+
+/home/shash/projects/weather-rtos/common/models/WeatherPacket.hpp:
+
+/usr/include/nlohmann/detail/output/serializer.hpp:
+
+/usr/include/c++/13/bits/atomic_timed_wait.h:
+
+/usr/include/c++/13/tr1/exp_integral.tcc:
 
 /usr/include/c++/13/bits/hash_bytes.h:
 
@@ -1095,6 +1102,8 @@ CMakeFiles/south_india_collector.dir/collectors/south_india/main.cpp.o: /home/sh
 /usr/include/c++/13/bits/basic_string.h:
 
 /usr/include/c++/13/tr1/poly_laguerre.tcc:
+
+/home/shash/projects/weather-rtos/common/subscribing/IBrokerPublisher.hpp:
 
 /usr/include/libintl.h:
 
@@ -1160,15 +1169,9 @@ CMakeFiles/south_india_collector.dir/collectors/south_india/main.cpp.o: /home/sh
 
 /usr/include/c++/13/sstream:
 
-/usr/include/x86_64-linux-gnu/bits/types/sigval_t.h:
+/usr/include/nlohmann/detail/json_custom_base_class.hpp:
 
-/usr/include/c++/13/bits/stl_map.h:
-
-/usr/include/c++/13/bits/new_allocator.h:
-
-/usr/include/c++/13/bits/stl_uninitialized.h:
-
-/usr/include/c++/13/locale:
+/usr/include/c++/13/bits/stl_raw_storage_iter.h:
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls.h:
 

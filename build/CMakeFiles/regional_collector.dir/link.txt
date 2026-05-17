@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.o -o regional_collector  libsocket.a /usr/lib/x86_64-linux-gnu/libcurl.so 

@@ -53,5 +53,8 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/south_india_collector.dir/DependInfo.cmake"
   "CMakeFiles/india_aggregator.dir/DependInfo.cmake"
   "CMakeFiles/asia_aggregator.dir/DependInfo.cmake"
+  "CMakeFiles/regional_collector.dir/DependInfo.cmake"
+  "CMakeFiles/hierarchical_aggregator.dir/DependInfo.cmake"
+  "CMakeFiles/timescale_writer.dir/DependInfo.cmake"
   "CMakeFiles/simulator.dir/DependInfo.cmake"
   )

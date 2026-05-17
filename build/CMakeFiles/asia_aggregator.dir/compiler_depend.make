@@ -7,6 +7,11 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
   /home/shash/projects/weather-rtos/common/protocol/MessageTypes.hpp \
   /home/shash/projects/weather-rtos/common/pipeline/ValidationAggregationConsumerPipeline.hpp \
   /home/shash/projects/weather-rtos/common/socket/TCPSocket.hpp \
+  /home/shash/projects/weather-rtos/common/subscribing/IBrokerPublisher.hpp \
+  /home/shash/projects/weather-rtos/common/subscribing/IBrokerSubscriber.hpp \
+  /home/shash/projects/weather-rtos/common/subscribing/InProcessBrokerPublisher.hpp \
+  /home/shash/projects/weather-rtos/common/subscribing/InProcessBrokerSubscriber.hpp \
+  /home/shash/projects/weather-rtos/common/subscribing/TcpSubscriber.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
@@ -40,6 +45,7 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
   /usr/include/c++/13/bits/cpp_type_traits.h \
   /usr/include/c++/13/bits/cxxabi_forced.h \
   /usr/include/c++/13/bits/cxxabi_init_exception.h \
+  /usr/include/c++/13/bits/deque.tcc \
   /usr/include/c++/13/bits/enable_special_members.h \
   /usr/include/c++/13/bits/erase_if.h \
   /usr/include/c++/13/bits/exception.h \
@@ -111,6 +117,7 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
   /usr/include/c++/13/bits/stl_algobase.h \
   /usr/include/c++/13/bits/stl_bvector.h \
   /usr/include/c++/13/bits/stl_construct.h \
+  /usr/include/c++/13/bits/stl_deque.h \
   /usr/include/c++/13/bits/stl_function.h \
   /usr/include/c++/13/bits/stl_heap.h \
   /usr/include/c++/13/bits/stl_iterator.h \
@@ -120,6 +127,7 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
   /usr/include/c++/13/bits/stl_multimap.h \
   /usr/include/c++/13/bits/stl_numeric.h \
   /usr/include/c++/13/bits/stl_pair.h \
+  /usr/include/c++/13/bits/stl_queue.h \
   /usr/include/c++/13/bits/stl_raw_storage_iter.h \
   /usr/include/c++/13/bits/stl_relops.h \
   /usr/include/c++/13/bits/stl_tempbuf.h \
@@ -155,6 +163,7 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
   /usr/include/c++/13/codecvt \
   /usr/include/c++/13/compare \
   /usr/include/c++/13/concepts \
+  /usr/include/c++/13/condition_variable \
   /usr/include/c++/13/csignal \
   /usr/include/c++/13/cstddef \
   /usr/include/c++/13/cstdint \
@@ -166,6 +175,7 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
   /usr/include/c++/13/cwctype \
   /usr/include/c++/13/debug/assertions.h \
   /usr/include/c++/13/debug/debug.h \
+  /usr/include/c++/13/deque \
   /usr/include/c++/13/exception \
   /usr/include/c++/13/ext/aligned_buffer.h \
   /usr/include/c++/13/ext/alloc_traits.h \
@@ -201,6 +211,7 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
   /usr/include/c++/13/pstl/glue_memory_defs.h \
   /usr/include/c++/13/pstl/glue_numeric_defs.h \
   /usr/include/c++/13/pstl/pstl_config.h \
+  /usr/include/c++/13/queue \
   /usr/include/c++/13/ranges \
   /usr/include/c++/13/ratio \
   /usr/include/c++/13/semaphore \
@@ -523,8 +534,6 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 
 /usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
 
-/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
-
 /usr/include/x86_64-linux-gnu/bits/timex.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
@@ -667,19 +676,15 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 
 /usr/include/nlohmann/detail/input/position_t.hpp:
 
-/usr/include/stdint.h:
+/usr/include/x86_64-linux-gnu/bits/types/time_t.h:
 
-/usr/include/endian.h:
+/usr/include/nlohmann/detail/input/binary_reader.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/types/sigval_t.h:
+/usr/include/nlohmann/detail/hash.hpp:
 
-/usr/include/c++/13/bits/stl_map.h:
+/usr/include/nlohmann/detail/exceptions.hpp:
 
-/usr/include/c++/13/locale:
-
-/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
-
-/usr/include/c++/13/bits/stl_relops.h:
+/usr/include/nlohmann/byte_container_with_subtype.hpp:
 
 /usr/include/c++/13/bits/stl_numeric.h:
 
@@ -690,6 +695,12 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
 
 /usr/include/asm-generic/errno.h:
+
+/usr/include/nlohmann/detail/meta/call_std/end.hpp:
+
+/usr/include/nlohmann/detail/input/json_sax.hpp:
+
+/usr/include/c++/13/bits/functexcept.h:
 
 /usr/include/c++/13/bits/stl_construct.h:
 
@@ -735,6 +746,8 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 
 /usr/include/c++/13/tr1/poly_hermite.tcc:
 
+/usr/include/c++/13/bits/stl_deque.h:
+
 /usr/include/x86_64-linux-gnu/bits/floatn-common.h:
 
 /usr/include/nlohmann/detail/string_concat.hpp:
@@ -763,10 +776,6 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 
 /usr/include/c++/13/bits/parse_numbers.h:
 
-/usr/include/c++/13/bits/ostream.tcc:
-
-/usr/include/c++/13/numbers:
-
 /usr/include/c++/13/bits/stl_function.h:
 
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
@@ -782,6 +791,10 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 /usr/include/x86_64-linux-gnu/bits/sigaction.h:
 
 /usr/include/c++/13/bits/fs_fwd.h:
+
+/usr/include/stdint.h:
+
+/usr/include/endian.h:
 
 /usr/include/c++/13/bits/shared_ptr_atomic.h:
 
@@ -813,33 +826,11 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 
 /usr/include/c++/13/bits/invoke.h:
 
-/usr/include/c++/13/bits/chrono_io.h:
+/usr/include/x86_64-linux-gnu/bits/types/error_t.h:
 
-/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
+/usr/include/c++/13/bits/hashtable.h:
 
-/usr/include/c++/13/bits/exception_defines.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
-
-/usr/include/math.h:
-
-/usr/include/c++/13/bits/streambuf.tcc:
-
-/usr/include/c++/13/bits/specfun.h:
-
-/usr/include/c++/13/bits/basic_string.h:
-
-/usr/include/c++/13/tr1/poly_laguerre.tcc:
-
-/usr/include/libintl.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/time_t.h:
-
-/usr/include/nlohmann/detail/input/binary_reader.hpp:
-
-/usr/include/nlohmann/detail/meta/void_t.hpp:
-
-/usr/include/c++/13/atomic:
+/usr/include/c++/13/bits/stl_queue.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h:
 
@@ -861,37 +852,13 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 
 /usr/include/c++/13/clocale:
 
-/usr/include/c++/13/bits/alloc_traits.h:
-
-/usr/include/c++/13/bits/concept_check.h:
-
 /usr/include/x86_64-linux-gnu/bits/long-double.h:
 
 /usr/include/c++/13/bits/algorithmfwd.h:
 
-/usr/include/c++/13/bits/predefined_ops.h:
+/usr/include/c++/13/bits/alloc_traits.h:
 
-/usr/include/c++/13/bits/ranges_cmp.h:
-
-/usr/include/x86_64-linux-gnu/bits/signum-generic.h:
-
-/usr/include/c++/13/iosfwd:
-
-/usr/include/c++/13/bits/align.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
-
-/usr/include/c++/13/bits/unique_ptr.h:
-
-/usr/include/c++/13/semaphore:
-
-/usr/include/wchar.h:
-
-/usr/include/c++/13/bits/shared_ptr_base.h:
-
-/usr/include/c++/13/bits/slice_array.h:
-
-/home/shash/projects/weather-rtos/aggregator/asia/main.cpp:
+/usr/include/c++/13/bits/concept_check.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
 
@@ -925,21 +892,39 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 
 /usr/include/c++/13/bits/stream_iterator.h:
 
+/usr/include/c++/13/algorithm:
+
+/usr/include/c++/13/backward/auto_ptr.h:
+
+/usr/include/assert.h:
+
+/usr/include/c++/13/bits/hash_bytes.h:
+
+/usr/include/c++/13/array:
+
+/usr/include/c++/13/bits/stl_iterator_base_funcs.h:
+
+/usr/include/asm-generic/errno-base.h:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_base.h:
+
+/usr/include/c++/13/any:
+
+/usr/include/c++/13/bits/ranges_util.h:
+
 /usr/include/c++/13/bits/atomic_base.h:
 
-/usr/include/c++/13/bits/stl_uninitialized.h:
+/usr/include/nlohmann/detail/conversions/to_chars.hpp:
 
-/usr/include/c++/13/bits/new_allocator.h:
+/usr/include/c++/13/bits/uses_allocator_args.h:
 
-/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
 
-/home/shash/projects/weather-rtos/common/protocol/MessageTypes.hpp:
+/usr/include/c++/13/bits/exception_defines.h:
 
-/usr/include/nlohmann/detail/json_custom_base_class.hpp:
+/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
 
-/usr/include/c++/13/bits/stl_raw_storage_iter.h:
-
-/usr/include/c++/13/algorithm:
+/usr/include/math.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
@@ -947,11 +932,7 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 
 /usr/include/c++/13/forward_list:
 
-/usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h:
-
-/usr/include/c++/13/tr1/modified_bessel_func.tcc:
-
-/usr/include/c++/13/bits/ranges_base.h:
+/home/shash/projects/weather-rtos/common/subscribing/IBrokerSubscriber.hpp:
 
 /home/shash/projects/weather-rtos/common/models/WeatherPacket.hpp:
 
@@ -961,41 +942,113 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 
 /usr/include/c++/13/tr1/exp_integral.tcc:
 
-/usr/include/c++/13/array:
+/usr/include/x86_64-linux-gnu/bits/types/sigval_t.h:
 
-/usr/include/c++/13/bits/hash_bytes.h:
+/usr/include/c++/13/bits/stl_map.h:
 
-/usr/include/c++/13/bits/stl_iterator_base_funcs.h:
+/usr/include/c++/13/bits/new_allocator.h:
 
-/usr/include/asm-generic/errno-base.h:
+/usr/include/c++/13/bits/stl_uninitialized.h:
 
-/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_base.h:
-
-/usr/include/c++/13/bits/ranges_util.h:
-
-/usr/include/c++/13/any:
-
-/usr/include/c++/13/backward/auto_ptr.h:
-
-/usr/include/assert.h:
-
-/usr/include/c++/13/bits/stl_vector.h:
-
-/usr/include/c++/13/bits/stl_tempbuf.h:
-
-/usr/include/c++/13/bits/stl_tree.h:
-
-/usr/include/c++/13/bits/codecvt.h:
-
-/usr/include/alloca.h:
-
-/usr/include/c++/13/bits/refwrap.h:
+/usr/include/c++/13/locale:
 
 /usr/include/c++/13/bits/gslice.h:
+
+/usr/include/c++/13/bits/refwrap.h:
 
 /usr/include/c++/13/bits/atomic_lockfree_defines.h:
 
 /usr/include/c++/13/bits/valarray_array.h:
+
+/usr/include/c++/13/bits/streambuf.tcc:
+
+/usr/include/c++/13/bits/specfun.h:
+
+/usr/include/x86_64-linux-gnu/bits/confname.h:
+
+/usr/include/c++/13/bits/locale_facets_nonio.h:
+
+/usr/include/c++/13/bits/fs_dir.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h:
+
+/usr/include/c++/13/sstream:
+
+/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
+
+/home/shash/projects/weather-rtos/common/protocol/MessageTypes.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h:
+
+/usr/include/c++/13/bits/ranges_base.h:
+
+/usr/include/c++/13/tr1/modified_bessel_func.tcc:
+
+/usr/include/c++/13/bits/slice_array.h:
+
+/home/shash/projects/weather-rtos/aggregator/asia/main.cpp:
+
+/usr/include/wchar.h:
+
+/usr/include/c++/13/bits/shared_ptr_base.h:
+
+/usr/include/c++/13/bits/forward_list.h:
+
+/usr/include/c++/13/bits/predefined_ops.h:
+
+/usr/include/c++/13/bits/ranges_cmp.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
+
+/usr/include/c++/13/condition_variable:
+
+/usr/include/x86_64-linux-gnu/bits/signum-generic.h:
+
+/usr/include/c++/13/iosfwd:
+
+/usr/include/c++/13/bits/align.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
+
+/usr/include/c++/13/bits/unique_ptr.h:
+
+/usr/include/c++/13/semaphore:
+
+/usr/include/c++/13/bits/ostream.tcc:
+
+/usr/include/c++/13/numbers:
+
+/home/shash/projects/weather-rtos/common/subscribing/InProcessBrokerPublisher.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/endianness.h:
+
+/usr/include/c++/13/bits/chrono.h:
+
+/usr/include/c++/13/bits/deque.tcc:
+
+/usr/include/nlohmann/detail/conversions/to_json.hpp:
+
+/home/shash/projects/weather-rtos/common/subscribing/InProcessBrokerSubscriber.hpp:
+
+/usr/include/nlohmann/detail/conversions/from_json.hpp:
+
+/usr/include/c++/13/bits/basic_ios.h:
+
+/usr/include/nlohmann/detail/meta/void_t.hpp:
+
+/usr/include/c++/13/atomic:
+
+/usr/include/c++/13/bits/basic_string.h:
+
+/usr/include/c++/13/tr1/poly_laguerre.tcc:
+
+/home/shash/projects/weather-rtos/common/subscribing/IBrokerPublisher.hpp:
+
+/usr/include/libintl.h:
+
+/usr/include/c++/13/bits/chrono_io.h:
+
+/usr/include/alloca.h:
 
 /usr/include/nlohmann/json_fwd.hpp:
 
@@ -1011,15 +1064,9 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 
 /usr/include/c++/13/bits/hashtable_policy.h:
 
-/usr/include/x86_64-linux-gnu/bits/endianness.h:
-
-/usr/include/c++/13/bits/chrono.h:
-
 /usr/include/c++/13/cassert:
 
 /usr/include/c++/13/bits/cpp_type_traits.h:
-
-/usr/include/nlohmann/byte_container_with_subtype.hpp:
 
 /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp:
 
@@ -1035,33 +1082,33 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 
 /usr/include/c++/13/bits/localefwd.h:
 
-/usr/include/x86_64-linux-gnu/bits/confname.h:
-
-/usr/include/c++/13/bits/locale_facets_nonio.h:
-
-/usr/include/c++/13/bits/fs_dir.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h:
-
-/usr/include/c++/13/sstream:
-
-/usr/include/x86_64-linux-gnu/bits/types/error_t.h:
-
-/usr/include/c++/13/bits/hashtable.h:
+/usr/include/c++/13/bits/indirect_array.h:
 
 /usr/include/c++/13/bits/functional_hash.h:
-
-/usr/include/c++/13/bits/indirect_array.h:
 
 /usr/include/c++/13/bits/valarray_array.tcc:
 
 /usr/include/errno.h:
 
-/usr/include/c++/13/bits/forward_list.h:
-
 /usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h:
 
 /usr/include/c++/13/bits/forward_list.tcc:
+
+/usr/include/nlohmann/detail/json_custom_base_class.hpp:
+
+/usr/include/c++/13/bits/stl_raw_storage_iter.h:
+
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
+
+/usr/include/c++/13/bits/stl_relops.h:
+
+/usr/include/c++/13/bits/stl_tempbuf.h:
+
+/usr/include/c++/13/bits/codecvt.h:
+
+/usr/include/c++/13/bits/stl_tree.h:
+
+/usr/include/c++/13/bits/stl_vector.h:
 
 /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
 
@@ -1117,8 +1164,6 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 
 /usr/include/c++/13/tr1/gamma.tcc:
 
-/usr/include/nlohmann/detail/hash.hpp:
-
 /usr/include/c++/13/cerrno:
 
 /usr/include/c++/13/backward/binders.h:
@@ -1129,17 +1174,21 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 
 /usr/include/c++/13/chrono:
 
+/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
+
+/usr/include/nlohmann/detail/abi_macros.hpp:
+
+/usr/include/c++/13/climits:
+
+/home/shash/projects/weather-rtos/common/subscribing/TcpSubscriber.hpp:
+
 /usr/include/c++/13/cmath:
 
 /usr/include/c++/13/codecvt:
 
 /usr/include/c++/13/ctime:
 
-/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
-
-/usr/include/c++/13/climits:
-
-/usr/include/nlohmann/detail/abi_macros.hpp:
+/usr/include/c++/13/deque:
 
 /usr/include/c++/13/system_error:
 
@@ -1205,9 +1254,9 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 
 /usr/include/c++/13/bits/std_thread.h:
 
-/usr/include/c++/13/tr1/bessel_function.tcc:
-
 /usr/include/limits.h:
+
+/usr/include/c++/13/tr1/bessel_function.tcc:
 
 /usr/include/c++/13/initializer_list:
 
@@ -1224,8 +1273,6 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 /usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
 
 /usr/include/c++/13/limits:
-
-/usr/include/nlohmann/detail/conversions/to_json.hpp:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
 
@@ -1244,6 +1291,12 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 /usr/include/c++/13/bits/mask_array.h:
 
 /usr/include/c++/13/pstl/pstl_config.h:
+
+/usr/include/c++/13/queue:
+
+/usr/include/c++/13/ratio:
+
+/usr/include/linux/limits.h:
 
 /usr/include/c++/13/ranges:
 
@@ -1302,23 +1355,3 @@ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o: /home/shash/projects/
 /usr/include/features.h:
 
 /usr/include/linux/close_range.h:
-
-/usr/include/c++/13/ratio:
-
-/usr/include/linux/limits.h:
-
-/usr/include/c++/13/bits/basic_ios.h:
-
-/usr/include/nlohmann/detail/conversions/from_json.hpp:
-
-/usr/include/c++/13/bits/uses_allocator_args.h:
-
-/usr/include/nlohmann/detail/conversions/to_chars.hpp:
-
-/usr/include/nlohmann/detail/exceptions.hpp:
-
-/usr/include/nlohmann/detail/meta/call_std/end.hpp:
-
-/usr/include/c++/13/bits/functexcept.h:
-
-/usr/include/nlohmann/detail/input/json_sax.hpp:

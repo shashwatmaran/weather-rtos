@@ -2,6 +2,9 @@
 /home/shash/projects/weather-rtos/build/CMakeFiles/south_india_collector.dir
 /home/shash/projects/weather-rtos/build/CMakeFiles/india_aggregator.dir
 /home/shash/projects/weather-rtos/build/CMakeFiles/asia_aggregator.dir
+/home/shash/projects/weather-rtos/build/CMakeFiles/regional_collector.dir
+/home/shash/projects/weather-rtos/build/CMakeFiles/hierarchical_aggregator.dir
+/home/shash/projects/weather-rtos/build/CMakeFiles/timescale_writer.dir
 /home/shash/projects/weather-rtos/build/CMakeFiles/simulator.dir
 /home/shash/projects/weather-rtos/build/CMakeFiles/edit_cache.dir
 /home/shash/projects/weather-rtos/build/CMakeFiles/rebuild_cache.dir

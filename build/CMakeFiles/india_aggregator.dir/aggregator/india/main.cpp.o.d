@@ -354,4 +354,5 @@ CMakeFiles/india_aggregator.dir/aggregator/india/main.cpp.o: \
  /home/shash/projects/weather-rtos/aggregator/india/../../common/gateway/../protocol/MessageTypes.hpp \
  /home/shash/projects/weather-rtos/aggregator/india/../../common/gateway/../publishing/BrokerPublisher.hpp \
  /home/shash/projects/weather-rtos/aggregator/india/../../common/gateway/../publishing/../socket/TCPSocket.hpp \
+ /home/shash/projects/weather-rtos/aggregator/india/../../common/gateway/../publishing/../subscribing/IBrokerPublisher.hpp \
  /home/shash/projects/weather-rtos/aggregator/india/../../common/gateway/../socket/TCPSocket.hpp

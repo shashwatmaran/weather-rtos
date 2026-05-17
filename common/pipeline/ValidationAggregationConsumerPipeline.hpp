@@ -1,6 +1,7 @@
 #pragma once
 
 #include <fstream>
+#include <functional>
 #include <iomanip>
 #include <iostream>
 #include <map>
@@ -13,6 +14,10 @@ class ValidationAggregationConsumerPipeline {
 public:
     explicit ValidationAggregationConsumerPipeline(std::string consumerName)
         : consumerName_(std::move(consumerName)) {}
+
+    ValidationAggregationConsumerPipeline(std::string consumerName,
+                                          std::function<void(const MessageEnvelope&)> onSuccess)
+        : consumerName_(std::move(consumerName)), onSuccess_(std::move(onSuccess)) {}
 
     bool consume(const MessageEnvelope& envelope) {
         auto packet = weather_packet_from_envelope(envelope);
@@ -29,6 +34,11 @@ public:
         recordPacket(*packet);
         logPacket(envelope);
         printSummary(*packet);
+
+        if (onSuccess_) {
+            onSuccess_(envelope);
+        }
+
         return true;
     }
 
@@ -80,4 +90,5 @@ private:
     std::size_t totalPackets_{0};
     std::map<std::string, std::size_t> packetsByCity_;
     double temperatureSum_{0.0};
+    std::function<void(const MessageEnvelope&)> onSuccess_;
 };

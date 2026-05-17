@@ -5,20 +5,21 @@
 
 #include "../protocol/MessageEnvelope.hpp"
 #include "../socket/TCPSocket.hpp"
+#include "../subscribing/IBrokerPublisher.hpp"
 
-class IBrokerPublisher {
-public:
-    virtual ~IBrokerPublisher() = default;
-
-    virtual bool publish(const MessageEnvelope& envelope) = 0;
-};
-
+/**
+ * TCP-based broker publisher.
+ * Connects to a TCP server and publishes envelopes.
+ * For point-to-point communication; use real broker for multi-consumer scenarios.
+ */
 class TcpBrokerPublisher final : public IBrokerPublisher {
 public:
     TcpBrokerPublisher(std::string host, int port)
         : host_(std::move(host)), port_(port) {}
 
-    bool publish(const MessageEnvelope& envelope) override {
+    bool publish_to_topic(const std::string& topic, const MessageEnvelope& envelope) override {
+        // TCP publisher ignores topic and sends directly to the configured host:port
+        // The receiving side is responsible for routing based on the envelope
         if (!connected_) {
             connected_ = socket_.connectToServer(host_, port_);
         }

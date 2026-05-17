@@ -169,6 +169,45 @@ asia_aggregator/fast:
 .PHONY : asia_aggregator/fast
 
 #=============================================================================
+# Target rules for targets named regional_collector
+
+# Build rule for target.
+regional_collector: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 regional_collector
+.PHONY : regional_collector
+
+# fast build rule for target.
+regional_collector/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/regional_collector.dir/build.make CMakeFiles/regional_collector.dir/build
+.PHONY : regional_collector/fast
+
+#=============================================================================
+# Target rules for targets named hierarchical_aggregator
+
+# Build rule for target.
+hierarchical_aggregator: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 hierarchical_aggregator
+.PHONY : hierarchical_aggregator
+
+# fast build rule for target.
+hierarchical_aggregator/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hierarchical_aggregator.dir/build.make CMakeFiles/hierarchical_aggregator.dir/build
+.PHONY : hierarchical_aggregator/fast
+
+#=============================================================================
+# Target rules for targets named timescale_writer
+
+# Build rule for target.
+timescale_writer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 timescale_writer
+.PHONY : timescale_writer
+
+# fast build rule for target.
+timescale_writer/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/timescale_writer.dir/build.make CMakeFiles/timescale_writer.dir/build
+.PHONY : timescale_writer/fast
+
+#=============================================================================
 # Target rules for targets named simulator
 
 # Build rule for target.
@@ -205,6 +244,30 @@ aggregator/asia/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/asia_aggregator.dir/build.make CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.s
 .PHONY : aggregator/asia/main.cpp.s
 
+aggregator/hierarchical/main.o: aggregator/hierarchical/main.cpp.o
+.PHONY : aggregator/hierarchical/main.o
+
+# target to build an object file
+aggregator/hierarchical/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hierarchical_aggregator.dir/build.make CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o
+.PHONY : aggregator/hierarchical/main.cpp.o
+
+aggregator/hierarchical/main.i: aggregator/hierarchical/main.cpp.i
+.PHONY : aggregator/hierarchical/main.i
+
+# target to preprocess a source file
+aggregator/hierarchical/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hierarchical_aggregator.dir/build.make CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.i
+.PHONY : aggregator/hierarchical/main.cpp.i
+
+aggregator/hierarchical/main.s: aggregator/hierarchical/main.cpp.s
+.PHONY : aggregator/hierarchical/main.s
+
+# target to generate assembly for a file
+aggregator/hierarchical/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hierarchical_aggregator.dir/build.make CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.s
+.PHONY : aggregator/hierarchical/main.cpp.s
+
 aggregator/india/main.o: aggregator/india/main.cpp.o
 .PHONY : aggregator/india/main.o
 
@@ -228,6 +291,30 @@ aggregator/india/main.s: aggregator/india/main.cpp.s
 aggregator/india/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/india_aggregator.dir/build.make CMakeFiles/india_aggregator.dir/aggregator/india/main.cpp.s
 .PHONY : aggregator/india/main.cpp.s
+
+collectors/regional/main.o: collectors/regional/main.cpp.o
+.PHONY : collectors/regional/main.o
+
+# target to build an object file
+collectors/regional/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/regional_collector.dir/build.make CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.o
+.PHONY : collectors/regional/main.cpp.o
+
+collectors/regional/main.i: collectors/regional/main.cpp.i
+.PHONY : collectors/regional/main.i
+
+# target to preprocess a source file
+collectors/regional/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/regional_collector.dir/build.make CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.i
+.PHONY : collectors/regional/main.cpp.i
+
+collectors/regional/main.s: collectors/regional/main.cpp.s
+.PHONY : collectors/regional/main.s
+
+# target to generate assembly for a file
+collectors/regional/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/regional_collector.dir/build.make CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.s
+.PHONY : collectors/regional/main.cpp.s
 
 collectors/south_india/main.o: collectors/south_india/main.cpp.o
 .PHONY : collectors/south_india/main.o
@@ -301,6 +388,30 @@ simulator/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/simulator.dir/build.make CMakeFiles/simulator.dir/simulator/main.cpp.s
 .PHONY : simulator/main.cpp.s
 
+timescale_writer/main.o: timescale_writer/main.cpp.o
+.PHONY : timescale_writer/main.o
+
+# target to build an object file
+timescale_writer/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/timescale_writer.dir/build.make CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o
+.PHONY : timescale_writer/main.cpp.o
+
+timescale_writer/main.i: timescale_writer/main.cpp.i
+.PHONY : timescale_writer/main.i
+
+# target to preprocess a source file
+timescale_writer/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/timescale_writer.dir/build.make CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.i
+.PHONY : timescale_writer/main.cpp.i
+
+timescale_writer/main.s: timescale_writer/main.cpp.s
+.PHONY : timescale_writer/main.s
+
+# target to generate assembly for a file
+timescale_writer/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/timescale_writer.dir/build.make CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.s
+.PHONY : timescale_writer/main.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -310,16 +421,25 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... asia_aggregator"
+	@echo "... hierarchical_aggregator"
 	@echo "... india_aggregator"
+	@echo "... regional_collector"
 	@echo "... simulator"
 	@echo "... socket"
 	@echo "... south_india_collector"
+	@echo "... timescale_writer"
 	@echo "... aggregator/asia/main.o"
 	@echo "... aggregator/asia/main.i"
 	@echo "... aggregator/asia/main.s"
+	@echo "... aggregator/hierarchical/main.o"
+	@echo "... aggregator/hierarchical/main.i"
+	@echo "... aggregator/hierarchical/main.s"
 	@echo "... aggregator/india/main.o"
 	@echo "... aggregator/india/main.i"
 	@echo "... aggregator/india/main.s"
+	@echo "... collectors/regional/main.o"
+	@echo "... collectors/regional/main.i"
+	@echo "... collectors/regional/main.s"
 	@echo "... collectors/south_india/main.o"
 	@echo "... collectors/south_india/main.i"
 	@echo "... collectors/south_india/main.s"
@@ -329,6 +449,9 @@ help:
 	@echo "... simulator/main.o"
 	@echo "... simulator/main.i"
 	@echo "... simulator/main.s"
+	@echo "... timescale_writer/main.o"
+	@echo "... timescale_writer/main.i"
+	@echo "... timescale_writer/main.s"
 .PHONY : help
 
 

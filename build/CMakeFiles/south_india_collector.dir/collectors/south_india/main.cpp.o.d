@@ -386,4 +386,5 @@ CMakeFiles/south_india_collector.dir/collectors/south_india/main.cpp.o: \
  /home/shash/projects/weather-rtos/collectors/south_india/../../common/protocol/MessageEnvelope.hpp \
  /home/shash/projects/weather-rtos/collectors/south_india/../../common/protocol/MessageTypes.hpp \
  /home/shash/projects/weather-rtos/collectors/south_india/../../common/publishing/BrokerPublisher.hpp \
- /home/shash/projects/weather-rtos/collectors/south_india/../../common/publishing/../socket/TCPSocket.hpp
+ /home/shash/projects/weather-rtos/collectors/south_india/../../common/publishing/../socket/TCPSocket.hpp \
+ /home/shash/projects/weather-rtos/collectors/south_india/../../common/publishing/../subscribing/IBrokerPublisher.hpp

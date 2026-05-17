@@ -190,7 +190,7 @@ int main() {
             }
 
             MessageEnvelope envelope = make_weather_packet_envelope(packet, "south_india_collector", "india_gateway");
-            if (!publisher.publish(envelope)) {
+            if (!publisher.publish_to_topic("south_india_events", envelope)) {
                 std::cerr << "[Sender] Failed to publish packet for " << packet.city << std::endl;
             } else {
                 std::cout << "[Sender] Published envelope for " << packet.city << std::endl;

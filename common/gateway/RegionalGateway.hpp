@@ -63,7 +63,7 @@ public:
                             continue;
                         }
 
-                        if (!upstreamPublisher_.publish(envelope)) {
+                        if (!upstreamPublisher_.publish_to_topic("forward", envelope)) {
                             std::cerr << "[" << gatewayName_ << "] Failed to forward envelope " << envelope.message_id << std::endl;
                             continue;
                         }

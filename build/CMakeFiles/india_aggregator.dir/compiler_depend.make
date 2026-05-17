@@ -6,6 +6,7 @@ CMakeFiles/india_aggregator.dir/aggregator/india/main.cpp.o: /home/shash/project
   /home/shash/projects/weather-rtos/common/protocol/MessageEnvelope.hpp \
   /home/shash/projects/weather-rtos/common/protocol/MessageTypes.hpp \
   /home/shash/projects/weather-rtos/common/socket/TCPSocket.hpp \
+  /home/shash/projects/weather-rtos/common/subscribing/IBrokerPublisher.hpp \
   /home/shash/projects/weather-rtos/common/publishing/BrokerPublisher.hpp \
   /home/shash/projects/weather-rtos/common/socket/TCPSocket.hpp \
   /home/shash/projects/weather-rtos/common/gateway/RegionalGateway.hpp \
@@ -657,9 +658,7 @@ CMakeFiles/india_aggregator.dir/aggregator/india/main.cpp.o: /home/shash/project
 
 /usr/include/nlohmann/detail/iterators/iter_impl.hpp:
 
-/usr/include/stdint.h:
-
-/usr/include/endian.h:
+/usr/include/nlohmann/detail/iterators/internal_iterator.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/sigval_t.h:
 
@@ -773,6 +772,10 @@ CMakeFiles/india_aggregator.dir/aggregator/india/main.cpp.o: /home/shash/project
 
 /usr/include/c++/13/bits/fs_fwd.h:
 
+/usr/include/stdint.h:
+
+/usr/include/endian.h:
+
 /usr/include/c++/13/bits/shared_ptr_atomic.h:
 
 /usr/include/c++/13/bits/erase_if.h:
@@ -798,8 +801,6 @@ CMakeFiles/india_aggregator.dir/aggregator/india/main.cpp.o: /home/shash/project
 /usr/include/nlohmann/detail/input/input_adapters.hpp:
 
 /usr/include/c++/13/bits/fs_ops.h:
-
-/usr/include/nlohmann/detail/iterators/internal_iterator.hpp:
 
 /usr/include/c++/13/bits/this_thread_sleep.h:
 
@@ -901,6 +902,10 @@ CMakeFiles/india_aggregator.dir/aggregator/india/main.cpp.o: /home/shash/project
 
 /usr/include/c++/13/bits/new_allocator.h:
 
+/usr/include/nlohmann/detail/conversions/to_chars.hpp:
+
+/usr/include/c++/13/bits/uses_allocator_args.h:
+
 /usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
 
 /home/shash/projects/weather-rtos/common/protocol/MessageTypes.hpp:
@@ -977,6 +982,8 @@ CMakeFiles/india_aggregator.dir/aggregator/india/main.cpp.o: /home/shash/project
 
 /usr/include/c++/13/tr1/poly_laguerre.tcc:
 
+/home/shash/projects/weather-rtos/common/subscribing/IBrokerPublisher.hpp:
+
 /usr/include/libintl.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/time_t.h:
@@ -1019,6 +1026,18 @@ CMakeFiles/india_aggregator.dir/aggregator/india/main.cpp.o: /home/shash/project
 
 /usr/include/c++/13/bits/exception.h:
 
+/usr/include/c++/13/bits/indirect_array.h:
+
+/usr/include/c++/13/bits/functional_hash.h:
+
+/usr/include/c++/13/bits/valarray_array.tcc:
+
+/usr/include/errno.h:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h:
+
+/usr/include/c++/13/bits/forward_list.tcc:
+
 /usr/include/x86_64-linux-gnu/bits/confname.h:
 
 /usr/include/c++/13/bits/locale_facets_nonio.h:
@@ -1032,18 +1051,6 @@ CMakeFiles/india_aggregator.dir/aggregator/india/main.cpp.o: /home/shash/project
 /usr/include/x86_64-linux-gnu/bits/types/error_t.h:
 
 /usr/include/c++/13/bits/hashtable.h:
-
-/usr/include/c++/13/bits/functional_hash.h:
-
-/usr/include/c++/13/bits/indirect_array.h:
-
-/usr/include/c++/13/bits/valarray_array.tcc:
-
-/usr/include/errno.h:
-
-/usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h:
-
-/usr/include/c++/13/bits/forward_list.tcc:
 
 /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
 
@@ -1292,10 +1299,6 @@ CMakeFiles/india_aggregator.dir/aggregator/india/main.cpp.o: /home/shash/project
 /usr/include/c++/13/bits/basic_ios.h:
 
 /usr/include/nlohmann/detail/conversions/from_json.hpp:
-
-/usr/include/c++/13/bits/uses_allocator_args.h:
-
-/usr/include/nlohmann/detail/conversions/to_chars.hpp:
 
 /usr/include/nlohmann/detail/exceptions.hpp:
 
