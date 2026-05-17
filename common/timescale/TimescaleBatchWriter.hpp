@@ -22,6 +22,7 @@
 
 #include "../models/WeatherPacket.hpp"
 #include "../protocol/MessageEnvelope.hpp"
+#include "TimescaleDbClient.hpp"
 
 using json = nlohmann::json;
 
@@ -63,7 +64,8 @@ public:
         : outboxPath_(std::move(outboxPath)),
           maxQueueSize_(maxQueueSize),
           batchSize_(batchSize),
-          flushInterval_(flushInterval) {}
+                    flushInterval_(flushInterval),
+                    timescaleDb_() {}
 
     bool submit(const MessageEnvelope& envelope) {
         auto packet = weather_packet_from_envelope(envelope);
@@ -89,7 +91,8 @@ public:
     }
 
     void run(std::atomic<bool>& running) {
-        std::cout << "[TimescaleWriter] Batch writer started, outbox: " << outboxPath_ << std::endl;
+        std::cout << "[TimescaleWriter] Batch writer started, backend: " << timescaleDb_.backendName() << std::endl;
+        std::cout << "[TimescaleWriter] Outbox fallback: " << outboxPath_ << std::endl;
 
         while (running.load()) {
             std::vector<MessageEnvelope> batch;
@@ -222,55 +225,68 @@ private:
             });
         }
 
+        const std::string batchSql = buildBatchSql(rawRows, aggregateRows);
+
+        if (timescaleDb_.executeBatch(batchSql)) {
+            std::cout << "[TimescaleWriter] Flushed to TimescaleDB raw=" << rawRows.size()
+                      << " aggregate=" << aggregateRows.size() << std::endl;
+            return;
+        }
+
         std::ofstream outbox(outboxPath_, std::ios::app);
         if (!outbox.is_open()) {
             std::cerr << "[TimescaleWriter] Failed to open outbox file " << outboxPath_ << std::endl;
             return;
         }
 
-        outbox << "-- batch " << std::chrono::system_clock::now().time_since_epoch().count() << std::endl;
-        outbox << "BEGIN;" << std::endl;
-
-         for (const auto& row : rawRows) {
-             outbox << "INSERT INTO weather_observations_raw "
-                 << "(message_id, source, continent, country, region, city, event_time, created_at, temperature, humidity, wind_speed, payload_json) VALUES ("
-                 << "'" << escapeSqlLiteral(row.message_id) << "', '"
-                 << escapeSqlLiteral(row.source) << "', '"
-                 << escapeSqlLiteral(row.continent) << "', '"
-                 << escapeSqlLiteral(row.country) << "', '"
-                 << escapeSqlLiteral(row.region) << "', '"
-                 << escapeSqlLiteral(row.city) << "', to_timestamp(" << row.event_time << " / 1000.0), to_timestamp(" << row.created_at << " / 1000.0), "
-                 << row.temperature << ", " << row.humidity << ", " << row.wind_speed << ", '"
-                 << escapeSqlLiteral(row.payload_json) << "') ON CONFLICT (message_id) DO NOTHING;" << std::endl;
-         }
-
-         for (const auto& row : aggregateRows) {
-             outbox << "INSERT INTO weather_city_minute_aggregates "
-                 << "(bucket_start, continent, country, region, city, observation_count, min_temperature, max_temperature, avg_temperature, avg_humidity, avg_wind_speed) VALUES ("
-                 << "to_timestamp(" << row.bucket_start << " / 1000.0), '"
-                 << escapeSqlLiteral(row.continent) << "', '"
-                 << escapeSqlLiteral(row.country) << "', '"
-                 << escapeSqlLiteral(row.region) << "', '"
-                 << escapeSqlLiteral(row.city) << "', "
-                 << row.observation_count << ", "
-                 << row.min_temperature << ", "
-                 << row.max_temperature << ", "
-                 << row.avg_temperature << ", "
-                 << row.avg_humidity << ", "
-                 << row.avg_wind_speed << ") ON CONFLICT (bucket_start, continent, country, region, city) DO UPDATE SET "
-                 << "observation_count = EXCLUDED.observation_count, "
-                 << "min_temperature = LEAST(weather_city_minute_aggregates.min_temperature, EXCLUDED.min_temperature), "
-                 << "max_temperature = GREATEST(weather_city_minute_aggregates.max_temperature, EXCLUDED.max_temperature), "
-                 << "avg_temperature = EXCLUDED.avg_temperature, "
-                 << "avg_humidity = EXCLUDED.avg_humidity, "
-                 << "avg_wind_speed = EXCLUDED.avg_wind_speed;" << std::endl;
-         }
-
-        outbox << "COMMIT;" << std::endl;
-        outbox << std::endl;
-
-        std::cout << "[TimescaleWriter] Flushed raw=" << rawRows.size()
+        outbox << batchSql << std::endl;
+        std::cout << "[TimescaleWriter] Flushed to outbox raw=" << rawRows.size()
                   << " aggregate=" << aggregateRows.size() << std::endl;
+    }
+
+    std::string buildBatchSql(const std::vector<TimescaleRawRow>& rawRows,
+                             const std::vector<TimescaleAggregateRow>& aggregateRows) {
+        std::ostringstream sql;
+        sql << "-- batch " << std::chrono::system_clock::now().time_since_epoch().count() << std::endl;
+        sql << "BEGIN;" << std::endl;
+
+        for (const auto& row : rawRows) {
+            sql << "INSERT INTO weather_observations_raw "
+                << "(message_id, source, continent, country, region, city, event_time, created_at, temperature, humidity, wind_speed, payload_json) VALUES ("
+                << "'" << escapeSqlLiteral(row.message_id) << "', '"
+                << escapeSqlLiteral(row.source) << "', '"
+                << escapeSqlLiteral(row.continent) << "', '"
+                << escapeSqlLiteral(row.country) << "', '"
+                << escapeSqlLiteral(row.region) << "', '"
+                << escapeSqlLiteral(row.city) << "', to_timestamp(" << row.event_time << " / 1000.0), to_timestamp(" << row.created_at << " / 1000.0), "
+                << row.temperature << ", " << row.humidity << ", " << row.wind_speed << ", '"
+                << escapeSqlLiteral(row.payload_json) << "') ON CONFLICT (message_id) DO NOTHING;" << std::endl;
+        }
+
+        for (const auto& row : aggregateRows) {
+            sql << "INSERT INTO weather_city_minute_aggregates "
+                << "(bucket_start, continent, country, region, city, observation_count, min_temperature, max_temperature, avg_temperature, avg_humidity, avg_wind_speed) VALUES ("
+                << "to_timestamp(" << row.bucket_start << " / 1000.0), '"
+                << escapeSqlLiteral(row.continent) << "', '"
+                << escapeSqlLiteral(row.country) << "', '"
+                << escapeSqlLiteral(row.region) << "', '"
+                << escapeSqlLiteral(row.city) << "', "
+                << row.observation_count << ", "
+                << row.min_temperature << ", "
+                << row.max_temperature << ", "
+                << row.avg_temperature << ", "
+                << row.avg_humidity << ", "
+                << row.avg_wind_speed << ") ON CONFLICT (bucket_start, continent, country, region, city) DO UPDATE SET "
+                << "observation_count = EXCLUDED.observation_count, "
+                << "min_temperature = LEAST(weather_city_minute_aggregates.min_temperature, EXCLUDED.min_temperature), "
+                << "max_temperature = GREATEST(weather_city_minute_aggregates.max_temperature, EXCLUDED.max_temperature), "
+                << "avg_temperature = EXCLUDED.avg_temperature, "
+                << "avg_humidity = EXCLUDED.avg_humidity, "
+                << "avg_wind_speed = EXCLUDED.avg_wind_speed;" << std::endl;
+        }
+
+        sql << "COMMIT;" << std::endl;
+        return sql.str();
     }
 
     std::string outboxPath_;
@@ -281,4 +297,5 @@ private:
     std::unordered_set<std::string> seenIds_;
     std::mutex mutex_;
     std::condition_variable cv_;
+    TimescaleDbClient timescaleDb_;
 };

@@ -1,6 +1,7 @@
 #include <atomic>
 #include <chrono>
 #include <csignal>
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -26,7 +27,9 @@ int main() {
     std::signal(SIGTERM, handleShutdownSignal);
 
     std::cout << "=== Timescale Writer (Socket-fed prototype) ===" << std::endl;
-    std::cout << "Listening on port 13101 and batching to Timescale-ready SQL outbox" << std::endl;
+    std::cout << "Listening on port 13101 and batching to TimescaleDB when configured" << std::endl;
+    std::cout << "Set TIMESCALEDB_DSN or TIMESCALEDB_CONNECTION_STRING to enable direct DB writes" << std::endl;
+    std::cout << "Otherwise, batches are written to timescale_outbox.sql" << std::endl;
 
     auto batchWriter = std::make_shared<TimescaleBatchWriter>("timescale_outbox.sql", 2048, 128, std::chrono::milliseconds(1000));
 

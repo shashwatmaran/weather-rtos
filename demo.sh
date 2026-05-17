@@ -14,6 +14,8 @@ set -e
 
 cd "$(dirname "$0")"
 
+WEATHER_RTOS_HOST="${WEATHER_RTOS_HOST:-127.0.0.1}"
+
 if [ ! -d build ]; then
     echo "Error: build directory not found. Run 'cmake --build build -j 4' first."
     exit 1
@@ -48,6 +50,9 @@ echo ""
 echo "=========================================="
 echo ""
 echo "Starting components..."
+echo ""
+echo "TCP host: $WEATHER_RTOS_HOST"
+echo "Set WEATHER_RTOS_HOST to run the topology against another machine on your LAN."
 echo ""
 
 # Create a temporary directory for logs

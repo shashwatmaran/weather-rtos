@@ -11,6 +11,7 @@
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
 #include "../../common/models/WeatherPacket.hpp"
+#include "../../common/utils/RuntimeConfig.hpp"
 #include "../../common/protocol/MessageEnvelope.hpp"
 #include "../../common/publishing/BrokerPublisher.hpp"
 
@@ -189,7 +190,7 @@ int main(int argc, char* argv[]) {
     std::cout << std::endl;
 
     const int sendToPort = region["send_to_port"].get<int>();
-    auto brokerPublisher = std::make_shared<TcpBrokerPublisher>("127.0.0.1", sendToPort);
+    auto brokerPublisher = std::make_shared<TcpBrokerPublisher>(runtimeTcpHost(), sendToPort);
     std::vector<std::thread> threads;
 
     // Create a poll thread for each city

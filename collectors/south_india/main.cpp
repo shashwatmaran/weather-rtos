@@ -11,6 +11,7 @@
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
 #include "../../common/models/WeatherPacket.hpp"
+#include "../../common/utils/RuntimeConfig.hpp"
 #include "../../common/protocol/MessageEnvelope.hpp"
 #include "../../common/publishing/BrokerPublisher.hpp"
 
@@ -139,7 +140,7 @@ int main() {
     std::cout << "=== South India Collector ===" << std::endl;
     std::cout << "Publishing canonical envelopes to the India regional gateway..." << std::endl;
 
-    TcpBrokerPublisher publisher("127.0.0.1", 9101);
+    TcpBrokerPublisher publisher(runtimeTcpHost(), 9101);
 
     std::ifstream configFile("../configs/south_india.json");
     if (!configFile.is_open()) {

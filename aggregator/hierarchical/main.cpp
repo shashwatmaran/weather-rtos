@@ -12,6 +12,7 @@
 #include "../../common/publishing/BrokerPublisher.hpp"
 #include "../../common/subscribing/InProcessBrokerSubscriber.hpp"
 #include "../../common/subscribing/TcpSubscriber.hpp"
+#include "../../common/utils/RuntimeConfig.hpp"
 using json = nlohmann::json;
 
 std::atomic<bool> running{true};
@@ -109,7 +110,7 @@ int main(int argc, char* argv[]) {
     std::cout << std::endl;
 
     const int forwardPort = aggregatorConfig["forward_to_port"].get<int>();
-    auto downstreamPublisher = std::make_shared<TcpBrokerPublisher>("127.0.0.1", forwardPort);
+    auto downstreamPublisher = std::make_shared<TcpBrokerPublisher>(runtimeTcpHost(), forwardPort);
 
     std::shared_ptr<ValidationAggregationConsumerPipeline> pipeline;
     if (tier == "global") {

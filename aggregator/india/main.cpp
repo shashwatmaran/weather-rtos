@@ -2,6 +2,7 @@
 #include <atomic>
 #include <csignal>
 #include "../../common/gateway/RegionalGateway.hpp"
+#include "../../common/utils/RuntimeConfig.hpp"
 #include "../../common/publishing/BrokerPublisher.hpp"
 
 std::atomic<bool> running{true};
@@ -17,7 +18,7 @@ int main() {
     std::cout << "=== India Regional Gateway (Port 9101) ===" << std::endl;
     std::cout << "Relaying canonical envelopes to Asia consumer..." << std::endl;
 
-    TcpBrokerPublisher upstreamPublisher("127.0.0.1", 9201);
+    TcpBrokerPublisher upstreamPublisher(runtimeTcpHost(), 9201);
     RegionalGateway gateway(9101, "india_gateway", upstreamPublisher);
     gateway.run(running);
 
