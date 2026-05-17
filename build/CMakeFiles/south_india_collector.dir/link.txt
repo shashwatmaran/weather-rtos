@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/south_india_collector.dir/collectors/south_india/main.cpp.o -o south_india_collector  libsocket.a /usr/lib/x86_64-linux-gnu/libcurl.so 

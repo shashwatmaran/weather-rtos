@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o -o asia_aggregator  libsocket.a 

@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/india_aggregator.dir/aggregator/india/main.cpp.o -o india_aggregator  libsocket.a 
