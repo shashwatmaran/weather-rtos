@@ -56,7 +56,3 @@ Runtime notes:
 - Aggregators validate and reduce incoming `WeatherPacket` data, then either forward results or write to an outbox consumed by the `timescale_writer`.
 - `simulator` simplifies local testing by producing realistic traffic matching the `WeatherPacket` schema.
 
-Next steps you might want:
-- Add this `README.md` to the repo root (created).
-- Ask for a deep-dive on any file (I can open and explain line-by-line).
-- Generate quick run commands or a developer `Makefile` snippet for local testing.
