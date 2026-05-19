@@ -1,6 +1,7 @@
 #pragma once
 
 #include <fstream>
+#include <filesystem>
 #include <functional>
 #include <iomanip>
 #include <iostream>
@@ -67,7 +68,13 @@ private:
     }
 
     void logPacket(const MessageEnvelope& envelope) {
-        std::ofstream logFile(consumerName_ + ".log", std::ios::app);
+        namespace fs = std::filesystem;
+        fs::path logDir = fs::path("logs");
+        std::error_code ec;
+        fs::create_directories(logDir, ec);
+
+        fs::path logPath = logDir / (consumerName_ + ".log");
+        std::ofstream logFile(logPath, std::ios::app);
         if (!logFile.is_open()) {
             return;
         }

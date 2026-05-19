@@ -92,7 +92,9 @@ public:
 
     void run(std::atomic<bool>& running) {
         std::cout << "[TimescaleWriter] Batch writer started, backend: " << timescaleDb_.backendName() << std::endl;
-        std::cout << "[TimescaleWriter] Outbox fallback: " << outboxPath_ << std::endl;
+        if (timescaleDb_.backendName() == "file outbox") {
+            std::cout << "[TimescaleWriter] Outbox fallback: " << outboxPath_ << std::endl;
+        }
 
         while (running.load()) {
             std::vector<MessageEnvelope> batch;

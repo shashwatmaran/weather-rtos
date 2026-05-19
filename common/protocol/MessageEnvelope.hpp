@@ -12,6 +12,12 @@
 
 using json = nlohmann::json;
 
+inline long epoch_millis_now() {
+    return std::chrono::duration_cast<std::chrono::milliseconds>(
+               std::chrono::system_clock::now().time_since_epoch())
+        .count();
+}
+
 struct MessageEnvelope {
     int schema_version;
     std::string message_id;
@@ -24,7 +30,7 @@ struct MessageEnvelope {
 
 inline std::string generate_message_id(const std::string& source) {
     static std::atomic<unsigned long> sequence{0};
-    const auto now = std::chrono::system_clock::now().time_since_epoch().count();
+    const auto now = epoch_millis_now();
     return source + "-" + std::to_string(now) + "-" + std::to_string(sequence.fetch_add(1));
 }
 
@@ -37,7 +43,7 @@ inline MessageEnvelope make_weather_packet_envelope(const WeatherPacket& packet,
         source,
         route,
         MessageTypes::WeatherPacket,
-        std::chrono::system_clock::now().time_since_epoch().count(),
+        epoch_millis_now(),
         to_json(packet)
     };
 }

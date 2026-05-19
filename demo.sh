@@ -15,6 +15,8 @@ set -e
 cd "$(dirname "$0")"
 
 WEATHER_RTOS_HOST="${WEATHER_RTOS_HOST:-127.0.0.1}"
+TIMESCALEDB_DSN="${TIMESCALEDB_DSN:-host=127.0.0.1 port=5432 dbname=weather_rtos user=weather_rtos password=weather_secret}"
+export TIMESCALEDB_DSN
 
 if [ ! -d build ]; then
     echo "Error: build directory not found. Run 'cmake --build build -j 4' first."
@@ -55,8 +57,8 @@ echo "TCP host: $WEATHER_RTOS_HOST"
 echo "Set WEATHER_RTOS_HOST to run the topology against another machine on your LAN."
 echo ""
 
-# Create a temporary directory for logs
-LOGDIR="/tmp/weather-rtos-demo"
+# Create a repository-local logs directory (can be overridden via LOGDIR env)
+LOGDIR="${LOGDIR:-$(pwd)/logs}"
 mkdir -p "$LOGDIR"
 
 # Trap to kill all background processes on exit

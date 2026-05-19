@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/shash/projects/weather-rtos/collectors/south_india/main.cpp" "CMakeFiles/south_india_collector.dir/collectors/south_india/main.cpp.o" "gcc" "CMakeFiles/south_india_collector.dir/collectors/south_india/main.cpp.o.d"
+  "/home/wolfe/Documents/weather-rtos/collectors/south_india/main.cpp" "CMakeFiles/south_india_collector.dir/collectors/south_india/main.cpp.o" "gcc" "CMakeFiles/south_india_collector.dir/collectors/south_india/main.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

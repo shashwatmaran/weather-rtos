@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/shash/projects/weather-rtos
+CXX_INCLUDES = -I/home/wolfe/Documents/weather-rtos
 
 CXX_FLAGS = -std=gnu++20
 

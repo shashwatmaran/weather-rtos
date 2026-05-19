@@ -1,7 +1,7 @@
 CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: \
- /home/shash/projects/weather-rtos/common/socket/TCPSocket.cpp \
+ /home/wolfe/Documents/weather-rtos/common/socket/TCPSocket.cpp \
  /usr/include/stdc-predef.h \
- /home/shash/projects/weather-rtos/common/socket/TCPSocket.hpp \
+ /home/wolfe/Documents/weather-rtos/common/socket/TCPSocket.hpp \
  /usr/include/c++/13/string /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \

@@ -1,5 +1,5 @@
 CMakeFiles/simulator.dir/simulator/main.cpp.o: \
- /home/shash/projects/weather-rtos/simulator/main.cpp \
+ /home/wolfe/Documents/weather-rtos/simulator/main.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/13/iostream \
  /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
