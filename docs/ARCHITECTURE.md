@@ -184,6 +184,26 @@ Useful environment variables:
 - `WEATHER_RTOS_HOST` controls the TCP host used by some components.
 - `LOGDIR` overrides the log directory.
 
+## Common Modules
+
+The `common/` tree is the shared runtime and transport layer for the whole repo. The architecture doc now covers the behavior of the major runtime paths, but these supporting modules are also part of the system design:
+
+- [common/models/WeatherPacket.hpp](common/models/WeatherPacket.hpp) defines the weather payload exchanged between collectors and downstream consumers.
+- [common/protocol/MessageEnvelope.hpp](common/protocol/MessageEnvelope.hpp) defines the canonical envelope, including identifiers, routing metadata, and serialization helpers.
+- [common/protocol/MessageTypes.hpp](common/protocol/MessageTypes.hpp) centralizes message type tags used by the protocol layer.
+- [common/publishing/BrokerPublisher.hpp](common/publishing/BrokerPublisher.hpp) exposes publishing behavior for broker-backed message delivery.
+- [common/aggregation/BrokerAggregator.hpp](common/aggregation/BrokerAggregator.hpp) contains reusable aggregation logic for routing and combining envelopes between tiers.
+- [common/gateway/RegionalGateway.hpp](common/gateway/RegionalGateway.hpp) encapsulates regional routing and gateway behavior for inter-process forwarding.
+- [common/utils/RuntimeConfig.hpp](common/utils/RuntimeConfig.hpp) provides runtime configuration lookup and host selection helpers.
+- [common/socket/TCPSocket.hpp](common/socket/TCPSocket.hpp) and [common/socket/TCPSocket.cpp](common/socket/TCPSocket.cpp) wrap the low-level TCP server/client socket operations used by subscribers and gateways.
+- [common/subscribing/IBrokerPublisher.hpp](common/subscribing/IBrokerPublisher.hpp) and [common/subscribing/IBrokerSubscriber.hpp](common/subscribing/IBrokerSubscriber.hpp) define the broker abstraction contracts.
+- [common/subscribing/InProcessBrokerPublisher.hpp](common/subscribing/InProcessBrokerPublisher.hpp) and [common/subscribing/InProcessBrokerSubscriber.hpp](common/subscribing/InProcessBrokerSubscriber.hpp) implement the in-memory topic queues used for local demos and tests.
+- [common/subscribing/TcpSubscriber.hpp](common/subscribing/TcpSubscriber.hpp) bridges TCP transport into either a pipeline or broker topic.
+- [common/pipeline/ValidationAggregationConsumerPipeline.hpp](common/pipeline/ValidationAggregationConsumerPipeline.hpp) performs validation, bookkeeping, and per-consumer logging.
+- [common/timescale/AsyncQueueWriter.hpp](common/timescale/AsyncQueueWriter.hpp) provides the bounded queue, batching, backpressure, and queue partitioning used before database writes.
+- [common/timescale/TimescaleBatchWriter.hpp](common/timescale/TimescaleBatchWriter.hpp) turns queued envelopes into SQL batches and manages DB/outbox flush behavior.
+- [common/timescale/TimescaleDbClient.hpp](common/timescale/TimescaleDbClient.hpp) is the database client layer used by the batch writer to talk to TimescaleDB.
+
 ## Where To Look
 
 - [collectors/regional/main.cpp](collectors/regional/main.cpp)
