@@ -2,7 +2,7 @@
 
 Overview:
 - **Purpose**: A modular system for collecting, aggregating, simulating, and storing weather data with TimescaleDB integration.
-- **Structure**: Small executables (collectors, aggregators, simulator, writer) reuse common protocol, publishing, and Timescale helpers found under `common/`.
+- **Structure**: A hierarchical pipeline is already in place: city collectors feed regional aggregators, regional outputs roll up into continent/global aggregators, and shared protocol/publishing/Timescale helpers live under `common/`.
 
 How components fit together:
 - **Collectors**: Produce weather messages from sensors or simulated sources and publish them to brokers.
@@ -16,14 +16,11 @@ Key files and directories
 - **`timescale_outbox.sql`**: SQL for an outbox/integration table related to TimescaleDB workflows.
 - **`timescale/schema.sql`**: Database schema and hypertable definitions used by the Timescale writer.
 
-- **`aggregator/`**: Region/strategy specific aggregation binaries.
-  - **`aggregator/asia/main.cpp`**: Asia region aggregator entrypoint.
-  - **`aggregator/india/main.cpp`**: India region aggregator entrypoint.
-  - **`aggregator/hierarchical/main.cpp`**: Aggregator implementing hierarchical aggregation.
+- **`aggregator/`**: Aggregation binaries for the hierarchical flow.
+  - **`aggregator/hierarchical/main.cpp`**: Primary topology-driven aggregator entrypoint used for regional, continent, and global tiers.
 
 - **`collectors/`**: Data collector binaries.
-  - **`collectors/regional/main.cpp`**: Regional collector implementation.
-  - **`collectors/south_india/main.cpp`**: South India specific collector.
+  - **`collectors/regional/main.cpp`**: Primary topology-driven collector used by the hierarchical demo.
 
 - **`simulator/main.cpp`**: Synthetic data generator for testing and load simulations.
 - **`timescale_writer/main.cpp`**: Standalone writer that batches and inserts data to TimescaleDB.
@@ -42,17 +39,17 @@ Key files and directories
 
 - **`configs/`**: JSON configuration and topology files.
   - **`configs/global_topology.json`**: Global node and routing topology.
-  - **`configs/south_india.json`**: Region-specific configuration used by the South India collector/aggregator.
 
 - **`docs/`**: Documentation.
   - **`docs/ARCHITECTURE.md`**: System architecture and component interactions.
   - **`docs/QUICKSTART.md`**: How to build and run locally.
   - **`docs/SCALING.md`**: Notes on scaling, partitioning, and performance tuning.
 
-- **`build/`**: Generated CMake build artifacts and compiled binaries — ignore for source changes (contains targets like `asia_aggregator`, `regional_collector`, `simulator`, `timescale_writer`).
+- **`build/`**: Generated CMake build artifacts and compiled binaries — ignore for source changes (contains targets like `regional_collector`, `hierarchical_aggregator`, `simulator`, `timescale_writer`).
 
 Runtime notes:
 - The system supports both in-process and TCP-based messaging using the publisher/subscriber abstractions.
 - Aggregators validate and reduce incoming `WeatherPacket` data, then either forward results or write to an outbox consumed by the `timescale_writer`.
+- The repository already contains the hierarchical architecture; you do not need to stitch together separate one-off collector/aggregator trees to get the main demo running.
 - `simulator` simplifies local testing by producing realistic traffic matching the `WeatherPacket` schema.
 

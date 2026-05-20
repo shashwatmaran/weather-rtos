@@ -3,14 +3,14 @@
 This document summarizes the functional components, core concepts, concurrency model, logging, and operational notes for the Weather RTOS repository.
 
 **Purpose**
-- Provide a clear mental model for how components communicate and run (collectors → aggregators → continent → global → timescale writer).
+- Provide a clear mental model for how components communicate and run in the existing hierarchy (collectors → regional aggregators → continent aggregators → global aggregator → timescale writer).
 - Explain threading, synchronization, and logging decisions so maintainers can safely modify or extend the system.
 
 **High-level components**
-- Collectors: read sensor/source data per city and publish messages into the system. See [collectors/regional/main.cpp](collectors/regional/main.cpp) and [collectors/south_india/main.cpp](collectors/south_india/main.cpp).
-- Regional Aggregators: ingest region-level events and forward/aggregate them. Implementations live under [aggregator/](aggregator/).
-- Continent Aggregators: aggregate regional outputs for a continent (launched via `hierarchical_aggregator` with continent argument).
-- Global Aggregator: receives continent aggregates and performs final consolidation (launched via `hierarchical_aggregator global_sink`).
+- Collectors: read sensor/source data per city and publish messages into the system. The primary path is [collectors/regional/main.cpp](collectors/regional/main.cpp).
+- Regional Aggregators: ingest region-level events and forward/aggregate them. The primary path is [aggregator/hierarchical/main.cpp](aggregator/hierarchical/main.cpp).
+- Continent Aggregators: aggregate regional outputs for a continent and forward them upward.
+- Global Aggregator: receives continent aggregates and performs final consolidation.
 - Timescale Writer: persists aggregated data into TimescaleDB. See [timescale_writer/main.cpp](timescale_writer/main.cpp) and [common/timescale/AsyncQueueWriter.hpp](common/timescale/AsyncQueueWriter.hpp).
 - In-process Broker: a lightweight publish/subscribe implementation used for process-local messaging. See [common/subscribing/InProcessBrokerSubscriber.hpp](common/subscribing/InProcessBrokerSubscriber.hpp) and related publisher interfaces.
 - TCP Gateway / Subscribers: optional network transport for inter-process message passing. See [common/gateway/RegionalGateway.hpp](common/gateway/RegionalGateway.hpp) and [common/subscribing/TcpSubscriber.hpp](common/subscribing/TcpSubscriber.hpp).
@@ -33,9 +33,9 @@ This document summarizes the functional components, core concepts, concurrency m
   2. Within a process, a small number of dedicated threads handle I/O versus processing.
 
 - Common patterns used across the codebase:
-  - Per-city poll threads (Collectors) — each city has a polling thread that samples/generates events and enqueues them. See [collectors/south_india/main.cpp](collectors/south_india/main.cpp).
+  - Per-city poll threads (Collectors) — each city has a polling thread that samples/generates events and enqueues them. See [collectors/regional/main.cpp](collectors/regional/main.cpp).
   - Sender thread (Collectors) — a dedicated thread dequeues and publishes messages (non-blocking submit pattern protected by `queueMutex`).
-  - TCP adapter thread(s) (Aggregators) — accept connections and spawn per-client receiver threads. See [aggregator/asia/main.cpp](aggregator/asia/main.cpp) and [common/gateway/RegionalGateway.hpp](common/gateway/RegionalGateway.hpp).
+  - TCP adapter thread(s) (Aggregators) — accept connections and spawn per-client receiver threads. See [aggregator/hierarchical/main.cpp](aggregator/hierarchical/main.cpp) and [common/gateway/RegionalGateway.hpp](common/gateway/RegionalGateway.hpp).
   - Broker consumer threads — the in-process broker subscriber runs a loop and hands messages to the pipeline. Implementations follow the `IBrokerSubscriber` interface (see [common/subscribing/IBrokerSubscriber.hpp](common/subscribing/IBrokerSubscriber.hpp)).
   - Timescale writer: subscriber thread that receives messages and a writer/main thread responsible for batching and flushing (see [timescale_writer/main.cpp](timescale_writer/main.cpp) and [common/timescale/AsyncQueueWriter.hpp](common/timescale/AsyncQueueWriter.hpp)).
 

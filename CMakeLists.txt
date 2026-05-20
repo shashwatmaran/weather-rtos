@@ -16,21 +16,6 @@ find_library(POSTGRESQL_LIBRARY pq
 add_library(socket common/socket/TCPSocket.cpp)
 target_include_directories(socket PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-# Collector: South India
-add_executable(south_india_collector collectors/south_india/main.cpp)
-target_include_directories(south_india_collector PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(south_india_collector socket CURL::libcurl)
-
-# Aggregator: India
-add_executable(india_aggregator aggregator/india/main.cpp)
-target_include_directories(india_aggregator PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(india_aggregator socket)
-
-# Aggregator: Asia
-add_executable(asia_aggregator aggregator/asia/main.cpp)
-target_include_directories(asia_aggregator PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(asia_aggregator socket)
-
 # Regional Collector (multi-city, topology-driven)
 add_executable(regional_collector collectors/regional/main.cpp)
 target_include_directories(regional_collector PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

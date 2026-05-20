@@ -38,6 +38,7 @@ Run a component individually
 ```bash
 ./build/hierarchical_aggregator asia_continent
 ```
+- The full demo uses the hierarchical chain already wired in [demo.sh](demo.sh), so you do not need to assemble separate region-by-region trees to confirm the architecture.
 
 Notes
 - If you don't have TimescaleDB, the `timescale_writer` will run but writes will fail; set `TIMESCALEDB_DSN` to a reachable DB to enable persistence.

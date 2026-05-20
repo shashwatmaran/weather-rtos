@@ -1,7 +1,4 @@
 /home/wolfe/Documents/weather-rtos/build/CMakeFiles/socket.dir
-/home/wolfe/Documents/weather-rtos/build/CMakeFiles/south_india_collector.dir
-/home/wolfe/Documents/weather-rtos/build/CMakeFiles/india_aggregator.dir
-/home/wolfe/Documents/weather-rtos/build/CMakeFiles/asia_aggregator.dir
 /home/wolfe/Documents/weather-rtos/build/CMakeFiles/regional_collector.dir
 /home/wolfe/Documents/weather-rtos/build/CMakeFiles/hierarchical_aggregator.dir
 /home/wolfe/Documents/weather-rtos/build/CMakeFiles/timescale_writer.dir

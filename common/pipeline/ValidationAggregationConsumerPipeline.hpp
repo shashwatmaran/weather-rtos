@@ -5,6 +5,7 @@
 #include <functional>
 #include <iomanip>
 #include <iostream>
+#include <cstdlib>
 #include <map>
 #include <mutex>
 #include <string>
@@ -69,7 +70,10 @@ private:
 
     void logPacket(const MessageEnvelope& envelope) {
         namespace fs = std::filesystem;
-        fs::path logDir = fs::path("logs");
+        fs::path logDir = "logs";
+        if (const char* logDirEnv = std::getenv("LOGDIR"); logDirEnv != nullptr && *logDirEnv != '\0') {
+            logDir = logDirEnv;
+        }
         std::error_code ec;
         fs::create_directories(logDir, ec);
 

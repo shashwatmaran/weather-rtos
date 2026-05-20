@@ -130,45 +130,6 @@ socket/fast:
 .PHONY : socket/fast
 
 #=============================================================================
-# Target rules for targets named south_india_collector
-
-# Build rule for target.
-south_india_collector: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 south_india_collector
-.PHONY : south_india_collector
-
-# fast build rule for target.
-south_india_collector/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/south_india_collector.dir/build.make CMakeFiles/south_india_collector.dir/build
-.PHONY : south_india_collector/fast
-
-#=============================================================================
-# Target rules for targets named india_aggregator
-
-# Build rule for target.
-india_aggregator: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 india_aggregator
-.PHONY : india_aggregator
-
-# fast build rule for target.
-india_aggregator/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/india_aggregator.dir/build.make CMakeFiles/india_aggregator.dir/build
-.PHONY : india_aggregator/fast
-
-#=============================================================================
-# Target rules for targets named asia_aggregator
-
-# Build rule for target.
-asia_aggregator: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 asia_aggregator
-.PHONY : asia_aggregator
-
-# fast build rule for target.
-asia_aggregator/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/asia_aggregator.dir/build.make CMakeFiles/asia_aggregator.dir/build
-.PHONY : asia_aggregator/fast
-
-#=============================================================================
 # Target rules for targets named regional_collector
 
 # Build rule for target.
@@ -220,30 +181,6 @@ simulator/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/simulator.dir/build.make CMakeFiles/simulator.dir/build
 .PHONY : simulator/fast
 
-aggregator/asia/main.o: aggregator/asia/main.cpp.o
-.PHONY : aggregator/asia/main.o
-
-# target to build an object file
-aggregator/asia/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/asia_aggregator.dir/build.make CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.o
-.PHONY : aggregator/asia/main.cpp.o
-
-aggregator/asia/main.i: aggregator/asia/main.cpp.i
-.PHONY : aggregator/asia/main.i
-
-# target to preprocess a source file
-aggregator/asia/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/asia_aggregator.dir/build.make CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.i
-.PHONY : aggregator/asia/main.cpp.i
-
-aggregator/asia/main.s: aggregator/asia/main.cpp.s
-.PHONY : aggregator/asia/main.s
-
-# target to generate assembly for a file
-aggregator/asia/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/asia_aggregator.dir/build.make CMakeFiles/asia_aggregator.dir/aggregator/asia/main.cpp.s
-.PHONY : aggregator/asia/main.cpp.s
-
 aggregator/hierarchical/main.o: aggregator/hierarchical/main.cpp.o
 .PHONY : aggregator/hierarchical/main.o
 
@@ -268,30 +205,6 @@ aggregator/hierarchical/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/hierarchical_aggregator.dir/build.make CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.s
 .PHONY : aggregator/hierarchical/main.cpp.s
 
-aggregator/india/main.o: aggregator/india/main.cpp.o
-.PHONY : aggregator/india/main.o
-
-# target to build an object file
-aggregator/india/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/india_aggregator.dir/build.make CMakeFiles/india_aggregator.dir/aggregator/india/main.cpp.o
-.PHONY : aggregator/india/main.cpp.o
-
-aggregator/india/main.i: aggregator/india/main.cpp.i
-.PHONY : aggregator/india/main.i
-
-# target to preprocess a source file
-aggregator/india/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/india_aggregator.dir/build.make CMakeFiles/india_aggregator.dir/aggregator/india/main.cpp.i
-.PHONY : aggregator/india/main.cpp.i
-
-aggregator/india/main.s: aggregator/india/main.cpp.s
-.PHONY : aggregator/india/main.s
-
-# target to generate assembly for a file
-aggregator/india/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/india_aggregator.dir/build.make CMakeFiles/india_aggregator.dir/aggregator/india/main.cpp.s
-.PHONY : aggregator/india/main.cpp.s
-
 collectors/regional/main.o: collectors/regional/main.cpp.o
 .PHONY : collectors/regional/main.o
 
@@ -315,30 +228,6 @@ collectors/regional/main.s: collectors/regional/main.cpp.s
 collectors/regional/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/regional_collector.dir/build.make CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.s
 .PHONY : collectors/regional/main.cpp.s
-
-collectors/south_india/main.o: collectors/south_india/main.cpp.o
-.PHONY : collectors/south_india/main.o
-
-# target to build an object file
-collectors/south_india/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/south_india_collector.dir/build.make CMakeFiles/south_india_collector.dir/collectors/south_india/main.cpp.o
-.PHONY : collectors/south_india/main.cpp.o
-
-collectors/south_india/main.i: collectors/south_india/main.cpp.i
-.PHONY : collectors/south_india/main.i
-
-# target to preprocess a source file
-collectors/south_india/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/south_india_collector.dir/build.make CMakeFiles/south_india_collector.dir/collectors/south_india/main.cpp.i
-.PHONY : collectors/south_india/main.cpp.i
-
-collectors/south_india/main.s: collectors/south_india/main.cpp.s
-.PHONY : collectors/south_india/main.s
-
-# target to generate assembly for a file
-collectors/south_india/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/south_india_collector.dir/build.make CMakeFiles/south_india_collector.dir/collectors/south_india/main.cpp.s
-.PHONY : collectors/south_india/main.cpp.s
 
 common/socket/TCPSocket.o: common/socket/TCPSocket.cpp.o
 .PHONY : common/socket/TCPSocket.o
@@ -420,29 +309,17 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... asia_aggregator"
 	@echo "... hierarchical_aggregator"
-	@echo "... india_aggregator"
 	@echo "... regional_collector"
 	@echo "... simulator"
 	@echo "... socket"
-	@echo "... south_india_collector"
 	@echo "... timescale_writer"
-	@echo "... aggregator/asia/main.o"
-	@echo "... aggregator/asia/main.i"
-	@echo "... aggregator/asia/main.s"
 	@echo "... aggregator/hierarchical/main.o"
 	@echo "... aggregator/hierarchical/main.i"
 	@echo "... aggregator/hierarchical/main.s"
-	@echo "... aggregator/india/main.o"
-	@echo "... aggregator/india/main.i"
-	@echo "... aggregator/india/main.s"
 	@echo "... collectors/regional/main.o"
 	@echo "... collectors/regional/main.i"
 	@echo "... collectors/regional/main.s"
-	@echo "... collectors/south_india/main.o"
-	@echo "... collectors/south_india/main.i"
-	@echo "... collectors/south_india/main.s"
 	@echo "... common/socket/TCPSocket.o"
 	@echo "... common/socket/TCPSocket.i"
 	@echo "... common/socket/TCPSocket.s"

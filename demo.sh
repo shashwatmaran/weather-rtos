@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Global Weather RTOS Demo - Tree Topology
-# This script launches a hierarchical weather collection system with:
-#   - 4 regional collectors (South India, North India, Europe, Americas)
-#   - 3 regional aggregators (Asia, Europe, Americas)  
-#   - 3 continent aggregators (Asia, Europe, Americas)
+# Global Weather RTOS Demo - Hierarchical Topology
+# This script launches the hierarchical weather collection system with:
+#   - city collectors grouped into regions
+#   - regional aggregators
+#   - continent aggregators
 #   - 1 global aggregator
 #
 # Uses in-process broker for message passing, so no external Kafka/NATS needed.
@@ -24,19 +24,19 @@ if [ ! -d build ]; then
 fi
 
 echo "=========================================="
-echo "Global Weather RTOS - Tree Topology Demo"
+echo "Global Weather RTOS - Hierarchical Topology Demo"
 echo "=========================================="
 echo ""
 echo "Topology:"
-echo "  Cities (Collectors)"
-echo "    ├─ South India: Bangalore, Hyderabad"
-echo "    ├─ North India: Delhi, Mumbai"
-echo "    ├─ Europe: Paris, London"
-echo "    └─ Americas: New York, Los Angeles"
+echo "  Cities (Collectors) -> Regions"
+echo "    ├─ south_india"
+echo "    ├─ north_india"
+echo "    ├─ europe"
+echo "    └─ americas"
 echo ""
 echo "  ↓"
 echo "  Regional Aggregators"
-echo "    ├─ Asia Regional (consumes south_india_events, north_india_events)"
+echo "    ├─ asia_regional"
 echo "    ├─ Europe Regional (consumes europe_events)"
 echo "    └─ Americas Regional (consumes americas_events)"
 echo ""
@@ -60,6 +60,7 @@ echo ""
 # Create a repository-local logs directory (can be overridden via LOGDIR env)
 LOGDIR="${LOGDIR:-$(pwd)/logs}"
 mkdir -p "$LOGDIR"
+export LOGDIR
 
 # Trap to kill all background processes on exit
 trap 'echo "Shutting down all processes..."; kill $(jobs -p) 2>/dev/null || true' EXIT INT TERM
