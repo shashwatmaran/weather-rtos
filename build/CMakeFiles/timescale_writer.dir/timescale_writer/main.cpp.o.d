@@ -254,6 +254,8 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: \
  /usr/include/c++/13/bits/this_thread_sleep.h \
  /usr/include/x86_64-linux-gnu/sys/time.h /usr/include/semaphore.h \
  /usr/include/x86_64-linux-gnu/bits/semaphore.h \
+ /usr/include/x86_64-linux-gnu/sys/eventfd.h \
+ /usr/include/x86_64-linux-gnu/bits/eventfd.h \
  /usr/include/nlohmann/json.hpp /usr/include/c++/13/algorithm \
  /usr/include/c++/13/bits/ranges_algo.h \
  /usr/include/c++/13/pstl/glue_algorithm_defs.h \
@@ -355,9 +357,10 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: \
  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
  /home/wolfe/Documents/weather-rtos/timescale_writer/../common/pipeline/ValidationAggregationConsumerPipeline.hpp \
  /usr/include/c++/13/mutex /usr/include/c++/13/bits/unique_lock.h \
- /home/wolfe/Documents/weather-rtos/timescale_writer/../common/pipeline/../protocol/MessageEnvelope.hpp \
- /home/wolfe/Documents/weather-rtos/timescale_writer/../common/pipeline/../protocol/../models/WeatherPacket.hpp \
- /home/wolfe/Documents/weather-rtos/timescale_writer/../common/pipeline/../protocol/MessageTypes.hpp \
+ /home/wolfe/Documents/weather-rtos/timescale_writer/../common/pipeline/../analytics/MapAnalytics.hpp \
+ /home/wolfe/Documents/weather-rtos/timescale_writer/../common/pipeline/../analytics/../models/WeatherPacket.hpp \
+ /home/wolfe/Documents/weather-rtos/timescale_writer/../common/pipeline/../analytics/../protocol/MessageEnvelope.hpp \
+ /home/wolfe/Documents/weather-rtos/timescale_writer/../common/pipeline/../analytics/../protocol/MessageTypes.hpp \
  /home/wolfe/Documents/weather-rtos/timescale_writer/../common/socket/TCPSocket.hpp \
  /home/wolfe/Documents/weather-rtos/timescale_writer/../common/subscribing/TcpSubscriber.hpp \
  /home/wolfe/Documents/weather-rtos/timescale_writer/../common/subscribing/../socket/TCPSocket.hpp \
@@ -372,4 +375,23 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: \
  /usr/include/c++/13/bits/unordered_set.h \
  /home/wolfe/Documents/weather-rtos/timescale_writer/../common/timescale/TimescaleDbClient.hpp \
  /usr/include/x86_64-linux-gnu/sys/wait.h \
- /usr/include/x86_64-linux-gnu/bits/types/idtype_t.h
+ /usr/include/x86_64-linux-gnu/bits/types/idtype_t.h \
+ /home/wolfe/Documents/weather-rtos/timescale_writer/../common/timescale/../metrics/Metrics.hpp \
+ /usr/include/arpa/inet.h /usr/include/netinet/in.h \
+ /usr/include/x86_64-linux-gnu/sys/socket.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
+ /usr/include/x86_64-linux-gnu/bits/socket.h \
+ /usr/include/x86_64-linux-gnu/bits/socket_type.h \
+ /usr/include/x86_64-linux-gnu/bits/sockaddr.h \
+ /usr/include/x86_64-linux-gnu/asm/socket.h \
+ /usr/include/asm-generic/socket.h /usr/include/linux/posix_types.h \
+ /usr/include/linux/stddef.h \
+ /usr/include/x86_64-linux-gnu/asm/posix_types.h \
+ /usr/include/x86_64-linux-gnu/asm/posix_types_64.h \
+ /usr/include/asm-generic/posix_types.h \
+ /usr/include/x86_64-linux-gnu/asm/bitsperlong.h \
+ /usr/include/asm-generic/bitsperlong.h \
+ /usr/include/x86_64-linux-gnu/asm/sockios.h \
+ /usr/include/asm-generic/sockios.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h \
+ /usr/include/x86_64-linux-gnu/bits/in.h

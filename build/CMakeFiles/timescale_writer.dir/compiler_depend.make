@@ -5,17 +5,24 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
   /home/wolfe/Documents/weather-rtos/common/models/WeatherPacket.hpp \
   /home/wolfe/Documents/weather-rtos/common/protocol/MessageEnvelope.hpp \
   /home/wolfe/Documents/weather-rtos/common/protocol/MessageTypes.hpp \
+  /home/wolfe/Documents/weather-rtos/common/analytics/MapAnalytics.hpp \
   /home/wolfe/Documents/weather-rtos/common/pipeline/ValidationAggregationConsumerPipeline.hpp \
   /home/wolfe/Documents/weather-rtos/common/socket/TCPSocket.hpp \
   /home/wolfe/Documents/weather-rtos/common/socket/TCPSocket.hpp \
   /home/wolfe/Documents/weather-rtos/common/subscribing/IBrokerPublisher.hpp \
   /home/wolfe/Documents/weather-rtos/common/subscribing/TcpSubscriber.hpp \
+  /home/wolfe/Documents/weather-rtos/common/metrics/Metrics.hpp \
   /home/wolfe/Documents/weather-rtos/common/timescale/AsyncQueueWriter.hpp \
   /home/wolfe/Documents/weather-rtos/common/timescale/TimescaleBatchWriter.hpp \
   /home/wolfe/Documents/weather-rtos/common/timescale/TimescaleDbClient.hpp \
   /usr/include/alloca.h \
+  /usr/include/arpa/inet.h \
+  /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/posix_types.h \
+  /usr/include/asm-generic/socket.h \
+  /usr/include/asm-generic/sockios.h \
   /usr/include/assert.h \
   /usr/include/c++/13/algorithm \
   /usr/include/c++/13/any \
@@ -259,8 +266,11 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
   /usr/include/linux/close_range.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
+  /usr/include/linux/posix_types.h \
+  /usr/include/linux/stddef.h \
   /usr/include/locale.h \
   /usr/include/math.h \
+  /usr/include/netinet/in.h \
   /usr/include/nlohmann/adl_serializer.hpp \
   /usr/include/nlohmann/byte_container_with_subtype.hpp \
   /usr/include/nlohmann/detail/abi_macros.hpp \
@@ -321,7 +331,12 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
   /usr/include/unistd.h \
   /usr/include/wchar.h \
   /usr/include/wctype.h \
+  /usr/include/x86_64-linux-gnu/asm/bitsperlong.h \
   /usr/include/x86_64-linux-gnu/asm/errno.h \
+  /usr/include/x86_64-linux-gnu/asm/posix_types.h \
+  /usr/include/x86_64-linux-gnu/asm/posix_types_64.h \
+  /usr/include/x86_64-linux-gnu/asm/socket.h \
+  /usr/include/x86_64-linux-gnu/asm/sockios.h \
   /usr/include/x86_64-linux-gnu/asm/unistd.h \
   /usr/include/x86_64-linux-gnu/asm/unistd_64.h \
   /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
@@ -332,6 +347,7 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
   /usr/include/x86_64-linux-gnu/bits/endianness.h \
   /usr/include/x86_64-linux-gnu/bits/environments.h \
   /usr/include/x86_64-linux-gnu/bits/errno.h \
+  /usr/include/x86_64-linux-gnu/bits/eventfd.h \
   /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
   /usr/include/x86_64-linux-gnu/bits/floatn.h \
   /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
@@ -339,6 +355,7 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
   /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
   /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
   /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
+  /usr/include/x86_64-linux-gnu/bits/in.h \
   /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
@@ -371,6 +388,9 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
   /usr/include/x86_64-linux-gnu/bits/sigstack.h \
   /usr/include/x86_64-linux-gnu/bits/sigstksz.h \
   /usr/include/x86_64-linux-gnu/bits/sigthread.h \
+  /usr/include/x86_64-linux-gnu/bits/sockaddr.h \
+  /usr/include/x86_64-linux-gnu/bits/socket.h \
+  /usr/include/x86_64-linux-gnu/bits/socket_type.h \
   /usr/include/x86_64-linux-gnu/bits/ss_flags.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
@@ -409,7 +429,9 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
   /usr/include/x86_64-linux-gnu/bits/types/stack_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
@@ -446,8 +468,10 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/sys/eventfd.h \
   /usr/include/x86_64-linux-gnu/sys/select.h \
   /usr/include/x86_64-linux-gnu/sys/single_threaded.h \
+  /usr/include/x86_64-linux-gnu/sys/socket.h \
   /usr/include/x86_64-linux-gnu/sys/syscall.h \
   /usr/include/x86_64-linux-gnu/sys/time.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
@@ -465,6 +489,8 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 /usr/include/x86_64-linux-gnu/sys/ucontext.h:
 
 /usr/include/x86_64-linux-gnu/sys/single_threaded.h:
+
+/usr/include/x86_64-linux-gnu/sys/eventfd.h:
 
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
@@ -508,9 +534,9 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/x86_64-linux-gnu/bits/types/stack_t.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
-
 /usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h:
 
@@ -554,6 +580,8 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/x86_64-linux-gnu/bits/ss_flags.h:
 
+/usr/include/x86_64-linux-gnu/bits/sockaddr.h:
+
 /usr/include/x86_64-linux-gnu/bits/sigthread.h:
 
 /usr/include/x86_64-linux-gnu/bits/sigstksz.h:
@@ -578,8 +606,6 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
 
-/usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h:
-
 /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h:
 
 /usr/include/x86_64-linux-gnu/bits/math-vector.h:
@@ -593,6 +619,10 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
 
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
+
+/usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h:
+
+/usr/include/x86_64-linux-gnu/bits/in.h:
 
 /usr/include/x86_64-linux-gnu/bits/getopt_core.h:
 
@@ -608,11 +638,15 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/x86_64-linux-gnu/bits/endian.h:
 
-/usr/include/x86_64-linux-gnu/bits/cpu-set.h:
-
 /usr/include/x86_64-linux-gnu/bits/byteswap.h:
 
 /usr/include/x86_64-linux-gnu/asm/unistd_64.h:
+
+/usr/include/x86_64-linux-gnu/bits/cpu-set.h:
+
+/usr/include/x86_64-linux-gnu/asm/posix_types_64.h:
+
+/usr/include/x86_64-linux-gnu/asm/bitsperlong.h:
 
 /usr/include/unistd.h:
 
@@ -648,8 +682,6 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/nlohmann/detail/meta/type_traits.hpp:
 
-/usr/include/nlohmann/detail/meta/std_fs.hpp:
-
 /usr/include/x86_64-linux-gnu/bits/syscall.h:
 
 /usr/include/nlohmann/detail/meta/is_sax.hpp:
@@ -661,8 +693,6 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 /usr/include/nlohmann/detail/macro_unscope.hpp:
 
 /usr/include/nlohmann/detail/macro_scope.hpp:
-
-/usr/include/nlohmann/detail/json_pointer.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
@@ -684,6 +714,8 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/nlohmann/detail/input/binary_reader.hpp:
 
+/usr/include/x86_64-linux-gnu/bits/socket.h:
+
 /usr/include/nlohmann/detail/hash.hpp:
 
 /usr/include/nlohmann/detail/exceptions.hpp:
@@ -692,31 +724,29 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/nlohmann/byte_container_with_subtype.hpp:
 
+/usr/include/netinet/in.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
+
+/usr/include/x86_64-linux-gnu/asm/sockios.h:
 
 /usr/include/math.h:
 
 /usr/include/locale.h:
 
-/usr/include/c++/13/bits/stl_numeric.h:
+/usr/include/linux/stddef.h:
 
-/usr/include/stdio.h:
+/usr/include/linux/close_range.h:
 
-/usr/include/c++/13/bits/stl_iterator_base_types.h:
+/usr/include/libintl.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
-
-/usr/include/asm-generic/errno.h:
+/usr/include/features-time64.h:
 
 /usr/include/nlohmann/detail/meta/call_std/end.hpp:
 
 /usr/include/nlohmann/detail/input/json_sax.hpp:
 
 /usr/include/c++/13/bits/functexcept.h:
-
-/usr/include/c++/13/bits/stl_construct.h:
-
-/usr/include/c++/13/bits/std_mutex.h:
 
 /usr/include/c++/13/bits/stl_bvector.h:
 
@@ -748,7 +778,13 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/c++/13/bits/sstream.tcc:
 
+/usr/include/x86_64-linux-gnu/asm/posix_types.h:
+
 /usr/include/c++/13/cwctype:
+
+/usr/include/linux/limits.h:
+
+/usr/include/c++/13/ratio:
 
 /usr/include/c++/13/bits/shared_ptr.h:
 
@@ -761,6 +797,8 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 /usr/include/c++/13/bits/quoted_string.h:
 
 /usr/include/c++/13/bits/unordered_map.h:
+
+/usr/include/linux/posix_types.h:
 
 /usr/include/c++/13/bits/ptr_traits.h:
 
@@ -787,6 +825,8 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 /usr/include/c++/13/tr1/beta_function.tcc:
 
 /usr/include/c++/13/bits/move.h:
+
+/usr/include/asm-generic/sockios.h:
 
 /usr/include/c++/13/bits/memoryfwd.h:
 
@@ -838,19 +878,239 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/c++/13/bits/hashtable.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/sigval_t.h:
-
-/usr/include/c++/13/bits/stl_map.h:
-
-/usr/include/c++/13/locale:
-
 /usr/include/c++/13/bits/gslice.h:
 
 /usr/include/c++/13/bits/refwrap.h:
 
-/usr/include/x86_64-linux-gnu/sys/syscall.h:
+/usr/include/c++/13/bits/functional_hash.h:
 
-/usr/include/c++/13/clocale:
+/usr/include/c++/13/bits/indirect_array.h:
+
+/usr/include/c++/13/bits/valarray_array.tcc:
+
+/usr/include/errno.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+/usr/include/c++/13/bits/node_handle.h:
+
+/usr/include/c++/13/forward_list:
+
+/usr/include/nlohmann/json_fwd.hpp:
+
+/usr/include/c++/13/bits/fstream.tcc:
+
+/usr/include/c++/13/bits/fs_path.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
+
+/usr/include/nlohmann/detail/json_ref.hpp:
+
+/usr/include/c++/13/bits/charconv.h:
+
+/usr/include/x86_64-linux-gnu/bits/signum-arch.h:
+
+/usr/include/x86_64-linux-gnu/bits/errno.h:
+
+/usr/include/c++/13/bits/stl_pair.h:
+
+/usr/include/nlohmann/detail/input/parser.hpp:
+
+/usr/include/c++/13/cstdio:
+
+/usr/include/x86_64-linux-gnu/bits/confname.h:
+
+/usr/include/c++/13/bits/locale_facets_nonio.h:
+
+/usr/include/c++/13/bits/fs_dir.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h:
+
+/usr/include/c++/13/sstream:
+
+/usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
+
+/usr/include/c++/13/bits/enable_special_members.h:
+
+/usr/include/x86_64-linux-gnu/bits/uio_lim.h:
+
+/usr/include/c++/13/bits/stream_iterator.h:
+
+/usr/include/c++/13/bits/stl_construct.h:
+
+/home/wolfe/Documents/weather-rtos/common/timescale/TimescaleBatchWriter.hpp:
+
+/usr/include/c++/13/bits/valarray_array.h:
+
+/usr/include/c++/13/bits/atomic_lockfree_defines.h:
+
+/usr/include/c++/13/bits/basic_string.tcc:
+
+/usr/include/c++/13/algorithm:
+
+/home/wolfe/Documents/weather-rtos/common/subscribing/IBrokerPublisher.hpp:
+
+/usr/include/c++/13/bits/hash_bytes.h:
+
+/usr/include/c++/13/array:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_base.h:
+
+/usr/include/c++/13/any:
+
+/usr/include/c++/13/bits/ranges_util.h:
+
+/usr/include/asm-generic/posix_types.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigcontext.h:
+
+/usr/include/c++/13/tr1/special_function_util.h:
+
+/home/wolfe/Documents/weather-rtos/timescale_writer/main.cpp:
+
+/usr/include/wchar.h:
+
+/usr/include/c++/13/bits/shared_ptr_base.h:
+
+/usr/include/nlohmann/detail/conversions/from_json.hpp:
+
+/usr/include/c++/13/bits/basic_ios.h:
+
+/usr/include/x86_64-linux-gnu/bits/endianness.h:
+
+/usr/include/c++/13/bits/chrono.h:
+
+/home/wolfe/Documents/weather-rtos/common/timescale/TimescaleDbClient.hpp:
+
+/usr/include/alloca.h:
+
+/usr/include/features.h:
+
+/usr/include/c++/13/bits/atomic_wait.h:
+
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
+
+/usr/include/c++/13/bits/exception_defines.h:
+
+/usr/include/c++/13/bits/ranges_algobase.h:
+
+/usr/include/c++/13/bits/stl_deque.h:
+
+/home/wolfe/Documents/weather-rtos/common/protocol/MessageEnvelope.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
+
+/usr/include/asm-generic/errno.h:
+
+/usr/include/x86_64-linux-gnu/sys/wait.h:
+
+/usr/include/asm-generic/errno-base.h:
+
+/usr/include/c++/13/bits/stl_iterator_base_funcs.h:
+
+/usr/include/nlohmann/detail/meta/std_fs.hpp:
+
+/usr/include/arpa/inet.h:
+
+/usr/include/c++/13/bits/atomic_base.h:
+
+/usr/include/nlohmann/detail/conversions/to_chars.hpp:
+
+/usr/include/c++/13/bits/uses_allocator_args.h:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h:
+
+/usr/include/c++/13/bits/forward_list.tcc:
+
+/usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h:
+
+/usr/include/c++/13/bits/unordered_set.h:
+
+/usr/include/c++/13/backward/auto_ptr.h:
+
+/usr/include/assert.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
+
+/usr/include/asm-generic/bitsperlong.h:
+
+/usr/include/c++/13/cctype:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
+
+/usr/include/c++/13/ext/atomicity.h:
+
+/usr/include/c++/13/tr1/gamma.tcc:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
+
+/home/wolfe/Documents/weather-rtos/common/timescale/AsyncQueueWriter.hpp:
+
+/usr/include/c++/13/bits/stl_tempbuf.h:
+
+/usr/include/c++/13/bits/streambuf.tcc:
+
+/usr/include/c++/13/bits/specfun.h:
+
+/usr/include/nlohmann/detail/meta/void_t.hpp:
+
+/usr/include/c++/13/atomic:
+
+/usr/include/c++/13/bits/basic_string.h:
+
+/usr/include/c++/13/tr1/poly_laguerre.tcc:
+
+/usr/include/c++/13/bits/chrono_io.h:
+
+/usr/include/c++/13/bits/std_mutex.h:
+
+/home/wolfe/Documents/weather-rtos/common/metrics/Metrics.hpp:
+
+/usr/include/c++/13/concepts:
+
+/usr/include/c++/13/memory:
+
+/usr/include/c++/13/bits/stl_algobase.h:
+
+/home/wolfe/Documents/weather-rtos/common/subscribing/TcpSubscriber.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/idtype_t.h:
+
+/home/wolfe/Documents/weather-rtos/common/pipeline/ValidationAggregationConsumerPipeline.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
+
+/usr/include/c++/13/bits/string_view.tcc:
+
+/usr/include/c++/13/bits/locale_conv.h:
+
+/usr/include/c++/13/bits/istream.tcc:
+
+/usr/include/c++/13/bits/exception_ptr.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
+
+/usr/include/c++/13/bits/stl_multimap.h:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h:
+
+/usr/include/x86_64-linux-gnu/bits/signal_ext.h:
+
+/usr/include/c++/13/bits/std_function.h:
+
+/usr/include/c++/13/bits/char_traits.h:
+
+/usr/include/c++/13/bits/hashtable_policy.h:
+
+/usr/include/x86_64-linux-gnu/bits/long-double.h:
+
+/usr/include/c++/13/bits/algorithmfwd.h:
+
+/usr/include/c++/13/bits/alloc_traits.h:
+
+/usr/include/c++/13/bits/concept_check.h:
 
 /usr/include/c++/13/bits/predefined_ops.h:
 
@@ -872,185 +1132,15 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/c++/13/semaphore:
 
-/usr/include/x86_64-linux-gnu/bits/long-double.h:
-
-/usr/include/c++/13/bits/algorithmfwd.h:
-
-/usr/include/c++/13/bits/alloc_traits.h:
-
-/usr/include/c++/13/bits/concept_check.h:
-
-/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
-
-/usr/include/c++/13/bits/node_handle.h:
-
-/usr/include/c++/13/forward_list:
-
-/home/wolfe/Documents/weather-rtos/timescale_writer/main.cpp:
-
-/usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
-
-/usr/include/c++/13/bits/enable_special_members.h:
-
-/usr/include/x86_64-linux-gnu/bits/uio_lim.h:
-
-/usr/include/c++/13/bits/stream_iterator.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
-
-/usr/include/c++/13/bits/stl_multimap.h:
-
-/usr/include/c++/13/bits/locale_conv.h:
-
-/usr/include/c++/13/bits/istream.tcc:
-
-/usr/include/c++/13/bits/exception_ptr.h:
-
-/usr/include/c++/13/bits/valarray_array.h:
-
-/usr/include/c++/13/bits/atomic_lockfree_defines.h:
-
-/home/wolfe/Documents/weather-rtos/common/timescale/TimescaleBatchWriter.hpp:
+/usr/include/c++/13/bit:
 
 /usr/include/c++/13/bits/allocated_ptr.h:
 
-/usr/include/c++/13/bit:
+/usr/include/x86_64-linux-gnu/sys/syscall.h:
 
-/usr/include/c++/13/bits/basic_string.tcc:
+/usr/include/c++/13/clocale:
 
-/usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
-
-/usr/include/nlohmann/detail/json_ref.hpp:
-
-/usr/include/c++/13/bits/charconv.h:
-
-/usr/include/x86_64-linux-gnu/bits/signum-arch.h:
-
-/usr/include/x86_64-linux-gnu/bits/errno.h:
-
-/usr/include/c++/13/bits/stl_pair.h:
-
-/usr/include/c++/13/bits/fs_path.h:
-
-/usr/include/nlohmann/detail/input/parser.hpp:
-
-/usr/include/c++/13/cstdio:
-
-/home/wolfe/Documents/weather-rtos/common/subscribing/IBrokerPublisher.hpp:
-
-/usr/include/c++/13/bits/hash_bytes.h:
-
-/usr/include/c++/13/array:
-
-/usr/include/x86_64-linux-gnu/sys/wait.h:
-
-/usr/include/c++/13/bits/stl_iterator_base_funcs.h:
-
-/usr/include/asm-generic/errno-base.h:
-
-/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_base.h:
-
-/usr/include/c++/13/any:
-
-/usr/include/c++/13/bits/ranges_util.h:
-
-/usr/include/c++/13/algorithm:
-
-/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
-
-/usr/include/c++/13/bits/exception_defines.h:
-
-/usr/include/c++/13/bits/ranges_algobase.h:
-
-/usr/include/x86_64-linux-gnu/bits/confname.h:
-
-/usr/include/c++/13/bits/locale_facets_nonio.h:
-
-/usr/include/c++/13/backward/auto_ptr.h:
-
-/usr/include/assert.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
-
-/home/wolfe/Documents/weather-rtos/common/timescale/AsyncQueueWriter.hpp:
-
-/usr/include/c++/13/bits/stl_tempbuf.h:
-
-/usr/include/c++/13/bits/streambuf.tcc:
-
-/usr/include/c++/13/bits/specfun.h:
-
-/usr/include/nlohmann/detail/meta/void_t.hpp:
-
-/usr/include/c++/13/atomic:
-
-/usr/include/c++/13/bits/basic_string.h:
-
-/usr/include/c++/13/tr1/poly_laguerre.tcc:
-
-/usr/include/libintl.h:
-
-/usr/include/c++/13/bits/chrono_io.h:
-
-/usr/include/c++/13/bits/stl_deque.h:
-
-/home/wolfe/Documents/weather-rtos/common/protocol/MessageEnvelope.hpp:
-
-/usr/include/c++/13/bits/stl_uninitialized.h:
-
-/usr/include/c++/13/bits/new_allocator.h:
-
-/usr/include/c++/13/bits/atomic_base.h:
-
-/usr/include/nlohmann/detail/conversions/to_chars.hpp:
-
-/usr/include/c++/13/bits/uses_allocator_args.h:
-
-/usr/include/c++/13/bits/indirect_array.h:
-
-/usr/include/c++/13/bits/functional_hash.h:
-
-/usr/include/c++/13/bits/valarray_array.tcc:
-
-/usr/include/errno.h:
-
-/usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h:
-
-/usr/include/c++/13/bits/forward_list.tcc:
-
-/usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h:
-
-/usr/include/c++/13/bits/unordered_set.h:
-
-/usr/include/c++/13/bits/stl_algobase.h:
-
-/home/wolfe/Documents/weather-rtos/common/subscribing/TcpSubscriber.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/idtype_t.h:
-
-/home/wolfe/Documents/weather-rtos/common/pipeline/ValidationAggregationConsumerPipeline.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
-
-/usr/include/c++/13/bits/string_view.tcc:
-
-/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h:
-
-/usr/include/x86_64-linux-gnu/bits/signal_ext.h:
-
-/usr/include/c++/13/bits/std_function.h:
-
-/usr/include/c++/13/bits/char_traits.h:
-
-/usr/include/c++/13/bits/hashtable_policy.h:
-
-/usr/include/x86_64-linux-gnu/bits/endianness.h:
-
-/usr/include/c++/13/bits/chrono.h:
-
-/home/wolfe/Documents/weather-rtos/common/timescale/TimescaleDbClient.hpp:
+/usr/include/asm-generic/socket.h:
 
 /usr/include/nlohmann/detail/output/serializer.hpp:
 
@@ -1058,21 +1148,11 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/c++/13/tr1/exp_integral.tcc:
 
-/usr/include/wchar.h:
-
-/usr/include/c++/13/bits/shared_ptr_base.h:
-
-/usr/include/nlohmann/detail/conversions/from_json.hpp:
-
-/usr/include/c++/13/bits/basic_ios.h:
-
-/usr/include/alloca.h:
-
-/usr/include/nlohmann/json_fwd.hpp:
-
-/usr/include/c++/13/bits/fstream.tcc:
-
 /usr/include/c++/13/bits/deque.tcc:
+
+/usr/include/nlohmann/detail/json_pointer.hpp:
+
+/home/wolfe/Documents/weather-rtos/common/analytics/MapAnalytics.hpp:
 
 /usr/include/c++/13/cassert:
 
@@ -1081,6 +1161,8 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp:
 
 /usr/include/c++/13/bits/cxxabi_forced.h:
+
+/usr/include/x86_64-linux-gnu/bits/socket_type.h:
 
 /usr/include/c++/13/bits/localefwd.h:
 
@@ -1100,11 +1182,21 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/c++/13/bits/forward_list.h:
 
-/usr/include/c++/13/bits/fs_dir.h:
+/usr/include/stdio.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h:
+/usr/include/c++/13/bits/stl_iterator_base_types.h:
 
-/usr/include/c++/13/sstream:
+/usr/include/x86_64-linux-gnu/bits/types/sigval_t.h:
+
+/usr/include/c++/13/bits/stl_map.h:
+
+/usr/include/c++/13/bits/new_allocator.h:
+
+/usr/include/c++/13/bits/stl_uninitialized.h:
+
+/usr/include/c++/13/locale:
+
+/usr/include/c++/13/bits/stl_numeric.h:
 
 /usr/include/nlohmann/detail/json_custom_base_class.hpp:
 
@@ -1121,6 +1213,10 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 /usr/include/c++/13/bits/codecvt.h:
 
 /usr/include/c++/13/bits/stl_tree.h:
+
+/usr/include/x86_64-linux-gnu/sys/socket.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h:
 
 /usr/include/c++/13/bits/stl_vector.h:
 
@@ -1168,19 +1264,11 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/c++/13/variant:
 
-/usr/include/c++/13/cctype:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
-
-/usr/include/c++/13/ext/atomicity.h:
-
-/usr/include/c++/13/tr1/gamma.tcc:
-
 /usr/include/c++/13/cerrno:
 
-/usr/include/c++/13/backward/binders.h:
-
 /home/wolfe/Documents/weather-rtos/common/models/WeatherPacket.hpp:
+
+/usr/include/c++/13/backward/binders.h:
 
 /usr/include/c++/13/charconv:
 
@@ -1208,10 +1296,6 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/c++/13/filesystem:
 
-/usr/include/c++/13/concepts:
-
-/usr/include/c++/13/memory:
-
 /usr/include/c++/13/csignal:
 
 /usr/include/nlohmann/detail/input/lexer.hpp:
@@ -1219,6 +1303,8 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 /usr/include/c++/13/cstring:
 
 /usr/include/x86_64-linux-gnu/sys/select.h:
+
+/usr/include/x86_64-linux-gnu/asm/socket.h:
 
 /usr/include/c++/13/cwchar:
 
@@ -1262,9 +1348,9 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/c++/13/functional:
 
-/usr/include/c++/13/bits/std_thread.h:
-
 /usr/include/limits.h:
+
+/usr/include/c++/13/bits/std_thread.h:
 
 /usr/include/c++/13/tr1/bessel_function.tcc:
 
@@ -1300,6 +1386,8 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/c++/13/pstl/pstl_config.h:
 
+/usr/include/x86_64-linux-gnu/bits/eventfd.h:
+
 /usr/include/c++/13/ranges:
 
 /usr/include/c++/13/bits/shared_ptr_atomic.h:
@@ -1328,8 +1416,6 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/c++/13/string_view:
 
-/usr/include/features-time64.h:
-
 /usr/include/c++/13/tr1/ell_integral.tcc:
 
 /usr/include/c++/13/bits/range_access.h:
@@ -1344,10 +1430,6 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 
 /usr/include/c++/13/tr1/modified_bessel_func.tcc:
 
-/usr/include/x86_64-linux-gnu/bits/sigcontext.h:
-
-/usr/include/c++/13/tr1/special_function_util.h:
-
 /usr/include/c++/13/bits/nested_exception.h:
 
 /usr/include/c++/13/tuple:
@@ -1361,13 +1443,3 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o: /home/wolfe/Documen
 /usr/include/c++/13/version:
 
 /usr/include/ctype.h:
-
-/usr/include/c++/13/bits/atomic_wait.h:
-
-/usr/include/features.h:
-
-/usr/include/linux/close_range.h:
-
-/usr/include/c++/13/ratio:
-
-/usr/include/linux/limits.h:

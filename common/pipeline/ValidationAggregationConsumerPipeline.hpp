@@ -3,6 +3,7 @@
 #include <fstream>
 #include <filesystem>
 #include <functional>
+#include <cmath>
 #include <iomanip>
 #include <iostream>
 #include <cstdlib>
@@ -10,6 +11,7 @@
 #include <mutex>
 #include <string>
 
+#include "../analytics/MapAnalytics.hpp"
 #include "../protocol/MessageEnvelope.hpp"
 
 class ValidationAggregationConsumerPipeline {
@@ -34,6 +36,7 @@ public:
         }
 
         recordPacket(*packet);
+        logMapAnalytics(envelope, *packet);
         logPacket(envelope);
         printSummary(*packet);
 
@@ -45,6 +48,10 @@ public:
     }
 
 private:
+    static bool hasMeasurement(double value) {
+        return !std::isnan(value);
+    }
+
     bool validatePacket(const WeatherPacket& packet) const {
         if (packet.continent.empty() || packet.country.empty() || packet.region.empty() || packet.city.empty()) {
             return false;
@@ -56,6 +63,21 @@ private:
             return false;
         }
         if (packet.wind_speed < 0 || packet.wind_speed > 200) {
+            return false;
+        }
+        if (hasMeasurement(packet.latitude) && (packet.latitude < -90.0 || packet.latitude > 90.0)) {
+            return false;
+        }
+        if (hasMeasurement(packet.longitude) && (packet.longitude < -180.0 || packet.longitude > 180.0)) {
+            return false;
+        }
+        if (hasMeasurement(packet.visibility_km) && (packet.visibility_km < 0.0 || packet.visibility_km > 200.0)) {
+            return false;
+        }
+        if (hasMeasurement(packet.precipitation_mm) && (packet.precipitation_mm < 0.0 || packet.precipitation_mm > 1000.0)) {
+            return false;
+        }
+        if (hasMeasurement(packet.pressure_hpa) && (packet.pressure_hpa < 800.0 || packet.pressure_hpa > 1200.0)) {
             return false;
         }
         return true;
@@ -84,6 +106,46 @@ private:
         }
 
         logFile << envelope_to_json(envelope).dump() << std::endl;
+    }
+
+    void logMapAnalytics(const MessageEnvelope& envelope, const WeatherPacket& packet) {
+        namespace fs = std::filesystem;
+        fs::path logDir = "logs";
+        if (const char* logDirEnv = std::getenv("LOGDIR"); logDirEnv != nullptr && *logDirEnv != '\0') {
+            logDir = logDirEnv;
+        }
+        std::error_code ec;
+        fs::create_directories(logDir, ec);
+
+        fs::path logPath = logDir / (consumerName_ + "_map_analytics.log");
+        std::ofstream logFile(logPath, std::ios::app);
+        if (!logFile.is_open()) {
+            return;
+        }
+
+        const auto tileHazard = make_map_tile_hazard_event(envelope, packet);
+        const auto routeRisk = make_map_route_risk_event(envelope, packet);
+        json analyticsEnvelope = {
+            {"schema_version", envelope.schema_version + 1},
+            {"message_id", envelope.message_id + ".map"},
+            {"source", envelope.source},
+            {"route", envelope.route},
+            {"message_type", MessageTypes::MapTileHazard},
+            {"created_at", envelope.created_at},
+            {"payload", to_json(tileHazard)}
+        };
+        json routeEnvelope = {
+            {"schema_version", envelope.schema_version + 1},
+            {"message_id", envelope.message_id + ".route"},
+            {"source", envelope.source},
+            {"route", envelope.route},
+            {"message_type", MessageTypes::MapRouteRisk},
+            {"created_at", envelope.created_at},
+            {"payload", to_json(routeRisk)}
+        };
+
+        logFile << analyticsEnvelope.dump() << std::endl;
+        logFile << routeEnvelope.dump() << std::endl;
     }
 
     void printSummary(const WeatherPacket& packet) {

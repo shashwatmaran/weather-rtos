@@ -3,6 +3,7 @@
 #include <arpa/inet.h>
 #include <cstring>
 #include <thread>
+#include <chrono>
 
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>    
@@ -29,7 +30,7 @@ std::string fetchWeather() {
         std::string url =
             "https://api.open-meteo.com/v1/forecast?"
             "latitude=13.0827&longitude=80.2707&"
-            "current=temperature_2m,relative_humidity_2m,wind_speed_10m";
+            "current=temperature_2m,relative_humidity_2m,wind_speed_10m,cloud_cover,visibility,precipitation,pressure_msl";
 
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
@@ -67,18 +68,36 @@ int main() {
         std::string apiResponse = fetchWeather();
 
         auto data = json::parse(apiResponse);
+        const auto& current = data["current"];
 
         json packet;
 
         packet["city"] = "Chennai";
-        packet["temperature"] =
-            data["current"]["temperature_2m"];
+        packet["latitude"] = 13.0827;
+        packet["longitude"] = 80.2707;
+        packet["temperature"] = current.value("temperature_2m", 0.0);
 
-        packet["humidity"] =
-            data["current"]["relative_humidity_2m"];
+        packet["humidity"] = current.value("relative_humidity_2m", 0.0);
 
-        packet["wind_speed"] =
-            data["current"]["wind_speed_10m"];
+        packet["wind_speed"] = current.value("wind_speed_10m", 0.0);
+        if (current.contains("cloud_cover")) {
+            packet["cloud_cover_percent"] = current["cloud_cover"];
+        }
+        if (current.contains("visibility")) {
+            packet["visibility_km"] = current["visibility"].get<double>() / 1000.0;
+        }
+        if (current.contains("precipitation")) {
+            packet["precipitation_mm"] = current["precipitation"];
+        }
+        if (current.contains("pressure_msl")) {
+            packet["pressure_hpa"] = current["pressure_msl"];
+        }
+        packet["continent"] = "Asia";
+        packet["country"] = "India";
+        packet["region"] = "south_india";
+        packet["station_id"] = "chennai-station";
+        packet["timestamp"] = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::system_clock::now().time_since_epoch()).count();
 
         std::string message = packet.dump();
 

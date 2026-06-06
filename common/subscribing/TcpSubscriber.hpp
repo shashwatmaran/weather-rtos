@@ -5,6 +5,8 @@
 #include <memory>
 #include <atomic>
 #include <iostream>
+#include <sys/eventfd.h>
+#include <unistd.h>
 
 #include "../socket/TCPSocket.hpp"
 #include "../pipeline/ValidationAggregationConsumerPipeline.hpp"
@@ -34,7 +36,7 @@ public:
         : listenPort_(listenPort), pipeline_(nullptr), name_(std::move(name)), brokerPublisher_(std::move(brokerPublisher)), topic_(std::move(topic)) {}
 
     // Runs the subscriber loop on the current thread until running becomes false.
-    void run(std::atomic<bool>& running) {
+    void run(std::atomic<bool>& running, int shutdownEventFd = -1) {
         TCPSocket serverSocket;
 
         if (!serverSocket.createServer(listenPort_)) {
@@ -45,9 +47,12 @@ public:
         std::vector<std::thread> receiveThreads;
 
         while (running.load()) {
-            int clientFd = serverSocket.acceptClient(1000);
+            int clientFd = serverSocket.acceptClient(1000, shutdownEventFd);
             if (clientFd == 0) {
                 continue;
+            }
+            if (clientFd == -2) {
+                break;
             }
             if (clientFd < 0) {
                 if (!running.load()) {
@@ -57,15 +62,18 @@ public:
                 continue;
             }
 
-            receiveThreads.emplace_back([this, clientFd, &running]() {
+            receiveThreads.emplace_back([this, clientFd, &running, shutdownEventFd]() {
                 TCPSocket clientSocket;
                 clientSocket.setSocketFd(clientFd);
                 std::string message;
 
                 while (running.load()) {
-                    int status = clientSocket.receiveMessage(message, 1000);
+                    int status = clientSocket.receiveMessage(message, 1000, shutdownEventFd);
                     if (status == 0) {
                         continue;
+                    }
+                    if (status == -2) {
+                        break;
                     }
                     if (status < 0) {
                         break;

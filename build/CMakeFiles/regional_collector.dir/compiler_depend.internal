@@ -9,6 +9,7 @@ CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.o
  /home/wolfe/Documents/weather-rtos/common/socket/TCPSocket.hpp
  /home/wolfe/Documents/weather-rtos/common/subscribing/IBrokerPublisher.hpp
  /home/wolfe/Documents/weather-rtos/common/publishing/BrokerPublisher.hpp
+ /home/wolfe/Documents/weather-rtos/common/utils/CitySampling.hpp
  /home/wolfe/Documents/weather-rtos/common/utils/RuntimeConfig.hpp
  /usr/include/alloca.h
  /usr/include/asm-generic/bitsperlong.h

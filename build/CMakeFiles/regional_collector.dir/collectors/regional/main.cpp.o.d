@@ -383,6 +383,7 @@ CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.o: \
  /usr/include/nlohmann/detail/macro_unscope.hpp \
  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
  /home/wolfe/Documents/weather-rtos/collectors/regional/../../common/models/WeatherPacket.hpp \
+ /home/wolfe/Documents/weather-rtos/collectors/regional/../../common/utils/CitySampling.hpp \
  /home/wolfe/Documents/weather-rtos/collectors/regional/../../common/utils/RuntimeConfig.hpp \
  /home/wolfe/Documents/weather-rtos/collectors/regional/../../common/protocol/MessageEnvelope.hpp \
  /home/wolfe/Documents/weather-rtos/collectors/regional/../../common/protocol/MessageTypes.hpp \

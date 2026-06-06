@@ -53,5 +53,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/regional_collector.dir/DependInfo.cmake"
   "CMakeFiles/hierarchical_aggregator.dir/DependInfo.cmake"
   "CMakeFiles/timescale_writer.dir/DependInfo.cmake"
+  "CMakeFiles/map_query_api.dir/DependInfo.cmake"
   "CMakeFiles/simulator.dir/DependInfo.cmake"
   )

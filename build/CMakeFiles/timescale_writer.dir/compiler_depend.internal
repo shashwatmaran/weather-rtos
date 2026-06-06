@@ -6,17 +6,24 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o
  /home/wolfe/Documents/weather-rtos/common/models/WeatherPacket.hpp
  /home/wolfe/Documents/weather-rtos/common/protocol/MessageEnvelope.hpp
  /home/wolfe/Documents/weather-rtos/common/protocol/MessageTypes.hpp
+ /home/wolfe/Documents/weather-rtos/common/analytics/MapAnalytics.hpp
  /home/wolfe/Documents/weather-rtos/common/pipeline/ValidationAggregationConsumerPipeline.hpp
  /home/wolfe/Documents/weather-rtos/common/socket/TCPSocket.hpp
  /home/wolfe/Documents/weather-rtos/common/socket/TCPSocket.hpp
  /home/wolfe/Documents/weather-rtos/common/subscribing/IBrokerPublisher.hpp
  /home/wolfe/Documents/weather-rtos/common/subscribing/TcpSubscriber.hpp
+ /home/wolfe/Documents/weather-rtos/common/metrics/Metrics.hpp
  /home/wolfe/Documents/weather-rtos/common/timescale/AsyncQueueWriter.hpp
  /home/wolfe/Documents/weather-rtos/common/timescale/TimescaleBatchWriter.hpp
  /home/wolfe/Documents/weather-rtos/common/timescale/TimescaleDbClient.hpp
  /usr/include/alloca.h
+ /usr/include/arpa/inet.h
+ /usr/include/asm-generic/bitsperlong.h
  /usr/include/asm-generic/errno-base.h
  /usr/include/asm-generic/errno.h
+ /usr/include/asm-generic/posix_types.h
+ /usr/include/asm-generic/socket.h
+ /usr/include/asm-generic/sockios.h
  /usr/include/assert.h
  /usr/include/c++/13/algorithm
  /usr/include/c++/13/any
@@ -260,8 +267,11 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o
  /usr/include/linux/close_range.h
  /usr/include/linux/errno.h
  /usr/include/linux/limits.h
+ /usr/include/linux/posix_types.h
+ /usr/include/linux/stddef.h
  /usr/include/locale.h
  /usr/include/math.h
+ /usr/include/netinet/in.h
  /usr/include/nlohmann/adl_serializer.hpp
  /usr/include/nlohmann/byte_container_with_subtype.hpp
  /usr/include/nlohmann/detail/abi_macros.hpp
@@ -322,7 +332,12 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o
  /usr/include/unistd.h
  /usr/include/wchar.h
  /usr/include/wctype.h
+ /usr/include/x86_64-linux-gnu/asm/bitsperlong.h
  /usr/include/x86_64-linux-gnu/asm/errno.h
+ /usr/include/x86_64-linux-gnu/asm/posix_types.h
+ /usr/include/x86_64-linux-gnu/asm/posix_types_64.h
+ /usr/include/x86_64-linux-gnu/asm/socket.h
+ /usr/include/x86_64-linux-gnu/asm/sockios.h
  /usr/include/x86_64-linux-gnu/asm/unistd.h
  /usr/include/x86_64-linux-gnu/asm/unistd_64.h
  /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h
@@ -333,6 +348,7 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o
  /usr/include/x86_64-linux-gnu/bits/endianness.h
  /usr/include/x86_64-linux-gnu/bits/environments.h
  /usr/include/x86_64-linux-gnu/bits/errno.h
+ /usr/include/x86_64-linux-gnu/bits/eventfd.h
  /usr/include/x86_64-linux-gnu/bits/floatn-common.h
  /usr/include/x86_64-linux-gnu/bits/floatn.h
  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h
@@ -340,6 +356,7 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o
  /usr/include/x86_64-linux-gnu/bits/fp-logb.h
  /usr/include/x86_64-linux-gnu/bits/getopt_core.h
  /usr/include/x86_64-linux-gnu/bits/getopt_posix.h
+ /usr/include/x86_64-linux-gnu/bits/in.h
  /usr/include/x86_64-linux-gnu/bits/iscanonical.h
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h
  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h
@@ -372,6 +389,9 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o
  /usr/include/x86_64-linux-gnu/bits/sigstack.h
  /usr/include/x86_64-linux-gnu/bits/sigstksz.h
  /usr/include/x86_64-linux-gnu/bits/sigthread.h
+ /usr/include/x86_64-linux-gnu/bits/sockaddr.h
+ /usr/include/x86_64-linux-gnu/bits/socket.h
+ /usr/include/x86_64-linux-gnu/bits/socket_type.h
  /usr/include/x86_64-linux-gnu/bits/ss_flags.h
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h
  /usr/include/x86_64-linux-gnu/bits/stdint-least.h
@@ -410,7 +430,9 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o
  /usr/include/x86_64-linux-gnu/bits/types/stack_t.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h
  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h
+ /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h
+ /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h
  /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h
@@ -447,8 +469,10 @@ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
  /usr/include/x86_64-linux-gnu/gnu/stubs.h
  /usr/include/x86_64-linux-gnu/sys/cdefs.h
+ /usr/include/x86_64-linux-gnu/sys/eventfd.h
  /usr/include/x86_64-linux-gnu/sys/select.h
  /usr/include/x86_64-linux-gnu/sys/single_threaded.h
+ /usr/include/x86_64-linux-gnu/sys/socket.h
  /usr/include/x86_64-linux-gnu/sys/syscall.h
  /usr/include/x86_64-linux-gnu/sys/time.h
  /usr/include/x86_64-linux-gnu/sys/types.h

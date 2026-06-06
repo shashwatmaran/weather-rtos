@@ -354,9 +354,10 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o: \
  /home/wolfe/Documents/weather-rtos/aggregator/hierarchical/../../common/aggregation/BrokerAggregator.hpp \
  /home/wolfe/Documents/weather-rtos/aggregator/hierarchical/../../common/aggregation/../pipeline/ValidationAggregationConsumerPipeline.hpp \
  /usr/include/c++/13/mutex /usr/include/c++/13/bits/unique_lock.h \
- /home/wolfe/Documents/weather-rtos/aggregator/hierarchical/../../common/aggregation/../pipeline/../protocol/MessageEnvelope.hpp \
- /home/wolfe/Documents/weather-rtos/aggregator/hierarchical/../../common/aggregation/../pipeline/../protocol/../models/WeatherPacket.hpp \
- /home/wolfe/Documents/weather-rtos/aggregator/hierarchical/../../common/aggregation/../pipeline/../protocol/MessageTypes.hpp \
+ /home/wolfe/Documents/weather-rtos/aggregator/hierarchical/../../common/aggregation/../pipeline/../analytics/MapAnalytics.hpp \
+ /home/wolfe/Documents/weather-rtos/aggregator/hierarchical/../../common/aggregation/../pipeline/../analytics/../models/WeatherPacket.hpp \
+ /home/wolfe/Documents/weather-rtos/aggregator/hierarchical/../../common/aggregation/../pipeline/../analytics/../protocol/MessageEnvelope.hpp \
+ /home/wolfe/Documents/weather-rtos/aggregator/hierarchical/../../common/aggregation/../pipeline/../analytics/../protocol/MessageTypes.hpp \
  /home/wolfe/Documents/weather-rtos/aggregator/hierarchical/../../common/aggregation/../subscribing/IBrokerSubscriber.hpp \
  /home/wolfe/Documents/weather-rtos/aggregator/hierarchical/../../common/aggregation/../subscribing/IBrokerPublisher.hpp \
  /home/wolfe/Documents/weather-rtos/aggregator/hierarchical/../../common/publishing/BrokerPublisher.hpp \
@@ -366,5 +367,7 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o: \
  /usr/include/c++/13/deque /usr/include/c++/13/bits/stl_deque.h \
  /usr/include/c++/13/bits/deque.tcc /usr/include/c++/13/bits/stl_queue.h \
  /home/wolfe/Documents/weather-rtos/aggregator/hierarchical/../../common/subscribing/TcpSubscriber.hpp \
+ /usr/include/x86_64-linux-gnu/sys/eventfd.h \
+ /usr/include/x86_64-linux-gnu/bits/eventfd.h \
  /home/wolfe/Documents/weather-rtos/aggregator/hierarchical/../../common/subscribing/../socket/TCPSocket.hpp \
  /home/wolfe/Documents/weather-rtos/aggregator/hierarchical/../../common/utils/RuntimeConfig.hpp

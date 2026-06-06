@@ -1,0 +1,83 @@
+{
+  "topology": {
+    "description": "Phase 1 logistics map topology: Collector-per-region -> Tile aggregation -> Route risk -> Writer",
+    "regions": [
+      {
+        "region_id": "blr_metro",
+        "country": "India",
+        "continent": "Asia",
+        "collector_name": "collector_blr_metro",
+        "send_to_port": 20101,
+        "stations": [
+          {"name": "blr_airport", "latitude": 13.1986, "longitude": 77.7066},
+          {"name": "blr_city_center", "latitude": 12.9716, "longitude": 77.5946}
+        ]
+      },
+      {
+        "region_id": "hyd_metro",
+        "country": "India",
+        "continent": "Asia",
+        "collector_name": "collector_hyd_metro",
+        "send_to_port": 20101,
+        "stations": [
+          {"name": "hyd_airport", "latitude": 17.2403, "longitude": 78.4294},
+          {"name": "hyd_city_center", "latitude": 17.3850, "longitude": 78.4867}
+        ]
+      },
+      {
+        "region_id": "europe_west_corridor",
+        "country": "EU",
+        "continent": "Europe",
+        "collector_name": "collector_europe_west_corridor",
+        "send_to_port": 20102,
+        "stations": [
+          {"name": "paris_hub", "latitude": 48.8566, "longitude": 2.3522},
+          {"name": "london_hub", "latitude": 51.5074, "longitude": -0.1278}
+        ]
+      }
+    ],
+    "hierarchy": {
+      "collectors_output_topic": "collector.region.{region_id}.events",
+      "tile_aggregators": [
+        {
+          "name": "tile_agg_asia",
+          "consumes_from": [
+            "collector.region.blr_metro.events",
+            "collector.region.hyd_metro.events"
+          ],
+          "publishes_to": "agg.tile.asia.events",
+          "listen_port": 20101,
+          "forward_to_port": 21101,
+          "tier": "tile"
+        },
+        {
+          "name": "tile_agg_europe",
+          "consumes_from": [
+            "collector.region.europe_west_corridor.events"
+          ],
+          "publishes_to": "agg.tile.europe.events",
+          "listen_port": 20102,
+          "forward_to_port": 21102,
+          "tier": "tile"
+        }
+      ],
+      "route_risk_aggregator": {
+        "name": "route_risk_global",
+        "consumes_from": [
+          "agg.tile.asia.events",
+          "agg.tile.europe.events"
+        ],
+        "publishes_to": "agg.route.global.events",
+        "listen_port": 21101,
+        "forward_to_port": 22101,
+        "tier": "route"
+      },
+      "timescale_writer": {
+        "name": "timescale_writer_map",
+        "consumes_from": ["agg.route.global.events"],
+        "listen_port": 22101,
+        "tier": "writer"
+      }
+    }
+  }
+}

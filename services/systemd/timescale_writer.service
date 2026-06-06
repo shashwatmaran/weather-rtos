@@ -1,0 +1,16 @@
+[Unit]
+Description=Weather RTOS Timescale Writer
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/wolfe/Documents/weather-rtos
+ExecStart=/home/wolfe/Documents/weather-rtos/build/timescale_writer
+Restart=on-failure
+RestartSec=2
+Environment=WEATHER_RTOS_HOST=127.0.0.1
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

@@ -8,6 +8,7 @@ CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.o: /home/wolfe/Do
   /home/wolfe/Documents/weather-rtos/common/socket/TCPSocket.hpp \
   /home/wolfe/Documents/weather-rtos/common/subscribing/IBrokerPublisher.hpp \
   /home/wolfe/Documents/weather-rtos/common/publishing/BrokerPublisher.hpp \
+  /home/wolfe/Documents/weather-rtos/common/utils/CitySampling.hpp \
   /home/wolfe/Documents/weather-rtos/common/utils/RuntimeConfig.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
@@ -738,6 +739,8 @@ CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.o: /home/wolfe/Do
 
 /usr/include/locale.h:
 
+/usr/include/linux/stddef.h:
+
 /usr/include/c++/13/bits/stl_numeric.h:
 
 /usr/include/stdio.h:
@@ -852,8 +855,6 @@ CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.o: /home/wolfe/Do
 
 /usr/include/c++/13/pstl/execution_defs.h:
 
-/usr/include/linux/stddef.h:
-
 /usr/include/c++/13/bits/locale_facets_nonio.tcc:
 
 /usr/include/c++/13/bits/stl_heap.h:
@@ -898,6 +899,12 @@ CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.o: /home/wolfe/Do
 
 /usr/include/errno.h:
 
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+/usr/include/c++/13/bits/node_handle.h:
+
+/usr/include/c++/13/forward_list:
+
 /usr/include/c++/13/bits/predefined_ops.h:
 
 /usr/include/c++/13/bits/ranges_cmp.h:
@@ -930,22 +937,6 @@ CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.o: /home/wolfe/Do
 
 /usr/include/c++/13/bits/concept_check.h:
 
-/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
-
-/usr/include/c++/13/bits/node_handle.h:
-
-/usr/include/c++/13/forward_list:
-
-/usr/include/c++/13/bits/stl_construct.h:
-
-/usr/include/c++/13/bits/std_mutex.h:
-
-/usr/include/asm-generic/posix_types.h:
-
-/usr/include/x86_64-linux-gnu/bits/sigcontext.h:
-
-/usr/include/c++/13/tr1/special_function_util.h:
-
 /usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
 
 /usr/include/c++/13/bits/enable_special_members.h:
@@ -953,6 +944,10 @@ CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.o: /home/wolfe/Do
 /usr/include/x86_64-linux-gnu/bits/uio_lim.h:
 
 /usr/include/c++/13/bits/stream_iterator.h:
+
+/usr/include/c++/13/bits/std_mutex.h:
+
+/usr/include/c++/13/bits/stl_construct.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h:
 
@@ -978,13 +973,13 @@ CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.o: /home/wolfe/Do
 
 /usr/include/c++/13/bits/charconv.h:
 
+/usr/include/c++/13/bits/fs_path.h:
+
 /usr/include/x86_64-linux-gnu/bits/signum-arch.h:
 
 /usr/include/x86_64-linux-gnu/bits/errno.h:
 
 /usr/include/c++/13/bits/stl_pair.h:
-
-/usr/include/c++/13/bits/fs_path.h:
 
 /usr/include/nlohmann/detail/input/parser.hpp:
 
@@ -995,6 +990,28 @@ CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.o: /home/wolfe/Do
 /usr/include/nlohmann/json_fwd.hpp:
 
 /usr/include/c++/13/bits/fstream.tcc:
+
+/home/wolfe/Documents/weather-rtos/common/subscribing/IBrokerPublisher.hpp:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h:
+
+/home/wolfe/Documents/weather-rtos/collectors/regional/main.cpp:
+
+/usr/include/c++/13/bits/hash_bytes.h:
+
+/usr/include/c++/13/array:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_base.h:
+
+/usr/include/c++/13/any:
+
+/usr/include/c++/13/bits/ranges_util.h:
+
+/usr/include/asm-generic/posix_types.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigcontext.h:
+
+/usr/include/c++/13/tr1/special_function_util.h:
 
 /usr/include/x86_64-linux-gnu/bits/endianness.h:
 
@@ -1008,27 +1025,17 @@ CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.o: /home/wolfe/Do
 
 /usr/include/c++/13/clocale:
 
-/usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h:
-
-/home/wolfe/Documents/weather-rtos/collectors/regional/main.cpp:
-
-/home/wolfe/Documents/weather-rtos/common/subscribing/IBrokerPublisher.hpp:
-
 /usr/include/c++/13/bits/ranges_algobase.h:
 
 /usr/include/x86_64-linux-gnu/bits/confname.h:
 
 /usr/include/c++/13/bits/locale_facets_nonio.h:
 
-/usr/include/c++/13/bits/hash_bytes.h:
+/usr/include/nlohmann/detail/output/serializer.hpp:
 
-/usr/include/c++/13/array:
+/usr/include/c++/13/bits/atomic_timed_wait.h:
 
-/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_base.h:
-
-/usr/include/c++/13/bits/ranges_util.h:
-
-/usr/include/c++/13/any:
+/usr/include/c++/13/tr1/exp_integral.tcc:
 
 /usr/include/alloca.h:
 
@@ -1095,12 +1102,6 @@ CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.o: /home/wolfe/Do
 /home/wolfe/Documents/weather-rtos/common/protocol/MessageEnvelope.hpp:
 
 /usr/include/asm-generic/socket.h:
-
-/usr/include/nlohmann/detail/output/serializer.hpp:
-
-/usr/include/c++/13/bits/atomic_timed_wait.h:
-
-/usr/include/c++/13/tr1/exp_integral.tcc:
 
 /usr/include/c++/13/bits/streambuf.tcc:
 
@@ -1320,9 +1321,9 @@ CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.o: /home/wolfe/Do
 
 /usr/include/c++/13/bits/std_thread.h:
 
-/usr/include/c++/13/tr1/bessel_function.tcc:
-
 /usr/include/limits.h:
+
+/usr/include/c++/13/tr1/bessel_function.tcc:
 
 /usr/include/c++/13/initializer_list:
 
@@ -1369,6 +1370,8 @@ CMakeFiles/regional_collector.dir/collectors/regional/main.cpp.o: /home/wolfe/Do
 /usr/include/c++/13/span:
 
 /usr/include/c++/13/stdexcept:
+
+/home/wolfe/Documents/weather-rtos/common/utils/CitySampling.hpp:
 
 /usr/include/c++/13/stop_token:
 

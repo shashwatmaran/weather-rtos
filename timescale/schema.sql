@@ -9,9 +9,18 @@ CREATE TABLE IF NOT EXISTS weather_observations_raw (
     country TEXT NOT NULL,
     region TEXT NOT NULL,
     city TEXT NOT NULL,
+    latitude DOUBLE PRECISION,
+    longitude DOUBLE PRECISION,
     temperature DOUBLE PRECISION NOT NULL,
     humidity DOUBLE PRECISION NOT NULL,
     wind_speed DOUBLE PRECISION NOT NULL,
+    visibility_km DOUBLE PRECISION,
+    precipitation_mm DOUBLE PRECISION,
+    pressure_hpa DOUBLE PRECISION,
+    cloud_cover_percent DOUBLE PRECISION,
+    station_id TEXT,
+    ingest_layer TEXT,
+    sample_point TEXT,
     payload_json JSONB NOT NULL,
     PRIMARY KEY (message_id)
 );

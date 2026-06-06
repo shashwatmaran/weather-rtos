@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Weather RTOS Map Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">W</div>
+          <div>
+            <h1>Weather RTOS</h1>
+            <p>Map console</p>
+          </div>
+        </div>
+
+        <section class="panel">
+          <label for="apiBase">API base URL</label>
+          <input id="apiBase" type="url" value="http://127.0.0.1:8091" />
+        </section>
+
+        <section class="panel">
+          <label for="layerSelect">Layer</label>
+          <select id="layerSelect">
+            <option value="hazard">Hazard</option>
+            <option value="wind">Wind</option>
+            <option value="pressure">Pressure</option>
+            <option value="visibility">Visibility</option>
+            <option value="cloud">Cloud</option>
+            <option value="precipitation">Precipitation</option>
+          </select>
+        </section>
+
+        <section class="panel">
+          <label for="bboxInput">Bounding box</label>
+          <input id="bboxInput" type="text" value="72,12,79,18" />
+          <small>Format: minLon,minLat,maxLon,maxLat</small>
+        </section>
+
+        <section class="panel">
+          <label for="timeSlider">Time slice</label>
+          <input id="timeSlider" type="range" min="0" max="23" value="12" step="1" />
+          <div class="time-row">
+            <span id="timeLabel">Today 12:00</span>
+            <button id="resetTime" class="secondary small-btn" type="button">Now</button>
+          </div>
+          <small>Feeds the `at` query parameter for tile refreshes.</small>
+        </section>
+
+        <section class="panel">
+          <label for="routeIdInput">Route ID</label>
+          <input id="routeIdInput" type="text" value="route.blr_metro" />
+        </section>
+
+        <section class="panel">
+          <label for="segmentIdsInput">Segment IDs</label>
+          <input id="segmentIdsInput" type="text" value="blr_airport_segment,blr_city_center_segment" />
+          <small>Comma-separated</small>
+        </section>
+
+        <div class="actions">
+          <button id="refreshTiles">Refresh tiles</button>
+          <button id="refreshRoute" class="secondary">Refresh route risk</button>
+        </div>
+
+        <section class="panel stats">
+          <div>
+            <span>Tiles</span>
+            <strong id="tileCount">0</strong>
+          </div>
+          <div>
+            <span>Route hazard</span>
+            <strong id="routeHazard">0.0</strong>
+          </div>
+          <div>
+            <span>ETA delta</span>
+            <strong id="etaDelta">0.0 min</strong>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Region summary</h2>
+          <div class="summary-grid">
+            <div><span>Avg hazard</span><strong id="summaryHazard">0.0</strong></div>
+            <div><span>Layer mean</span><strong id="summaryLayer">0.0</strong></div>
+            <div><span>Avg temp</span><strong id="summaryTemp">0.0</strong></div>
+            <div><span>Avg humidity</span><strong id="summaryHumidity">0.0</strong></div>
+            <div><span>Avg wind</span><strong id="summaryWind">0.0</strong></div>
+            <div><span>Avg pressure</span><strong id="summaryPressure">n/a</strong></div>
+            <div><span>Cloud cover</span><strong id="summaryCloud">n/a</strong></div>
+            <div><span>Visibility</span><strong id="summaryVisibility">n/a</strong></div>
+            <div><span>Precip max</span><strong id="summaryPrecipitation">n/a</strong></div>
+            <div><span>Data source</span><strong id="summarySource">n/a</strong></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Map layers</h2>
+          <div class="legend-grid">
+            <span><i class="low"></i> 0–34</span>
+            <span><i class="med"></i> 35–59</span>
+            <span><i class="high"></i> 60–79</span>
+            <span><i class="extreme"></i> 80–100</span>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Route segments</h2>
+          <div id="segmentList" class="segment-list"></div>
+        </section>
+      </aside>
+
+      <main class="map-wrap">
+        <div id="map"></div>
+        <div class="legend">
+          <span><i class="low"></i> Low</span>
+          <span><i class="med"></i> Medium</span>
+          <span><i class="high"></i> High</span>
+          <span><i class="extreme"></i> Extreme</span>
+        </div>
+        <div class="heat-legend">
+          <span>Raster intensity</span>
+          <div class="heat-legend-bar"></div>
+          <div class="heat-legend-labels">
+            <span>cool</span>
+            <span>warm</span>
+            <span>hot</span>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

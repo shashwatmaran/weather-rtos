@@ -1,5 +1,29 @@
 **Weather RTOS — Project Summary**
 
+## Map Console
+
+Phase 1 now includes a browser UI for weather overlays and route risk.
+
+Run the API:
+
+```bash
+cd /home/wolfe/Documents/weather-rtos/build
+./map_query_api 8091
+```
+
+Run the UI:
+
+```bash
+cd /home/wolfe/Documents/weather-rtos/apps/map_console
+python3 -m http.server 5173
+```
+
+Open:
+
+```text
+http://127.0.0.1:5173
+```
+
 Overview:
 - **Purpose**: A modular system for collecting, aggregating, simulating, and storing weather data with TimescaleDB integration.
 - **Structure**: A hierarchical pipeline is already in place: city collectors feed regional aggregators, regional outputs roll up into continent/global aggregators, and shared protocol/publishing/Timescale helpers live under `common/`.

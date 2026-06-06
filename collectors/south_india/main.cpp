@@ -11,6 +11,7 @@
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
 #include "../../common/models/WeatherPacket.hpp"
+#include "../../common/utils/CitySampling.hpp"
 #include "../../common/utils/RuntimeConfig.hpp"
 #include "../../common/protocol/MessageEnvelope.hpp"
 #include "../../common/publishing/BrokerPublisher.hpp"
@@ -44,7 +45,8 @@ json fetchWeatherData(CURL* curl, double lat, double lon) {
     }
 
     std::string url = "https://api.open-meteo.com/v1/forecast?latitude=" + std::to_string(lat) +
-                      "&longitude=" + std::to_string(lon) + "&current=temperature_2m,relative_humidity_2m,wind_speed_10m";
+                      "&longitude=" + std::to_string(lon) +
+                      "&current=temperature_2m,relative_humidity_2m,wind_speed_10m,cloud_cover,visibility,precipitation,pressure_msl";
 
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
@@ -70,9 +72,9 @@ json fetchWeatherData(CURL* curl, double lat, double lon) {
 }
 
 // Thread function for each city
-void pollCity(const std::string& continent, const std::string& country, 
-              const std::string& region, const std::string& city, 
-              double lat, double lon) {
+void pollCity(const std::string& continent, const std::string& country,
+              const std::string& region, const std::string& city,
+              const std::vector<CitySamplePoint>& samplePoints) {
     std::cout << "Starting poll thread for " << city << std::endl;
 
     CURL* curl = curl_easy_init();
@@ -82,41 +84,66 @@ void pollCity(const std::string& continent, const std::string& country,
     }
 
     while (running.load()) {
-        json weatherData = fetchWeatherData(curl, lat, lon);
-        if (!running.load()) {
-            break;
-        }
-        
-        if (!weatherData.empty() && weatherData.contains("current")) {
-            WeatherPacket packet;
-            packet.continent = continent;
-            packet.country = country;
-            packet.region = region;
-            packet.city = city;
-            packet.temperature = weatherData["current"]["temperature_2m"];
-            packet.humidity = weatherData["current"]["relative_humidity_2m"];
-            packet.wind_speed = weatherData["current"]["wind_speed_10m"];
-            packet.timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
-                std::chrono::system_clock::now().time_since_epoch()).count();
-
-            {
-                std::unique_lock<std::mutex> lock(queueMutex);
-                while (running.load() && weatherQueue.size() >= MAX_QUEUE_SIZE) {
-                    queueCv.wait_for(lock, std::chrono::milliseconds(250));
-                }
-
-                if (!running.load()) {
-                    break;
-                }
-
-                weatherQueue.push(packet);
-                std::cout << "Pushed weather data for " << city << " - Temp: " 
-                          << packet.temperature << "°C" << std::endl;
-                lock.unlock();
-                queueCv.notify_one();
+        for (const auto& sample : samplePoints) {
+            if (!running.load()) {
+                break;
             }
-        } else {
-            std::cerr << "Failed to fetch weather data for " << city << std::endl;
+
+            json weatherData = fetchWeatherData(curl, sample.latitude, sample.longitude);
+            if (!running.load()) {
+                break;
+            }
+
+            if (!weatherData.empty() && weatherData.contains("current")) {
+                WeatherPacket packet;
+                packet.continent = continent;
+                packet.country = country;
+                packet.region = region;
+                packet.city = city;
+                packet.latitude = sample.latitude;
+                packet.longitude = sample.longitude;
+                const auto& current = weatherData["current"];
+                packet.temperature = current.value("temperature_2m", 0.0);
+                packet.humidity = current.value("relative_humidity_2m", 0.0);
+                packet.wind_speed = current.value("wind_speed_10m", 0.0);
+                if (current.contains("cloud_cover") && current["cloud_cover"].is_number()) {
+                    packet.cloud_cover_percent = current["cloud_cover"].get<double>();
+                }
+                if (current.contains("visibility") && current["visibility"].is_number()) {
+                    packet.visibility_km = current["visibility"].get<double>() / 1000.0;
+                }
+                if (current.contains("precipitation") && current["precipitation"].is_number()) {
+                    packet.precipitation_mm = current["precipitation"].get<double>();
+                }
+                if (current.contains("pressure_msl") && current["pressure_msl"].is_number()) {
+                    packet.pressure_hpa = current["pressure_msl"].get<double>();
+                }
+                packet.station_id = sample.label;
+                packet.ingest_layer = sample.layer;
+                packet.sample_point = sample.label;
+                packet.timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+                    std::chrono::system_clock::now().time_since_epoch()).count();
+
+                {
+                    std::unique_lock<std::mutex> lock(queueMutex);
+                    while (running.load() && weatherQueue.size() >= MAX_QUEUE_SIZE) {
+                        queueCv.wait_for(lock, std::chrono::milliseconds(250));
+                    }
+
+                    if (!running.load()) {
+                        break;
+                    }
+
+                    weatherQueue.push(packet);
+                    std::cout << "Pushed weather data for " << city << " @ " << sample.label
+                              << " - Temp: " << packet.temperature << "°C" << std::endl;
+                    lock.unlock();
+                    queueCv.notify_one();
+                }
+            } else {
+                std::cerr << "Failed to fetch weather data for " << city
+                          << " @ " << sample.label << std::endl;
+            }
         }
 
         std::unique_lock<std::mutex> lock(queueMutex);
@@ -164,7 +191,12 @@ int main() {
         double lat = cityObj["lat"];
         double lon = cityObj["lon"];
 
-        threads.emplace_back(pollCity, continent, country, region, cityName, lat, lon);
+        threads.emplace_back(pollCity,
+                            continent,
+                            country,
+                            region,
+                            cityName,
+                            makeCitySamplePoints(cityName, lat, lon));
     }
 
     // Create sender thread to send queued packets to aggregator

@@ -169,6 +169,19 @@ timescale_writer/fast:
 .PHONY : timescale_writer/fast
 
 #=============================================================================
+# Target rules for targets named map_query_api
+
+# Build rule for target.
+map_query_api: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 map_query_api
+.PHONY : map_query_api
+
+# fast build rule for target.
+map_query_api/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/map_query_api.dir/build.make CMakeFiles/map_query_api.dir/build
+.PHONY : map_query_api/fast
+
+#=============================================================================
 # Target rules for targets named simulator
 
 # Build rule for target.
@@ -253,6 +266,30 @@ common/socket/TCPSocket.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/socket.dir/build.make CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.s
 .PHONY : common/socket/TCPSocket.cpp.s
 
+services/map_query_api/main.o: services/map_query_api/main.cpp.o
+.PHONY : services/map_query_api/main.o
+
+# target to build an object file
+services/map_query_api/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/map_query_api.dir/build.make CMakeFiles/map_query_api.dir/services/map_query_api/main.cpp.o
+.PHONY : services/map_query_api/main.cpp.o
+
+services/map_query_api/main.i: services/map_query_api/main.cpp.i
+.PHONY : services/map_query_api/main.i
+
+# target to preprocess a source file
+services/map_query_api/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/map_query_api.dir/build.make CMakeFiles/map_query_api.dir/services/map_query_api/main.cpp.i
+.PHONY : services/map_query_api/main.cpp.i
+
+services/map_query_api/main.s: services/map_query_api/main.cpp.s
+.PHONY : services/map_query_api/main.s
+
+# target to generate assembly for a file
+services/map_query_api/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/map_query_api.dir/build.make CMakeFiles/map_query_api.dir/services/map_query_api/main.cpp.s
+.PHONY : services/map_query_api/main.cpp.s
+
 simulator/main.o: simulator/main.cpp.o
 .PHONY : simulator/main.o
 
@@ -310,6 +347,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... hierarchical_aggregator"
+	@echo "... map_query_api"
 	@echo "... regional_collector"
 	@echo "... simulator"
 	@echo "... socket"
@@ -323,6 +361,9 @@ help:
 	@echo "... common/socket/TCPSocket.o"
 	@echo "... common/socket/TCPSocket.i"
 	@echo "... common/socket/TCPSocket.s"
+	@echo "... services/map_query_api/main.o"
+	@echo "... services/map_query_api/main.i"
+	@echo "... services/map_query_api/main.s"
 	@echo "... simulator/main.o"
 	@echo "... simulator/main.i"
 	@echo "... simulator/main.s"

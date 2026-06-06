@@ -17,6 +17,26 @@
             "name": "Hyderabad",
             "latitude": 17.3850,
             "longitude": 78.4867
+          },
+          {
+            "name": "Chennai",
+            "latitude": 13.0827,
+            "longitude": 80.2707
+          },
+          {
+            "name": "Kochi",
+            "latitude": 9.9312,
+            "longitude": 76.2673
+          },
+          {
+            "name": "Madurai",
+            "latitude": 9.9252,
+            "longitude": 78.1198
+          },
+          {
+            "name": "Mysore",
+            "latitude": 12.2958,
+            "longitude": 76.6394
           }
         ]
       },
@@ -35,6 +55,26 @@
             "name": "Mumbai",
             "latitude": 19.0760,
             "longitude": 72.8777
+          },
+          {
+            "name": "Jaipur",
+            "latitude": 26.9124,
+            "longitude": 75.7873
+          },
+          {
+            "name": "Lucknow",
+            "latitude": 26.8467,
+            "longitude": 80.9462
+          },
+          {
+            "name": "Ahmedabad",
+            "latitude": 23.0225,
+            "longitude": 72.5714
+          },
+          {
+            "name": "Chandigarh",
+            "latitude": 30.7333,
+            "longitude": 76.7794
           }
         ]
       },

@@ -1,0 +1,16 @@
+[Unit]
+Description=Weather RTOS Map Query API
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/wolfe/Documents/weather-rtos
+ExecStart=/home/wolfe/Documents/weather-rtos/build/map_query_api 8091
+Restart=on-failure
+RestartSec=2
+Environment=TIMESCALEDB_DSN=host=127.0.0.1 port=5432 dbname=weather_rtos user=weather_rtos password=weather_secret
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

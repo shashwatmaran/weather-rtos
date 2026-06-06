@@ -5,6 +5,7 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o: /home
   /home/wolfe/Documents/weather-rtos/common/models/WeatherPacket.hpp \
   /home/wolfe/Documents/weather-rtos/common/protocol/MessageEnvelope.hpp \
   /home/wolfe/Documents/weather-rtos/common/protocol/MessageTypes.hpp \
+  /home/wolfe/Documents/weather-rtos/common/analytics/MapAnalytics.hpp \
   /home/wolfe/Documents/weather-rtos/common/pipeline/ValidationAggregationConsumerPipeline.hpp \
   /home/wolfe/Documents/weather-rtos/common/subscribing/IBrokerPublisher.hpp \
   /home/wolfe/Documents/weather-rtos/common/subscribing/IBrokerSubscriber.hpp \
@@ -331,6 +332,7 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o: /home
   /usr/include/x86_64-linux-gnu/bits/endianness.h \
   /usr/include/x86_64-linux-gnu/bits/environments.h \
   /usr/include/x86_64-linux-gnu/bits/errno.h \
+  /usr/include/x86_64-linux-gnu/bits/eventfd.h \
   /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
   /usr/include/x86_64-linux-gnu/bits/floatn.h \
   /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
@@ -444,6 +446,7 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o: /home
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/sys/eventfd.h \
   /usr/include/x86_64-linux-gnu/sys/select.h \
   /usr/include/x86_64-linux-gnu/sys/single_threaded.h \
   /usr/include/x86_64-linux-gnu/sys/syscall.h \
@@ -464,6 +467,8 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o: /home
 /usr/include/x86_64-linux-gnu/sys/types.h:
 
 /usr/include/x86_64-linux-gnu/sys/single_threaded.h:
+
+/usr/include/x86_64-linux-gnu/sys/eventfd.h:
 
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
@@ -665,8 +670,6 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o: /home
 
 /usr/include/nlohmann/detail/macro_scope.hpp:
 
-/usr/include/nlohmann/detail/json_pointer.hpp:
-
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
 /usr/include/nlohmann/detail/iterators/primitive_iterator.hpp:
@@ -697,7 +700,7 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o: /home
 
 /usr/include/math.h:
 
-/usr/include/c++/13/bits/stl_numeric.h:
+/usr/include/locale.h:
 
 /usr/include/stdio.h:
 
@@ -857,6 +860,10 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o: /home
 
 /usr/include/c++/13/forward_list:
 
+/usr/include/nlohmann/json_fwd.hpp:
+
+/usr/include/c++/13/bits/fstream.tcc:
+
 /usr/include/x86_64-linux-gnu/sys/syscall.h:
 
 /usr/include/c++/13/clocale:
@@ -909,6 +916,14 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o: /home
 
 /usr/include/c++/13/bits/stream_iterator.h:
 
+/usr/include/nlohmann/detail/iterators/iter_impl.hpp:
+
+/home/wolfe/Documents/weather-rtos/common/utils/RuntimeConfig.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/long-double.h:
+
+/usr/include/c++/13/bits/algorithmfwd.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/struct_sigstack.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
@@ -920,14 +935,6 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o: /home
 /usr/include/c++/13/bits/istream.tcc:
 
 /usr/include/c++/13/bits/exception_ptr.h:
-
-/usr/include/nlohmann/detail/iterators/iter_impl.hpp:
-
-/home/wolfe/Documents/weather-rtos/common/utils/RuntimeConfig.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/long-double.h:
-
-/usr/include/c++/13/bits/algorithmfwd.h:
 
 /usr/include/c++/13/bits/valarray_array.h:
 
@@ -1029,6 +1036,22 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o: /home
 
 /usr/include/c++/13/bits/chrono.h:
 
+/usr/include/c++/13/bits/streambuf.tcc:
+
+/usr/include/c++/13/bits/specfun.h:
+
+/usr/include/nlohmann/detail/meta/void_t.hpp:
+
+/usr/include/c++/13/atomic:
+
+/usr/include/c++/13/bits/basic_string.h:
+
+/usr/include/c++/13/tr1/poly_laguerre.tcc:
+
+/usr/include/libintl.h:
+
+/usr/include/c++/13/bits/chrono_io.h:
+
 /usr/include/assert.h:
 
 /usr/include/c++/13/backward/auto_ptr.h:
@@ -1053,29 +1076,13 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o: /home
 
 /usr/include/c++/13/bits/basic_ios.h:
 
-/usr/include/c++/13/bits/streambuf.tcc:
-
-/usr/include/c++/13/bits/specfun.h:
-
-/usr/include/nlohmann/detail/meta/void_t.hpp:
-
-/usr/include/c++/13/atomic:
-
-/usr/include/c++/13/bits/basic_string.h:
-
-/usr/include/c++/13/tr1/poly_laguerre.tcc:
-
-/usr/include/libintl.h:
-
-/usr/include/c++/13/bits/chrono_io.h:
-
 /usr/include/alloca.h:
 
-/usr/include/nlohmann/json_fwd.hpp:
-
-/usr/include/c++/13/bits/fstream.tcc:
-
 /usr/include/c++/13/bits/deque.tcc:
+
+/usr/include/nlohmann/detail/json_pointer.hpp:
+
+/home/wolfe/Documents/weather-rtos/common/analytics/MapAnalytics.hpp:
 
 /usr/include/c++/13/cassert:
 
@@ -1102,6 +1109,8 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o: /home
 /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h:
 
 /usr/include/c++/13/sstream:
+
+/usr/include/c++/13/bits/stl_numeric.h:
 
 /usr/include/c++/13/bits/stl_queue.h:
 
@@ -1227,8 +1236,6 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o: /home
 
 /usr/include/c++/13/ext/aligned_buffer.h:
 
-/usr/include/locale.h:
-
 /usr/include/c++/13/ext/alloc_traits.h:
 
 /usr/include/c++/13/bits/gslice_array.h:
@@ -1298,6 +1305,8 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o: /home
 /usr/include/c++/13/ratio:
 
 /usr/include/linux/limits.h:
+
+/usr/include/x86_64-linux-gnu/bits/eventfd.h:
 
 /usr/include/c++/13/ranges:
 

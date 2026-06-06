@@ -8,6 +8,106 @@ The repository is organized around a pipeline:
 
 Collectors -> hierarchical aggregators -> Timescale writer
 
+## Architecture Diagram
+
+Use the following Mermaid diagram to show the repository in a structured, end-to-end view. It includes the core runtime pipeline, shared transport and validation layers, persistence, and the phase 1 map stack.
+
+```mermaid
+flowchart TB
+	%% ---------------------------------------------------------------------------
+	%% Source layer
+	%% ---------------------------------------------------------------------------
+	subgraph L1["1. Source Layer"]
+		direction LR
+		COLS["Collectors\nregional / south_india / india / asia"]
+		SIM["Simulator\nsynthetic weather traffic"]
+		COLS_OUT["MessageEnvelope\nregion, city, coordinates, payload"]
+	end
+
+	%% ---------------------------------------------------------------------------
+	%% Shared runtime and transport
+	%% ---------------------------------------------------------------------------
+	subgraph L2["2. Shared Runtime and Transport"]
+		direction LR
+		WP["WeatherPacket"]
+		ME["MessageEnvelope"]
+		PUB["BrokerPublisher"]
+		TCP["TcpSubscriber"]
+		INPROC["InProcessBrokerPublisher\nInProcessBrokerSubscriber"]
+		PIPE["ValidationAggregationConsumerPipeline"]
+		GW["RegionalGateway\nBrokerAggregator"]
+	end
+
+	%% ---------------------------------------------------------------------------
+	%% Hierarchical aggregation tiers
+	%% ---------------------------------------------------------------------------
+	subgraph L3["3. Hierarchical Aggregation Tiers"]
+		direction LR
+		REG["Regional aggregators\nvalidate, reduce, forward"]
+		CONT["Continent aggregators\nroll up regional streams"]
+		GLOBAL["Global aggregator\nfinal consolidation tier"]
+	end
+
+	%% ---------------------------------------------------------------------------
+	%% Persistence and batching
+	%% ---------------------------------------------------------------------------
+	subgraph L4["4. Persistence and Batching"]
+		direction LR
+		AQW["AsyncQueueWriter\nbounded queue + backpressure"]
+		TBW["TimescaleBatchWriter\nbatch insert + outbox flush"]
+		DB[("TimescaleDB")]
+		RAW[("weather_observations_raw")]
+		MIN[("weather_city_minute_aggregates")]
+	end
+
+	%% ---------------------------------------------------------------------------
+	%% Map-first phase 1 stack
+	%% ---------------------------------------------------------------------------
+	subgraph L5["5. Map-First Phase 1 Stack"]
+		direction LR
+		MAPAGG["Tile aggregation\nminute tile summaries + hazard score"]
+		ROUTE["Route risk aggregation\nsegment risk + ETA impact"]
+		API["Map Query API\nread-optimized tile and route queries"]
+		UI["Map Console\nweb map overlay + route panel"]
+	end
+
+	%% ---------------------------------------------------------------------------
+	%% Flows
+	%% ---------------------------------------------------------------------------
+	COLS --> WP
+	SIM --> WP
+	WP --> ME
+	ME --> PUB
+	ME --> INPROC
+	PUB --> TCP
+	INPROC --> PIPE
+	TCP --> PIPE
+	PIPE --> GW
+	GW --> REG --> CONT --> GLOBAL
+	GLOBAL --> AQW --> TBW --> DB
+	TBW --> RAW
+	TBW --> MIN
+	DB --> API --> UI
+
+	%% Phase 1 map data flow
+	REG --> MAPAGG --> ROUTE --> TBW
+	MIN --> API
+	ROUTE --> API
+
+	%% Styling hints
+	classDef source fill:#eef7ff,stroke:#2b6cb0,color:#102a43,stroke-width:1px;
+	classDef runtime fill:#f8f5ff,stroke:#6b46c1,color:#2d1b69,stroke-width:1px;
+	classDef agg fill:#fff7ed,stroke:#c05621,color:#7b341e,stroke-width:1px;
+	classDef storage fill:#ecfdf5,stroke:#2f855a,color:#22543d,stroke-width:1px;
+	classDef map fill:#fff1f2,stroke:#be123c,color:#881337,stroke-width:1px;
+
+	class COLS,SIM,COLS_OUT source;
+	class WP,ME,PUB,TCP,INPROC,PIPE,GW runtime;
+	class REG,CONT,GLOBAL,MAPAGG,ROUTE agg;
+	class AQW,TBW,DB,RAW,MIN storage;
+	class API,UI map;
+```
+
 The default demo launches one OS process per component instance. Inside each process, the code keeps concurrency narrow and explicit: a few dedicated threads handle polling, socket I/O, queue draining, and batching instead of a large shared worker pool.
 
 The main entry points are:
@@ -39,9 +139,11 @@ The schema in [timescale/schema.sql](timescale/schema.sql) uses both:
 - [weather_observations_raw](timescale/schema.sql#L3) for full-fidelity event history
 - [weather_city_minute_aggregates](timescale/schema.sql#L24) for minute-bucket rollups
 
+Scaffolding: We provide a Timescale continuous-aggregate scaffold at [timescale/migrations/007_continuous_aggregates.sql](timescale/migrations/007_continuous_aggregates.sql) and a helper script at [tools/create_continuous_agg.sh](tools/create_continuous_agg.sh) for applying it. Use [timescale/tests/verify_continuous_agg.sql](timescale/tests/verify_continuous_agg.sql) to smoke-check results after the view materializes.
+
 That split is deliberate.
 
-`weather_observations_raw` is the source of truth. It stores every observation with its exact event time, ingestion time, source, location fields, temperature, humidity, wind speed, and full payload JSON. It is indexed by `message_id` for deduplication and turned into a hypertable on `event_time` so time-range reads stay efficient.
+`weather_observations_raw` is the source of truth. It stores every observation with its exact event time, ingestion time, source, ingestion layer, sample point, location fields, temperature, humidity, wind speed, and full payload JSON. It is indexed by `message_id` for deduplication and turned into a hypertable on `event_time` so time-range reads stay efficient.
 
 `weather_city_minute_aggregates` is a read-optimized summary table. It keeps one row per minute bucket and location. That makes dashboard-style queries and per-city rollups much cheaper than scanning raw data every time.
 
@@ -162,6 +264,36 @@ These logs are meant for local inspection and demo tracing. They are not a repla
 - The current Timescale writer prefers throughput and clarity over perfect aggregate recomputation.
 - For larger deployments, the safest scaling lever is to add more process instances or partition by region rather than introducing broad shared mutable state.
 
+## Map-First Logistics Adaptation
+
+For logistics and transport use cases (route risk, delay prediction, wind/visibility hazards), the architecture should shift from "city summaries" to a map-centric model where each collector is treated as a region ingestion unit.
+
+### Why collector-as-region
+
+- It aligns ingestion ownership with operational boundaries (district, metro, corridor, port zone).
+- It keeps failure domains small: one region collector can fail/restart without blocking global flow.
+- It enables parallel analytics by region and easier horizontal scaling.
+- It maps naturally to partition keys used by queueing and Timescale hypertables.
+
+### Target flow for map projection and route intelligence
+
+1. Region collector ingests weather/sensor feeds for one region and emits normalized envelopes.
+2. Regional analytics aggregator computes minute tile summaries and hazard indicators.
+3. Corridor/route risk aggregator computes segment risk and ETA impact signals.
+4. Timescale writer stores raw, tile aggregate, and route risk outputs.
+5. Query API serves map overlays, route risk snapshots, and short-horizon forecasts.
+6. Frontend map renders tiles/layers and overlays route-level risk coloring.
+
+### Minimal new logical components
+
+- `Map Analytics Aggregator`: computes geospatial tile-level metrics from regional streams.
+- `Route Risk Service`: computes route-segment risk and delay estimates.
+- `Map Query API`: read-optimized API over aggregate tables for tiles and routes.
+
+The existing collector -> aggregator -> writer design remains valid. The main change is to make region the ingestion ownership boundary and to add map-aware analytics outputs.
+
+For a detailed first-phase implementation blueprint, see [docs/LOGISTICS_MAP_PHASE1_PLAN.md](docs/LOGISTICS_MAP_PHASE1_PLAN.md).
+
 ## Build And Run
 
 Typical local build:
@@ -214,5 +346,7 @@ The `common/` tree is the shared runtime and transport layer for the whole repo.
 - [common/subscribing/InProcessBrokerSubscriber.hpp](common/subscribing/InProcessBrokerSubscriber.hpp)
 - [common/timescale/AsyncQueueWriter.hpp](common/timescale/AsyncQueueWriter.hpp)
 - [common/timescale/TimescaleBatchWriter.hpp](common/timescale/TimescaleBatchWriter.hpp)
+- [docs/LOGISTICS_MAP_PHASE1_PLAN.md](docs/LOGISTICS_MAP_PHASE1_PLAN.md)
+- [configs/logistics_map_phase1_topology.json](configs/logistics_map_phase1_topology.json)
 
-Last updated: May 20, 2026
+Last updated: May 24, 2026

@@ -6,6 +6,7 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o
  /home/wolfe/Documents/weather-rtos/common/models/WeatherPacket.hpp
  /home/wolfe/Documents/weather-rtos/common/protocol/MessageEnvelope.hpp
  /home/wolfe/Documents/weather-rtos/common/protocol/MessageTypes.hpp
+ /home/wolfe/Documents/weather-rtos/common/analytics/MapAnalytics.hpp
  /home/wolfe/Documents/weather-rtos/common/pipeline/ValidationAggregationConsumerPipeline.hpp
  /home/wolfe/Documents/weather-rtos/common/subscribing/IBrokerPublisher.hpp
  /home/wolfe/Documents/weather-rtos/common/subscribing/IBrokerSubscriber.hpp
@@ -332,6 +333,7 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o
  /usr/include/x86_64-linux-gnu/bits/endianness.h
  /usr/include/x86_64-linux-gnu/bits/environments.h
  /usr/include/x86_64-linux-gnu/bits/errno.h
+ /usr/include/x86_64-linux-gnu/bits/eventfd.h
  /usr/include/x86_64-linux-gnu/bits/floatn-common.h
  /usr/include/x86_64-linux-gnu/bits/floatn.h
  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h
@@ -445,6 +447,7 @@ CMakeFiles/hierarchical_aggregator.dir/aggregator/hierarchical/main.cpp.o
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
  /usr/include/x86_64-linux-gnu/gnu/stubs.h
  /usr/include/x86_64-linux-gnu/sys/cdefs.h
+ /usr/include/x86_64-linux-gnu/sys/eventfd.h
  /usr/include/x86_64-linux-gnu/sys/select.h
  /usr/include/x86_64-linux-gnu/sys/single_threaded.h
  /usr/include/x86_64-linux-gnu/sys/syscall.h

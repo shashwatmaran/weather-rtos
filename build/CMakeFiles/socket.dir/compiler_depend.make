@@ -111,18 +111,22 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
   /usr/include/ctype.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
+  /usr/include/fcntl.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
   /usr/include/linux/close_range.h \
   /usr/include/linux/errno.h \
+  /usr/include/linux/falloc.h \
   /usr/include/linux/posix_types.h \
   /usr/include/linux/stddef.h \
   /usr/include/locale.h \
   /usr/include/netinet/in.h \
+  /usr/include/netinet/tcp.h \
   /usr/include/poll.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
   /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
   /usr/include/string.h \
@@ -144,7 +148,11 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
   /usr/include/x86_64-linux-gnu/bits/endian.h \
   /usr/include/x86_64-linux-gnu/bits/endianness.h \
   /usr/include/x86_64-linux-gnu/bits/environments.h \
+  /usr/include/x86_64-linux-gnu/bits/epoll.h \
   /usr/include/x86_64-linux-gnu/bits/errno.h \
+  /usr/include/x86_64-linux-gnu/bits/eventfd.h \
+  /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h \
+  /usr/include/x86_64-linux-gnu/bits/fcntl.h \
   /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
   /usr/include/x86_64-linux-gnu/bits/floatn.h \
   /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
@@ -164,15 +172,19 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
   /usr/include/x86_64-linux-gnu/bits/sockaddr.h \
   /usr/include/x86_64-linux-gnu/bits/socket.h \
   /usr/include/x86_64-linux-gnu/bits/socket_type.h \
+  /usr/include/x86_64-linux-gnu/bits/stat.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_stat.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
   /usr/include/x86_64-linux-gnu/bits/time.h \
   /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timerfd.h \
   /usr/include/x86_64-linux-gnu/bits/timesize.h \
   /usr/include/x86_64-linux-gnu/bits/timex.h \
   /usr/include/x86_64-linux-gnu/bits/types.h \
@@ -224,20 +236,28 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/sys/epoll.h \
+  /usr/include/x86_64-linux-gnu/sys/eventfd.h \
   /usr/include/x86_64-linux-gnu/sys/poll.h \
   /usr/include/x86_64-linux-gnu/sys/select.h \
   /usr/include/x86_64-linux-gnu/sys/single_threaded.h \
   /usr/include/x86_64-linux-gnu/sys/socket.h \
+  /usr/include/x86_64-linux-gnu/sys/timerfd.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
-  /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h
 
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
 
 /usr/include/x86_64-linux-gnu/sys/types.h:
 
 /usr/include/x86_64-linux-gnu/sys/socket.h:
+
+/usr/include/x86_64-linux-gnu/sys/eventfd.h:
 
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
@@ -267,6 +287,8 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
 
+/usr/include/x86_64-linux-gnu/sys/timerfd.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h:
@@ -291,10 +313,6 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
 
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
 
-/usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h:
-
-/usr/include/x86_64-linux-gnu/bits/timex.h:
-
 /usr/include/x86_64-linux-gnu/bits/timesize.h:
 
 /usr/include/x86_64-linux-gnu/bits/time.h:
@@ -305,9 +323,13 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
 
 /usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
 
+/usr/include/x86_64-linux-gnu/bits/stat.h:
+
 /usr/include/x86_64-linux-gnu/bits/socket.h:
 
 /usr/include/x86_64-linux-gnu/bits/sockaddr.h:
+
+/usr/include/x86_64-linux-gnu/bits/struct_stat.h:
 
 /usr/include/x86_64-linux-gnu/bits/select.h:
 
@@ -323,9 +345,17 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
 
 /usr/include/x86_64-linux-gnu/bits/getopt_core.h:
 
+/usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h:
+
+/usr/include/x86_64-linux-gnu/bits/timex.h:
+
+/usr/include/x86_64-linux-gnu/bits/fcntl-linux.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/floatn-common.h:
+
+/usr/include/x86_64-linux-gnu/bits/epoll.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
@@ -351,6 +381,18 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
 
 /usr/include/unistd.h:
 
+/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
+
+/usr/include/strings.h:
+
+/usr/include/string.h:
+
+/usr/include/x86_64-linux-gnu/bits/eventfd.h:
+
+/usr/include/x86_64-linux-gnu/asm/socket.h:
+
+/usr/include/stdlib.h:
+
 /usr/include/c++/13/bits/stl_construct.h:
 
 /usr/include/c++/13/bits/stl_algobase.h:
@@ -364,6 +406,10 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
 /usr/include/c++/13/stdexcept:
 
 /usr/include/c++/13/bits/ostream_insert.h:
+
+/usr/include/time.h:
+
+/usr/include/c++/13/bits/memoryfwd.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
 
@@ -465,6 +511,8 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
 
 /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
+/usr/include/x86_64-linux-gnu/bits/stdint-least.h:
+
 /usr/include/c++/13/cerrno:
 
 /usr/include/stdio.h:
@@ -476,6 +524,8 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
 /usr/include/c++/13/bits/requires_hosted.h:
 
 /usr/include/c++/13/bits/string_view.tcc:
+
+/usr/include/x86_64-linux-gnu/sys/epoll.h:
 
 /usr/include/features.h:
 
@@ -492,6 +542,8 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++locale.h:
 
 /usr/include/c++/13/bits/ptr_traits.h:
+
+/usr/include/linux/falloc.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h:
 
@@ -512,10 +564,6 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
 /usr/include/x86_64-linux-gnu/bits/socket_type.h:
 
 /usr/include/c++/13/bits/locale_facets.h:
-
-/usr/include/c++/13/bits/memoryfwd.h:
-
-/usr/include/time.h:
 
 /usr/include/c++/13/bits/cxxabi_forced.h:
 
@@ -571,6 +619,8 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
 
 /usr/include/c++/13/bits/uses_allocator_args.h:
 
+/usr/include/x86_64-linux-gnu/bits/fcntl.h:
+
 /usr/include/c++/13/bits/stl_function.h:
 
 /usr/include/c++/13/bits/utility.h:
@@ -580,6 +630,8 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
+
+/usr/include/x86_64-linux-gnu/bits/timerfd.h:
 
 /usr/include/x86_64-linux-gnu/bits/floatn.h:
 
@@ -635,6 +687,8 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
 
 /usr/include/c++/13/ostream:
 
+/usr/include/fcntl.h:
+
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
 /usr/include/c++/13/pstl/pstl_config.h:
@@ -675,6 +729,8 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
 
 /usr/include/netinet/in.h:
 
+/usr/include/netinet/tcp.h:
+
 /usr/include/c++/13/string_view:
 
 /usr/include/features-time64.h:
@@ -683,12 +739,4 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: /home/wolfe/Documents/weath
 
 /usr/include/pthread.h:
 
-/usr/include/x86_64-linux-gnu/asm/socket.h:
-
-/usr/include/stdlib.h:
-
-/usr/include/string.h:
-
-/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
-
-/usr/include/strings.h:
+/usr/include/stdint.h:

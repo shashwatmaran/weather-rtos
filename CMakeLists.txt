@@ -37,6 +37,17 @@ if (POSTGRESQL_INCLUDE_DIR AND POSTGRESQL_LIBRARY)
 	target_compile_definitions(timescale_writer PRIVATE WEATHER_RTOS_HAS_LIBPQ=1)
 endif()
 
+# Map query API (Phase 1 read path scaffold)
+add_executable(map_query_api services/map_query_api/main.cpp)
+target_include_directories(map_query_api PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(map_query_api socket)
+
+if (POSTGRESQL_INCLUDE_DIR AND POSTGRESQL_LIBRARY)
+	target_include_directories(map_query_api PRIVATE ${POSTGRESQL_INCLUDE_DIR})
+	target_link_libraries(map_query_api ${POSTGRESQL_LIBRARY})
+	target_compile_definitions(map_query_api PRIVATE WEATHER_RTOS_HAS_LIBPQ=1)
+endif()
+
 # Simulator (legacy)
 add_executable(simulator simulator/main.cpp)
 target_link_libraries(simulator CURL::libcurl)

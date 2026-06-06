@@ -185,5 +185,17 @@ CMakeFiles/socket.dir/common/socket/TCPSocket.cpp.o: \
  /usr/include/netinet/in.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /usr/include/x86_64-linux-gnu/bits/in.h /usr/include/arpa/inet.h \
- /usr/include/poll.h /usr/include/x86_64-linux-gnu/sys/poll.h \
- /usr/include/x86_64-linux-gnu/bits/poll.h
+ /usr/include/fcntl.h /usr/include/x86_64-linux-gnu/bits/fcntl.h \
+ /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h \
+ /usr/include/linux/falloc.h /usr/include/x86_64-linux-gnu/bits/stat.h \
+ /usr/include/x86_64-linux-gnu/bits/struct_stat.h /usr/include/poll.h \
+ /usr/include/x86_64-linux-gnu/sys/poll.h \
+ /usr/include/x86_64-linux-gnu/bits/poll.h \
+ /usr/include/x86_64-linux-gnu/sys/epoll.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \
+ /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+ /usr/include/x86_64-linux-gnu/bits/epoll.h \
+ /usr/include/x86_64-linux-gnu/sys/eventfd.h \
+ /usr/include/x86_64-linux-gnu/bits/eventfd.h \
+ /usr/include/x86_64-linux-gnu/sys/timerfd.h \
+ /usr/include/x86_64-linux-gnu/bits/timerfd.h /usr/include/netinet/tcp.h

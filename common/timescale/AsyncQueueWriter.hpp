@@ -15,13 +15,14 @@
 
 #include "../protocol/MessageEnvelope.hpp"
 #include "TimescaleBatchWriter.hpp"
+#include "../metrics/Metrics.hpp"
 
 using json = nlohmann::json;
 
 /**
  * Tier 2: Async queue-based writer
  * 
- * - Bounded in-memory queue (~10K messages)
+ * - Bounded in-memory queue for backpressure control
  * - Region-based partitioning (preserves ordering for same city)
  * - Single dedicated writer thread
  * - Automatic retry on DB failures
@@ -30,9 +31,9 @@ using json = nlohmann::json;
 class AsyncQueueWriter {
 public:
     struct Config {
-        std::size_t maxQueueSize = 10240;       // ~10K messages
-        std::size_t batchSize = 500;            // Flush every 500 msgs
-        std::chrono::milliseconds flushInterval{1000};  // Or every 1 second
+        std::size_t maxQueueSize = 4096;        // Keep memory bounded
+        std::size_t batchSize = 250;            // Favor smaller flushes for lower latency
+        std::chrono::milliseconds flushInterval{500};   // Or every 0.5 second
         std::string outboxPath = "timescale_outbox.sql";
         std::size_t maxRetries = 3;
         std::chrono::milliseconds retryDelay{100};
@@ -64,10 +65,12 @@ public:
     bool submit(const MessageEnvelope& envelope) {
         std::unique_lock<std::mutex> lock(queueMutex_);
 
-        // Check queue depth
-        if (queues_.size() >= config_.maxQueueSize) {
+        // Check total queued messages, not just the number of region partitions.
+        const std::size_t totalQueued = getTotalQueueSize();
+        if (totalQueued >= config_.maxQueueSize) {
             metrics_.backpressureEvents++;
-            std::cerr << "[AsyncQueueWriter] Backpressure: queue full (" << queues_.size()
+            metrics::inc_backpressure_events();
+            std::cerr << "[AsyncQueueWriter] Backpressure: queue full (" << totalQueued
                       << "/" << config_.maxQueueSize << "), rejecting " << envelope.message_id
                       << std::endl;
             return false;
@@ -77,6 +80,7 @@ public:
         std::string region = extractRegion(envelope);
         queues_[region].push_back(envelope);
         metrics_.queueDepth = getTotalQueueSize();
+        metrics::set_queue_depth(metrics_.queueDepth.load());
         cv_.notify_one();
 
         return true;
@@ -188,8 +192,10 @@ private:
         }
 
         metrics_.queueDepth = getTotalQueueSize();
+        metrics::set_queue_depth(metrics_.queueDepth.load());
         if (!batch.empty()) {
             metrics_.regionPartitions = queues_.size();
+            metrics::set_region_partitions(metrics_.regionPartitions.load());
         }
 
         return batch;
@@ -202,13 +208,16 @@ private:
         for (const auto& envelope : batch) {
             if (batchWriter_->submit(envelope)) {
                 metrics_.messagesProcessed++;
+                metrics::inc_messages_processed();
             } else {
                 metrics_.writeErrors++;
+                metrics::inc_write_errors();
                 std::cerr << "[AsyncQueueWriter] Failed to submit envelope "
                           << envelope.message_id << std::endl;
             }
         }
         metrics_.batchesFlushed++;
+        metrics::inc_batches_flushed();
     }
 
     /**

@@ -7,19 +7,28 @@
 #include <memory>
 #include <thread>
 
+#include <sys/eventfd.h>
+#include <unistd.h>
+
 #include <nlohmann/json.hpp>
 
 #include "../common/pipeline/ValidationAggregationConsumerPipeline.hpp"
 #include "../common/socket/TCPSocket.hpp"
 #include "../common/subscribing/TcpSubscriber.hpp"
 #include "../common/timescale/AsyncQueueWriter.hpp"
+#include "../common/metrics/Metrics.hpp"
 
 using json = nlohmann::json;
 
 std::atomic<bool> running{true};
+int shutdownEventFd = -1;
 
 void handleShutdownSignal(int) {
     running.store(false);
+    if (shutdownEventFd >= 0) {
+        const uint64_t signalValue = 1;
+        write(shutdownEventFd, &signalValue, sizeof(signalValue));
+    }
 }
 
 int main() {
@@ -30,11 +39,20 @@ int main() {
     std::cout << "Queue-based architecture with region partitioning" << std::endl;
     std::cout << "Auto-detecting local TimescaleDB..." << std::endl;
 
+    // Start metrics endpoint for Prometheus scraping
+    metrics::start_http_server(9100);
+    std::cout << "Metrics HTTP endpoint started on port 9100" << std::endl;
+
+    shutdownEventFd = eventfd(0, EFD_CLOEXEC | EFD_NONBLOCK);
+    if (shutdownEventFd < 0) {
+        std::cerr << "[timescale_writer] Failed to create shutdown eventfd" << std::endl;
+    }
+
     // Configure Tier 2: bounded queue + region partitioning
     AsyncQueueWriter::Config queueConfig;
-    queueConfig.maxQueueSize = 10240;      // 10K messages
-    queueConfig.batchSize = 500;           // Batch every 500
-    queueConfig.flushInterval = std::chrono::milliseconds(1000);
+    queueConfig.maxQueueSize = 4096;       // Keep memory bounded
+    queueConfig.batchSize = 250;           // Lower latency than giant flushes
+    queueConfig.flushInterval = std::chrono::milliseconds(500);
     queueConfig.outboxPath = "timescale_outbox.sql";
     queueConfig.maxRetries = 3;
     queueConfig.retryDelay = std::chrono::milliseconds(100);
@@ -53,7 +71,7 @@ int main() {
     // Start socket subscriber on a separate thread (receives data)
     std::thread subscriberThread([&pipeline]() {
         TcpSubscriber subscriber(13101, pipeline, "timescale_writer_tcp");
-        subscriber.run(running);
+        subscriber.run(running, shutdownEventFd);
     });
 
     // Run writer on main thread (manages queue + batch flushing)
@@ -62,6 +80,11 @@ int main() {
     // Wait for subscriber thread to finish (it waits for running signal)
     if (subscriberThread.joinable()) {
         subscriberThread.join();
+    }
+
+    if (shutdownEventFd >= 0) {
+        close(shutdownEventFd);
+        shutdownEventFd = -1;
     }
 
     // Print final metrics

@@ -18,6 +18,21 @@
       "name": "Hyderabad",
       "lat": 17.3850,
       "lon": 78.4867
+    },
+    {
+      "name": "Kochi",
+      "lat": 9.9312,
+      "lon": 76.2673
+    },
+    {
+      "name": "Mysore",
+      "lat": 12.2958,
+      "lon": 76.6394
+    },
+    {
+      "name": "Madurai",
+      "lat": 9.9252,
+      "lon": 78.1198
     }
   ]
 }
