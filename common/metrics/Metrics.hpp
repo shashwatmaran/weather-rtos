@@ -15,13 +15,15 @@
 
 namespace metrics {
 
-static std::atomic<uint64_t> messagesProcessed{0};
-static std::atomic<uint64_t> batchesFlushed{0};
-static std::atomic<uint64_t> dbWrites{0};
-static std::atomic<uint64_t> writeErrors{0};
-static std::atomic<uint64_t> backpressureEvents{0};
-static std::atomic<uint64_t> queueDepth{0};
-static std::atomic<uint64_t> regionPartitions{0};
+inline std::atomic<uint64_t> messagesProcessed{0};
+inline std::atomic<uint64_t> batchesFlushed{0};
+inline std::atomic<uint64_t> dbWrites{0};
+inline std::atomic<uint64_t> writeErrors{0};
+inline std::atomic<uint64_t> backpressureEvents{0};
+inline std::atomic<uint64_t> queueDepth{0};
+inline std::atomic<uint64_t> regionPartitions{0};
+inline std::atomic<uint64_t> ingestionLatencySumMs{0};
+inline std::atomic<uint64_t> ingestionLatencyCount{0};
 
 inline std::string gather() {
 	std::ostringstream out;
@@ -52,6 +54,13 @@ inline std::string gather() {
 	out << "# HELP weather_region_partitions Number of region partitions in memory" << "\n";
 	out << "# TYPE weather_region_partitions gauge" << "\n";
 	out << "weather_region_partitions " << regionPartitions.load() << "\n";
+
+	uint64_t sum = ingestionLatencySumMs.load();
+	uint64_t count = ingestionLatencyCount.load();
+	double avgLatency = count > 0 ? static_cast<double>(sum) / count : 0.0;
+	out << "# HELP weather_ingestion_latency_avg_ms Average end-to-end ingestion latency" << "\n";
+	out << "# TYPE weather_ingestion_latency_avg_ms gauge" << "\n";
+	out << "weather_ingestion_latency_avg_ms " << avgLatency << "\n";
 
 	return out.str();
 }
@@ -120,5 +129,9 @@ inline void inc_write_errors() { writeErrors.fetch_add(1); }
 inline void inc_backpressure_events() { backpressureEvents.fetch_add(1); }
 inline void set_queue_depth(std::uint64_t depth) { queueDepth.store(depth); }
 inline void set_region_partitions(std::uint64_t parts) { regionPartitions.store(parts); }
+inline void add_ingestion_latency(uint64_t ms) {
+	ingestionLatencySumMs.fetch_add(ms);
+	ingestionLatencyCount.fetch_add(1);
+}
 
 } // namespace metrics

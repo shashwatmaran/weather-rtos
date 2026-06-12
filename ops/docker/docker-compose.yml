@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg14
+    environment:
+      POSTGRES_USER: weather_rtos
+      POSTGRES_PASSWORD: weather_secret
+      POSTGRES_DB: weather_rtos
+    ports:
+      - "5432:5432"
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ../../ops/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
+  timescale_writer:
+    build:
+      context: ../../
+      dockerfile: ops/docker/Dockerfile.writer
+    depends_on:
+      - timescaledb
+      - prometheus
+    environment:
+      - TIMESCALEDB_DSN=host=timescaledb port=5432 dbname=weather_rtos user=weather_rtos password=weather_secret
+    ports:
+      - "9100:9100"
+
+  simulator:
+    build:
+      context: ../../
+      dockerfile: ops/docker/Dockerfile.writer
+    command: ./build/simulator
+    depends_on:
+      - timescaledb
+      - timescale_writer
+
+volumes:
+  timescale_data:

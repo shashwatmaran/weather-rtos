@@ -67,7 +67,7 @@ Key files and directories
 - **`docs/`**: Documentation.
   - **`docs/ARCHITECTURE.md`**: System architecture and component interactions.
   - **`docs/QUICKSTART.md`**: How to build and run locally.
-  - **`docs/SCALING.md`**: Notes on scaling, partitioning, and performance tuning.
+  - **`docs/ARCHITECTURE.md`**: Also covers scaling by region partition and horizontal process layout.
 
 - **`build/`**: Generated CMake build artifacts and compiled binaries — ignore for source changes (contains targets like `regional_collector`, `hierarchical_aggregator`, `simulator`, `timescale_writer`).
 

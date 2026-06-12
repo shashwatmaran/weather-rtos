@@ -121,10 +121,21 @@ public:
             return false;
         }
 
-        if (!seenIds_.insert(envelope.message_id).second) {
+        if (seenIds_.count(envelope.message_id)) {
             std::cout << "[TimescaleWriter] Duplicate envelope ignored: " << envelope.message_id << std::endl;
             return true;
         }
+
+        // Bounded duplicate cache (FIFO eviction)
+        if (seenIds_.size() >= 10000) {
+            auto it = seenIds_.find(idOrder_.front());
+            if (it != seenIds_.end()) {
+                seenIds_.erase(it);
+            }
+            idOrder_.pop_front();
+        }
+        seenIds_.insert(envelope.message_id);
+        idOrder_.push_back(envelope.message_id);
 
         pending_.push_back(std::move(envelope));
         cv_.notify_one();
@@ -334,14 +345,6 @@ private:
 
             const WeatherPacket& packet = *packetOpt;
             const long eventTime = packet.timestamp;
-            rawRows.push_back({
-                envelope.message_id,
-                envelope.source,
-                packet.continent,
-                packet.country,
-                packet.region,
-                packet.city,
-                eventTime,
                 envelope.created_at,
                 packet.latitude,
                 packet.longitude,
@@ -684,6 +687,7 @@ private:
     std::chrono::milliseconds flushInterval_;
     std::deque<MessageEnvelope> pending_;
     std::unordered_set<std::string> seenIds_;
+    std::deque<std::string> idOrder_;
     std::mutex mutex_;
     std::condition_variable cv_;
     TimescaleDbClient timescaleDb_;

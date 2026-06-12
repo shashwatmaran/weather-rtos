@@ -36,8 +36,13 @@ public:
         }
 
         recordPacket(*packet);
-        logMapAnalytics(envelope, *packet);
-        logPacket(envelope);
+        
+        static const bool loggingEnabled = (std::getenv("ENABLE_PIPELINE_LOGGING") != nullptr);
+        if (loggingEnabled) {
+            logMapAnalytics(envelope, *packet);
+            logPacket(envelope);
+        }
+        
         printSummary(*packet);
 
         if (onSuccess_) {

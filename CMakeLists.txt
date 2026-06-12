@@ -51,3 +51,8 @@ endif()
 # Simulator (legacy)
 add_executable(simulator simulator/main.cpp)
 target_link_libraries(simulator CURL::libcurl)
+
+# RTOS Benchmarking and Validation
+add_executable(rt_bench tools/rt_bench.cpp)
+target_include_directories(rt_bench PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(rt_bench pthread)

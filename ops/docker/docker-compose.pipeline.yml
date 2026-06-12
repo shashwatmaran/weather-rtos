@@ -1,0 +1,67 @@
+services:
+  # Message Broker: Kafka (using Redpanda for ease of deployment and high performance)
+  kafka:
+    image: docker.redpanda.com/redpandadata/redpanda:latest
+    command:
+      - redpanda start
+      - --smp 1
+      - --memory 1G
+      - --reserve-memory 0M
+      - --overprovisioned
+      - --node-id 0
+      - --check=false
+      - --kafka-addr plaintext://0.0.0.0:29092,outside://0.0.0.0:9092
+      - --advertise-kafka-addr plaintext://kafka:29092,outside://localhost:9093
+    ports:
+      - "9093:9092"
+      - "29092:29092"
+
+  # Scalable Storage: ClickHouse
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+    environment:
+      - CLICKHOUSE_USER=weather_user
+      - CLICKHOUSE_PASSWORD=weather_pass
+      - CLICKHOUSE_DB=weather_rtos
+
+  # Stream Processing: Vector (High-performance ingestion and transformation)
+  vector:
+    image: timberio/vector:latest-alpine
+    network_mode: "host"
+    volumes:
+      - /home/wolfe/Documents/weather-rtos/ops/docker/vector.toml:/etc/vector/vector.toml:ro
+    depends_on:
+      - kafka
+      - clickhouse
+
+  # Monitoring: Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    network_mode: "host"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.listen-address=:9095
+    volumes:
+      - /home/wolfe/Documents/weather-rtos/ops/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+  # Monitoring: Grafana
+  grafana:
+    image: grafana/grafana:latest
+    network_mode: "host"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SERVER_HTTP_PORT=3001
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - /home/wolfe/Documents/weather-rtos/ops/grafana/provisioning/datasources/prometheus.yml:/etc/grafana/provisioning/datasources/prometheus.yml:ro
+      - /home/wolfe/Documents/weather-rtos/ops/grafana/provisioning/dashboards/provider.yml:/etc/grafana/provisioning/dashboards/provider.yml:ro
+      - /home/wolfe/Documents/weather-rtos/ops/grafana/provisioning/dashboards/json/weather_rtos_dashboard.json:/etc/grafana/provisioning/dashboards/json/weather_rtos_dashboard.json:ro
+
+volumes:
+  clickhouse_data:
+  grafana_data:

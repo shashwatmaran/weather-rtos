@@ -4,5 +4,6 @@
 /home/wolfe/Documents/weather-rtos/build/CMakeFiles/timescale_writer.dir
 /home/wolfe/Documents/weather-rtos/build/CMakeFiles/map_query_api.dir
 /home/wolfe/Documents/weather-rtos/build/CMakeFiles/simulator.dir
+/home/wolfe/Documents/weather-rtos/build/CMakeFiles/rt_bench.dir
 /home/wolfe/Documents/weather-rtos/build/CMakeFiles/edit_cache.dir
 /home/wolfe/Documents/weather-rtos/build/CMakeFiles/rebuild_cache.dir

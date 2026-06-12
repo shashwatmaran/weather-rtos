@@ -1,0 +1,85 @@
+{
+  "topology": {
+    "description": "High-density India Logistics Topology: Extensive coverage across major corridors",
+    "regions": [
+      {
+        "name": "south_india_high_density",
+        "country": "India",
+        "continent": "Asia",
+        "send_to_port": 10101,
+        "cities": [
+          {"name": "Bangalore", "latitude": 12.9716, "longitude": 77.5946},
+          {"name": "Bangalore_North", "latitude": 13.05, "longitude": 77.60},
+          {"name": "Bangalore_South", "latitude": 12.90, "longitude": 77.58},
+          {"name": "Bangalore_East_Whitefield", "latitude": 12.9698, "longitude": 77.7500},
+          {"name": "Bangalore_West_Kengeri", "latitude": 12.9175, "longitude": 77.4833},
+          {"name": "Hosur_Logistics_Hub", "latitude": 12.7409, "longitude": 77.8253},
+          {"name": "Chennai_Port", "latitude": 13.0827, "longitude": 80.2707},
+          {"name": "Chennai_Industrial_Belt", "latitude": 13.15, "longitude": 80.10},
+          {"name": "Sriperumbudur_Hub", "latitude": 12.9734, "longitude": 79.9515},
+          {"name": "Hyderabad_Cyberabad", "latitude": 17.4448, "longitude": 78.3498},
+          {"name": "Hyderabad_Secunderabad", "latitude": 17.4399, "longitude": 78.4983},
+          {"name": "Kochi_Terminal", "latitude": 9.9312, "longitude": 76.2673},
+          {"name": "Coimbatore_Industrial", "latitude": 11.0168, "longitude": 76.9558},
+          {"name": "Salem_Junction", "latitude": 11.6643, "longitude": 78.1460},
+          {"name": "Vijayawada_Hub", "latitude": 16.5062, "longitude": 80.6480},
+          {"name": "Visakhapatnam_Port", "latitude": 17.6868, "longitude": 83.2185}
+        ]
+      },
+      {
+        "name": "north_india_high_density",
+        "country": "India",
+        "continent": "Asia",
+        "send_to_port": 10101,
+        "cities": [
+          {"name": "Delhi_NCR_Central", "latitude": 28.6139, "longitude": 77.2090},
+          {"name": "Gurugram_Logistics", "latitude": 28.4595, "longitude": 77.0266},
+          {"name": "Noida_Industrial", "latitude": 28.5355, "longitude": 77.3910},
+          {"name": "Faridabad_Hub", "latitude": 28.4089, "longitude": 77.3178},
+          {"name": "Agra_Corridor", "latitude": 27.1767, "longitude": 78.0081},
+          {"name": "Mathura_Waypoint", "latitude": 27.4924, "longitude": 77.6737},
+          {"name": "Jaipur_Hub", "latitude": 26.9124, "longitude": 75.7873},
+          {"name": "Ludhiana_Industrial", "latitude": 30.9010, "longitude": 75.8573},
+          {"name": "Amritsar_Gateway", "latitude": 31.6340, "longitude": 74.8723},
+          {"name": "Chandigarh_Logistics", "latitude": 30.7333, "longitude": 76.7794}
+        ]
+      },
+      {
+        "name": "west_india_high_density",
+        "country": "India",
+        "continent": "Asia",
+        "send_to_port": 10101,
+        "cities": [
+          {"name": "Mumbai_South", "latitude": 18.9220, "longitude": 72.8347},
+          {"name": "Navi_Mumbai_JNPT", "latitude": 18.9500, "longitude": 72.9500},
+          {"name": "Thane_Logistics", "latitude": 19.2183, "longitude": 72.9781},
+          {"name": "Pune_Auto_Hub", "latitude": 18.5204, "longitude": 73.8567},
+          {"name": "Ahmedabad_Sanand", "latitude": 23.0225, "longitude": 72.5714},
+          {"name": "Surat_Diamond_Hub", "latitude": 21.1702, "longitude": 72.8311},
+          {"name": "Vapi_Industrial", "latitude": 20.3717, "longitude": 72.9106}
+        ]
+      }
+    ],
+    "hierarchy": {
+      "collectors_output_topic": "{region}_events",
+      "regional_aggregators": [
+        {
+          "name": "india_mega_aggregator",
+          "consumes_from": ["south_india_high_density_events", "north_india_high_density_events", "west_india_high_density_events"],
+          "publishes_to": "india_combined_events",
+          "listen_port": 10101,
+          "forward_to_port": 13101,
+          "tier": "regional"
+        }
+      ],
+      "global_aggregator": {
+        "name": "india_logistics_sink",
+        "consumes_from": ["india_combined_events"],
+        "publishes_to": "timescale_raw",
+        "listen_port": 13101,
+        "forward_to_port": 13101,
+        "tier": "global"
+      }
+    }
+  }
+}

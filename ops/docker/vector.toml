@@ -1,0 +1,24 @@
+[sources.kafka_in]
+type = "kafka"
+bootstrap_servers = "kafka:29092"
+group_id = "vector-ingestion"
+topics = ["weather_raw"]
+
+[transforms.transform_weather]
+type = "remap"
+inputs = ["kafka_in"]
+source = """
+. = parse_json!(.message)
+.ingested_at = now()
+"""
+
+[sinks.clickhouse_out]
+type = "clickhouse"
+inputs = ["transform_weather"]
+endpoint = "http://clickhouse:8123"
+database = "weather_rtos"
+table = "weather_observations"
+auth.strategy = "basic"
+auth.user = "weather_user"
+auth.password = "weather_pass"
+skip_unknown_fields = true

@@ -176,7 +176,11 @@ int main(int argc, char* argv[]) {
     }
 
     // Load topology config
-    const std::string topologyPath = resolveTopologyPath();
+    std::string topologyPath = resolveTopologyPath();
+    if (argc > 2) {
+        topologyPath = argv[2];
+    }
+    
     std::ifstream topologyFile(topologyPath);
     if (!topologyFile.is_open()) {
         std::cerr << "Failed to open topology config" << std::endl;

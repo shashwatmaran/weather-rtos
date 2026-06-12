@@ -1,0 +1,17 @@
+FROM ubuntu:22.04 AS builder
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential cmake git wget ca-certificates libpq-dev pkg-config \
+    libssl-dev && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src
+COPY . /src
+RUN mkdir -p build && cd build && cmake .. && cmake --build . -j$(nproc)
+
+FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y --no-install-recommends libpq5 ca-certificates && rm -rf /var/lib/apt/lists/*
+COPY --from=builder /src/build/timescale_writer /usr/local/bin/timescale_writer
+COPY --from=builder /src/build/simulator /usr/local/bin/simulator
+WORKDIR /data
+EXPOSE 9100
+CMD ["/usr/local/bin/timescale_writer"]

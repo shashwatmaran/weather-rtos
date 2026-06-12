@@ -194,6 +194,19 @@ simulator/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/simulator.dir/build.make CMakeFiles/simulator.dir/build
 .PHONY : simulator/fast
 
+#=============================================================================
+# Target rules for targets named rt_bench
+
+# Build rule for target.
+rt_bench: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 rt_bench
+.PHONY : rt_bench
+
+# fast build rule for target.
+rt_bench/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rt_bench.dir/build.make CMakeFiles/rt_bench.dir/build
+.PHONY : rt_bench/fast
+
 aggregator/hierarchical/main.o: aggregator/hierarchical/main.cpp.o
 .PHONY : aggregator/hierarchical/main.o
 
@@ -338,6 +351,30 @@ timescale_writer/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/timescale_writer.dir/build.make CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.s
 .PHONY : timescale_writer/main.cpp.s
 
+tools/rt_bench.o: tools/rt_bench.cpp.o
+.PHONY : tools/rt_bench.o
+
+# target to build an object file
+tools/rt_bench.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rt_bench.dir/build.make CMakeFiles/rt_bench.dir/tools/rt_bench.cpp.o
+.PHONY : tools/rt_bench.cpp.o
+
+tools/rt_bench.i: tools/rt_bench.cpp.i
+.PHONY : tools/rt_bench.i
+
+# target to preprocess a source file
+tools/rt_bench.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rt_bench.dir/build.make CMakeFiles/rt_bench.dir/tools/rt_bench.cpp.i
+.PHONY : tools/rt_bench.cpp.i
+
+tools/rt_bench.s: tools/rt_bench.cpp.s
+.PHONY : tools/rt_bench.s
+
+# target to generate assembly for a file
+tools/rt_bench.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rt_bench.dir/build.make CMakeFiles/rt_bench.dir/tools/rt_bench.cpp.s
+.PHONY : tools/rt_bench.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -349,6 +386,7 @@ help:
 	@echo "... hierarchical_aggregator"
 	@echo "... map_query_api"
 	@echo "... regional_collector"
+	@echo "... rt_bench"
 	@echo "... simulator"
 	@echo "... socket"
 	@echo "... timescale_writer"
@@ -370,6 +408,9 @@ help:
 	@echo "... timescale_writer/main.o"
 	@echo "... timescale_writer/main.i"
 	@echo "... timescale_writer/main.s"
+	@echo "... tools/rt_bench.o"
+	@echo "... tools/rt_bench.i"
+	@echo "... tools/rt_bench.s"
 .PHONY : help
 
 
