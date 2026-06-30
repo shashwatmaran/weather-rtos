@@ -93,6 +93,7 @@ timescale_writer_EXTERNAL_OBJECTS =
 timescale_writer: CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o
 timescale_writer: CMakeFiles/timescale_writer.dir/build.make
 timescale_writer: libsocket.a
+timescale_writer: /usr/lib/x86_64-linux-gnu/libpq.so
 timescale_writer: CMakeFiles/timescale_writer.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/wolfe/Documents/weather-rtos/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable timescale_writer"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/timescale_writer.dir/link.txt --verbose=$(VERBOSE)

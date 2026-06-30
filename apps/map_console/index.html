@@ -86,6 +86,33 @@
         </section>
 
         <section class="panel">
+          <h2>Personal Analytics</h2>
+          <label for="profileSelect">Active Profile</label>
+          <select id="profileSelect">
+            <option value="crop_moisture">Crop Soil Moisture (%)</option>
+            <option value="power_consumption">Power Consumption (kW)</option>
+          </select>
+          <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 0.8rem; color: var(--muted);">Custom baseline:</span>
+            <label for="uploadBaseline" style="cursor: pointer; background: rgba(148, 163, 184, 0.2); padding: 5px 10px; border-radius: 8px; font-size: 0.78rem; font-weight: 600;">Upload File</label>
+            <input id="uploadBaseline" type="file" accept=".json" style="display: none;" />
+          </div>
+          <div style="margin-top: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px;">
+              <span>Comparison (24h)</span>
+              <span id="chartLegend" style="font-size: 0.75rem;"><span style="color: var(--accent);">■</span> Live <span style="color: #ffaa55;">■</span> Baseline</span>
+            </div>
+            <div id="comparisonChart" style="height: 140px; width: 100%; background: rgba(15, 23, 42, 0.75); border-radius: 12px; padding: 8px; border: 1px solid var(--panel-border);">
+              <svg id="chartSvg" style="width: 100%; height: 100%; overflow: visible;"></svg>
+            </div>
+            <div class="time-row" style="margin-top: 8px; font-size: 0.8rem;">
+              <span>RT-Actuator Trigger:</span>
+              <strong id="actuatorStatus" style="color: var(--muted); text-transform: uppercase;">Inactive</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
           <h2>Region summary</h2>
           <div class="summary-grid">
             <div><span>Avg hazard</span><strong id="summaryHazard">0.0</strong></div>

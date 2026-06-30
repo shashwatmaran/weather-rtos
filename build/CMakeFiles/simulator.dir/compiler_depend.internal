@@ -3,6 +3,9 @@
 
 CMakeFiles/simulator.dir/simulator/main.cpp.o
  /home/wolfe/Documents/weather-rtos/simulator/main.cpp
+ /home/wolfe/Documents/weather-rtos/common/models/WeatherPacket.hpp
+ /home/wolfe/Documents/weather-rtos/common/protocol/MessageEnvelope.hpp
+ /home/wolfe/Documents/weather-rtos/common/protocol/MessageTypes.hpp
  /usr/include/alloca.h
  /usr/include/arpa/inet.h
  /usr/include/asm-generic/bitsperlong.h

@@ -92,6 +92,7 @@ simulator_EXTERNAL_OBJECTS =
 
 simulator: CMakeFiles/simulator.dir/simulator/main.cpp.o
 simulator: CMakeFiles/simulator.dir/build.make
+simulator: libsocket.a
 simulator: /usr/lib/x86_64-linux-gnu/libcurl.so
 simulator: CMakeFiles/simulator.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/wolfe/Documents/weather-rtos/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable simulator"

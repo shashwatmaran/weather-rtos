@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o -o timescale_writer  libsocket.a 
+/usr/bin/c++ CMakeFiles/timescale_writer.dir/timescale_writer/main.cpp.o -o timescale_writer  libsocket.a /usr/lib/x86_64-linux-gnu/libpq.so 

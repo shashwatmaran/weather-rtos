@@ -883,9 +883,204 @@ public:
             {"avg_hazard_score", nullptr},
             {"layer_value", nullptr},
             {"source", "live_unavailable"},
-            {"as_of", asOf}
         };
     }
+
+    json personalComparisonSnapshot(const std::string& profileId) const {
+        if (!readClient_.isEnabled()) {
+            return fallbackPersonalComparison(profileId);
+        }
+
+        std::ostringstream sqlBaselines;
+        sqlBaselines << "SELECT COALESCE(json_agg(row_to_json(b)), '[]'::json)::text FROM ("
+                     << " SELECT hour_of_day, baseline_value FROM personal_historical_baselines"
+                     << " WHERE profile_id = '" << sqlEscape(profileId) << "'"
+                     << " ORDER BY hour_of_day ASC) b;";
+
+        auto baselinesResponse = readClient_.queryJson(sqlBaselines.str());
+
+        std::ostringstream sqlComparisons;
+        sqlComparisons << "SELECT COALESCE(json_agg(row_to_json(c)), '[]'::json)::text FROM ("
+                       << " SELECT event_time, live_value, baseline_value, variance, actuation_active"
+                       << " FROM personal_realtime_comparisons"
+                       << " WHERE profile_id = '" << sqlEscape(profileId) << "'"
+                       << " ORDER BY event_time DESC LIMIT 50) c;";
+
+        auto comparisonsResponse = readClient_.queryJson(sqlComparisons.str());
+
+        json result = json::object();
+        result["profile_id"] = profileId;
+        result["baselines"] = (baselinesResponse && baselinesResponse->is_array()) ? *baselinesResponse : json::array();
+        result["comparisons"] = (comparisonsResponse && comparisonsResponse->is_array()) ? *comparisonsResponse : json::array();
+        result["source"] = "timescale";
+        return result;
+    }
+
+    json fallbackPersonalComparison(const std::string& profileId) const {
+        json baselines = json::array();
+        for (int i = 0; i < 24; ++i) {
+            baselines.push_back({{"hour_of_day", i}, {"baseline_value", (profileId == "crop_moisture" ? 50.0 : 3.0)}});
+        }
+        json comparisons = json::array();
+        long now = epoch_millis_now();
+        for (int i = 0; i < 10; ++i) {
+            double live = (profileId == "crop_moisture" ? 48.0 : 2.5) + (i % 3);
+            double base = (profileId == "crop_moisture" ? 50.0 : 3.0);
+            comparisons.push_back({
+                {"event_time", now - i * 60000},
+                {"live_value", live},
+                {"baseline_value", base},
+                {"variance", std::abs(live - base)},
+                {"actuation_active", false}
+            });
+        }
+        return {
+            {"profile_id", profileId},
+            {"baselines", baselines},
+            {"comparisons", comparisons},
+            {"source", "live_unavailable"}
+        };
+    }
+
+    json historyCities() const {
+        if (!readClient_.isEnabled()) {
+            return fallbackHistoryCities();
+        }
+
+        std::string sql = "SELECT COALESCE(json_agg(row_to_json(c)), '[]'::json)::text FROM ("
+                          " SELECT DISTINCT city, region, country, continent"
+                          " FROM weather_city_minute_aggregates"
+                          " ORDER BY city ASC) c;";
+
+        auto response = readClient_.queryJson(sql);
+        if (response.has_value() && response->is_array()) {
+            return json{{"cities", *response}, {"source", "timescale"}};
+        }
+        return fallbackHistoryCities();
+    }
+
+    json fallbackHistoryCities() const {
+        json cities = json::array();
+        const std::vector<std::string> sampleCities = {"Bangalore", "Chennai", "Delhi", "Hyderabad", "Kochi", "Mumbai"};
+        for (const auto& name : sampleCities) {
+            cities.push_back({{"city", name}, {"region", "india"}, {"country", "India"}, {"continent", "Asia"}});
+        }
+        return json{{"cities", cities}, {"source", "live_unavailable"}};
+    }
+
+    json historyTimeseries(const std::string& city,
+                           const std::string& from,
+                           const std::string& to,
+                           const std::string& interval) const {
+        if (!readClient_.isEnabled()) {
+            return fallbackHistoryTimeseries(city);
+        }
+
+        std::string bucket = interval.empty() ? "1 hour" : interval;
+        std::ostringstream sql;
+        sql << "SELECT COALESCE(json_agg(row_to_json(t)), '[]'::json)::text FROM (";
+        sql << " SELECT time_bucket('" << sqlEscape(bucket) << "', bucket_start) AS ts,";
+        sql << " avg(avg_temperature) AS avg_temperature,";
+        sql << " min(min_temperature) AS min_temperature,";
+        sql << " max(max_temperature) AS max_temperature,";
+        sql << " avg(avg_humidity) AS avg_humidity,";
+        sql << " avg(avg_wind_speed) AS avg_wind_speed,";
+        sql << " sum(observation_count) AS observation_count";
+        sql << " FROM weather_city_minute_aggregates";
+        sql << " WHERE city = '" << sqlEscape(city) << "'";
+        if (!from.empty()) {
+            sql << " AND bucket_start >= '" << sqlEscape(from) << "'::timestamptz";
+        }
+        if (!to.empty()) {
+            sql << " AND bucket_start <= '" << sqlEscape(to) << "'::timestamptz";
+        }
+        sql << " GROUP BY ts ORDER BY ts ASC LIMIT 2000) t;";
+
+        auto response = readClient_.queryJson(sql.str());
+        if (response.has_value() && response->is_array()) {
+            return json{{"city", city}, {"interval", bucket}, {"data", *response}, {"source", "timescale"}};
+        }
+        return fallbackHistoryTimeseries(city);
+    }
+
+    json fallbackHistoryTimeseries(const std::string& city) const {
+        json data = json::array();
+        long now = epoch_millis_now();
+        for (int i = 23; i >= 0; --i) {
+            long ts = now - static_cast<long>(i) * 3600000L;
+            double temp = 22.0 + (i % 8) * 1.5 + ((i * 7) % 5) * 0.4;
+            double humidity = 55.0 + (i % 6) * 3.0;
+            double wind = 8.0 + (i % 4) * 2.5;
+            data.push_back({
+                {"ts", ts},
+                {"avg_temperature", temp},
+                {"min_temperature", temp - 2.0},
+                {"max_temperature", temp + 3.0},
+                {"avg_humidity", humidity},
+                {"avg_wind_speed", wind},
+                {"observation_count", 15 + (i % 10)}
+            });
+        }
+        return json{{"city", city}, {"interval", "1 hour"}, {"data", data}, {"source", "live_unavailable"}};
+    }
+
+    json historySummary(const std::string& city,
+                        const std::string& from,
+                        const std::string& to) const {
+        if (!readClient_.isEnabled()) {
+            return fallbackHistorySummary(city);
+        }
+
+        std::ostringstream sql;
+        sql << "SELECT json_build_object(";
+        sql << "'city', '" << sqlEscape(city) << "',";
+        sql << "'min_temperature', (SELECT min(min_temperature) FROM weather_city_minute_aggregates WHERE city='" << sqlEscape(city) << "'";
+        if (!from.empty()) sql << " AND bucket_start >= '" << sqlEscape(from) << "'::timestamptz";
+        if (!to.empty()) sql << " AND bucket_start <= '" << sqlEscape(to) << "'::timestamptz";
+        sql << "),";
+        sql << "'max_temperature', (SELECT max(max_temperature) FROM weather_city_minute_aggregates WHERE city='" << sqlEscape(city) << "'";
+        if (!from.empty()) sql << " AND bucket_start >= '" << sqlEscape(from) << "'::timestamptz";
+        if (!to.empty()) sql << " AND bucket_start <= '" << sqlEscape(to) << "'::timestamptz";
+        sql << "),";
+        sql << "'avg_temperature', (SELECT avg(avg_temperature) FROM weather_city_minute_aggregates WHERE city='" << sqlEscape(city) << "'";
+        if (!from.empty()) sql << " AND bucket_start >= '" << sqlEscape(from) << "'::timestamptz";
+        if (!to.empty()) sql << " AND bucket_start <= '" << sqlEscape(to) << "'::timestamptz";
+        sql << "),";
+        sql << "'avg_humidity', (SELECT avg(avg_humidity) FROM weather_city_minute_aggregates WHERE city='" << sqlEscape(city) << "'";
+        if (!from.empty()) sql << " AND bucket_start >= '" << sqlEscape(from) << "'::timestamptz";
+        if (!to.empty()) sql << " AND bucket_start <= '" << sqlEscape(to) << "'::timestamptz";
+        sql << "),";
+        sql << "'avg_wind_speed', (SELECT avg(avg_wind_speed) FROM weather_city_minute_aggregates WHERE city='" << sqlEscape(city) << "'";
+        if (!from.empty()) sql << " AND bucket_start >= '" << sqlEscape(from) << "'::timestamptz";
+        if (!to.empty()) sql << " AND bucket_start <= '" << sqlEscape(to) << "'::timestamptz";
+        sql << "),";
+        sql << "'observation_count', (SELECT COALESCE(sum(observation_count), 0) FROM weather_city_minute_aggregates WHERE city='" << sqlEscape(city) << "'";
+        if (!from.empty()) sql << " AND bucket_start >= '" << sqlEscape(from) << "'::timestamptz";
+        if (!to.empty()) sql << " AND bucket_start <= '" << sqlEscape(to) << "'::timestamptz";
+        sql << "),";
+        sql << "'source', 'timescale'";
+        sql << ")::text;";
+
+        auto response = readClient_.queryJson(sql.str());
+        if (response.has_value() && response->is_object()) {
+            return *response;
+        }
+        return fallbackHistorySummary(city);
+    }
+
+    json fallbackHistorySummary(const std::string& city) const {
+        return json{
+            {"city", city},
+            {"min_temperature", 18.5},
+            {"max_temperature", 36.2},
+            {"avg_temperature", 27.3},
+            {"avg_humidity", 62.1},
+            {"avg_wind_speed", 12.4},
+            {"observation_count", 360},
+            {"source", "live_unavailable"}
+        };
+    }
+
     TimescaleReadClient readClient_;
     std::map<std::string, CityCoordinate> cityCoordinates_;
 };
@@ -904,6 +1099,32 @@ std::string trim(const std::string& value) {
     return value.substr(start, end - start);
 }
 
+std::string urlDecode(const std::string& encoded) {
+    std::string decoded;
+    decoded.reserve(encoded.size());
+    for (std::size_t i = 0; i < encoded.size(); ++i) {
+        if (encoded[i] == '%' && i + 2 < encoded.size()) {
+            int high = 0, low = 0;
+            char h = encoded[i + 1], l = encoded[i + 2];
+            if (h >= '0' && h <= '9') high = h - '0';
+            else if (h >= 'A' && h <= 'F') high = h - 'A' + 10;
+            else if (h >= 'a' && h <= 'f') high = h - 'a' + 10;
+            else { decoded.push_back('%'); continue; }
+            if (l >= '0' && l <= '9') low = l - '0';
+            else if (l >= 'A' && l <= 'F') low = l - 'A' + 10;
+            else if (l >= 'a' && l <= 'f') low = l - 'a' + 10;
+            else { decoded.push_back('%'); continue; }
+            decoded.push_back(static_cast<char>(high * 16 + low));
+            i += 2;
+        } else if (encoded[i] == '+') {
+            decoded.push_back(' ');
+        } else {
+            decoded.push_back(encoded[i]);
+        }
+    }
+    return decoded;
+}
+
 std::map<std::string, std::string> parseQuery(const std::string& queryString) {
     std::map<std::string, std::string> result;
     std::size_t start = 0;
@@ -916,9 +1137,9 @@ std::map<std::string, std::string> parseQuery(const std::string& queryString) {
         std::string pair = queryString.substr(start, end - start);
         std::size_t equals = pair.find('=');
         if (equals != std::string::npos) {
-            result[trim(pair.substr(0, equals))] = trim(pair.substr(equals + 1));
+            result[trim(urlDecode(pair.substr(0, equals)))] = trim(urlDecode(pair.substr(equals + 1)));
         } else if (!pair.empty()) {
-            result[trim(pair)] = "";
+            result[trim(urlDecode(pair))] = "";
         }
 
         start = end + 1;
@@ -1333,6 +1554,10 @@ void handleConnection(int clientFd, const MapQueryStore& store) {
                 payload = store.fallbackMapSummarySnapshot(layer, minLat, minLon, maxLat, maxLon, asOf);
             }
         }
+    } else if (request.method == "GET" && request.path == "/v1/personal/comparison") {
+        auto profileIt = request.query.find("profile_id");
+        std::string profileId = (profileIt != request.query.end()) ? profileIt->second : "crop_moisture";
+        payload = store.personalComparisonSnapshot(profileId);
     } else if (request.method == "POST" && request.path == "/v1/routes/risk") {
         if (!request.body.is_object()) {
             code = 400;
@@ -1353,6 +1578,26 @@ void handleConnection(int clientFd, const MapQueryStore& store) {
             }
             payload = store.routeRiskSnapshot(routeId, segmentIds, asOf);
         }
+    } else if (request.method == "GET" && request.path == "/v1/history/cities") {
+        payload = store.historyCities();
+    } else if (request.method == "GET" && request.path == "/v1/history/timeseries") {
+        auto cityIt = request.query.find("city");
+        auto fromIt = request.query.find("from");
+        auto toIt = request.query.find("to");
+        auto intervalIt = request.query.find("interval");
+        std::string city = (cityIt != request.query.end()) ? cityIt->second : "Bangalore";
+        std::string fromTs = (fromIt != request.query.end()) ? fromIt->second : "";
+        std::string toTs = (toIt != request.query.end()) ? toIt->second : "";
+        std::string interval = (intervalIt != request.query.end()) ? intervalIt->second : "";
+        payload = store.historyTimeseries(city, fromTs, toTs, interval);
+    } else if (request.method == "GET" && request.path == "/v1/history/summary") {
+        auto cityIt = request.query.find("city");
+        auto fromIt = request.query.find("from");
+        auto toIt = request.query.find("to");
+        std::string city = (cityIt != request.query.end()) ? cityIt->second : "Bangalore";
+        std::string fromTs = (fromIt != request.query.end()) ? fromIt->second : "";
+        std::string toTs = (toIt != request.query.end()) ? toIt->second : "";
+        payload = store.historySummary(city, fromTs, toTs);
     } else {
         code = 404;
         payload = {{"error", "not found"}};
@@ -1401,7 +1646,7 @@ int main(int argc, char* argv[]) {
     }
 
     std::cout << "[map_query_api] listening on port " << port << std::endl;
-    std::cout << "[map_query_api] endpoints: GET /v1/health, GET /v1/map/tiles, GET /v1/map/summary, POST /v1/routes/risk" << std::endl;
+    std::cout << "[map_query_api] endpoints: GET /v1/health, GET /v1/map/tiles, GET /v1/map/summary, POST /v1/routes/risk, GET /v1/history/cities, GET /v1/history/timeseries, GET /v1/history/summary" << std::endl;
 
     MapQueryStore store;
 

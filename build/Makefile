@@ -207,6 +207,19 @@ rt_bench/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rt_bench.dir/build.make CMakeFiles/rt_bench.dir/build
 .PHONY : rt_bench/fast
 
+#=============================================================================
+# Target rules for targets named personal_comparator
+
+# Build rule for target.
+personal_comparator: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 personal_comparator
+.PHONY : personal_comparator
+
+# fast build rule for target.
+personal_comparator/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/personal_comparator.dir/build.make CMakeFiles/personal_comparator.dir/build
+.PHONY : personal_comparator/fast
+
 aggregator/hierarchical/main.o: aggregator/hierarchical/main.cpp.o
 .PHONY : aggregator/hierarchical/main.o
 
@@ -303,6 +316,30 @@ services/map_query_api/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/map_query_api.dir/build.make CMakeFiles/map_query_api.dir/services/map_query_api/main.cpp.s
 .PHONY : services/map_query_api/main.cpp.s
 
+services/personal_comparator/main.o: services/personal_comparator/main.cpp.o
+.PHONY : services/personal_comparator/main.o
+
+# target to build an object file
+services/personal_comparator/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/personal_comparator.dir/build.make CMakeFiles/personal_comparator.dir/services/personal_comparator/main.cpp.o
+.PHONY : services/personal_comparator/main.cpp.o
+
+services/personal_comparator/main.i: services/personal_comparator/main.cpp.i
+.PHONY : services/personal_comparator/main.i
+
+# target to preprocess a source file
+services/personal_comparator/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/personal_comparator.dir/build.make CMakeFiles/personal_comparator.dir/services/personal_comparator/main.cpp.i
+.PHONY : services/personal_comparator/main.cpp.i
+
+services/personal_comparator/main.s: services/personal_comparator/main.cpp.s
+.PHONY : services/personal_comparator/main.s
+
+# target to generate assembly for a file
+services/personal_comparator/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/personal_comparator.dir/build.make CMakeFiles/personal_comparator.dir/services/personal_comparator/main.cpp.s
+.PHONY : services/personal_comparator/main.cpp.s
+
 simulator/main.o: simulator/main.cpp.o
 .PHONY : simulator/main.o
 
@@ -385,6 +422,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... hierarchical_aggregator"
 	@echo "... map_query_api"
+	@echo "... personal_comparator"
 	@echo "... regional_collector"
 	@echo "... rt_bench"
 	@echo "... simulator"
@@ -402,6 +440,9 @@ help:
 	@echo "... services/map_query_api/main.o"
 	@echo "... services/map_query_api/main.i"
 	@echo "... services/map_query_api/main.s"
+	@echo "... services/personal_comparator/main.o"
+	@echo "... services/personal_comparator/main.i"
+	@echo "... services/personal_comparator/main.s"
 	@echo "... simulator/main.o"
 	@echo "... simulator/main.i"
 	@echo "... simulator/main.s"

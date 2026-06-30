@@ -580,6 +580,7 @@ async function boot() {
     syncRasterLayer();
     await refreshMapData();
     renderRouteNotice('Route geometry is hidden until the API returns coordinates for real segment paths.');
+    await loadPersonalComparison();
   } catch (error) {
     console.warn(error);
   }
@@ -588,5 +589,237 @@ async function boot() {
 apiBaseInput.addEventListener('change', () => {
   syncRasterLayer();
 });
+
+// Personal Analytics Integration
+const profileSelect = document.getElementById('profileSelect');
+const uploadBaselineInput = document.getElementById('uploadBaseline');
+const chartSvg = document.getElementById('chartSvg');
+const actuatorStatus = document.getElementById('actuatorStatus');
+
+profileSelect.addEventListener('change', () => {
+  loadPersonalComparison().catch(console.warn);
+});
+
+uploadBaselineInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = async function(evt) {
+    try {
+      const data = JSON.parse(evt.target.result);
+      if (!data.profile_id || !Array.isArray(data.baselines) || data.baselines.length !== 24) {
+        alert("Invalid baseline file structure. It must contain a profile_id and an array of 24 baselines.");
+        return;
+      }
+      
+      if (data.profile_id === "crop_moisture" || data.profile_id === "power_consumption") {
+        profileSelect.value = data.profile_id;
+      }
+      
+      renderUploadedBaseline(data);
+    } catch (err) {
+      alert("Failed to parse JSON: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+});
+
+function renderUploadedBaseline(data) {
+  chartSvg.innerHTML = '';
+  const width = chartSvg.clientWidth || 300;
+  const height = chartSvg.clientHeight || 120;
+  
+  const baselines = data.baselines;
+  const minVal = Math.max(0, Math.min(...baselines) - 5);
+  const maxVal = Math.max(...baselines) + 5;
+  const valSpan = maxVal - minVal || 1;
+
+  const getX = (hour) => (hour / 23) * (width - 20) + 10;
+  const getY = (val) => height - 10 - ((val - minVal) / valSpan) * (height - 20);
+
+  let baselinePath = "";
+  baselines.forEach((val, hour) => {
+    const x = getX(hour);
+    const y = getY(val);
+    baselinePath += (hour === 0 ? "M" : "L") + `${x},${y}`;
+  });
+  
+  const pathElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  pathElement.setAttribute("d", baselinePath);
+  pathElement.setAttribute("fill", "none");
+  pathElement.setAttribute("stroke", "#ffaa55");
+  pathElement.setAttribute("stroke-width", "2.5");
+  chartSvg.appendChild(pathElement);
+
+  actuatorStatus.textContent = "Custom Profile Loaded";
+  actuatorStatus.style.color = "#22c55e";
+  
+  const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  text.setAttribute("x", "10");
+  text.setAttribute("y", "20");
+  text.setAttribute("fill", "#e5eefc");
+  text.setAttribute("font-size", "10px");
+  text.textContent = `Baseline: ${data.metric_name}`;
+  chartSvg.appendChild(text);
+}
+
+async function loadPersonalComparison() {
+  const profileId = profileSelect.value;
+  try {
+    const data = await fetchJson(`/v1/personal/comparison?profile_id=${profileId}`);
+    renderComparisonChart(data);
+  } catch (error) {
+    console.warn("Failed to query baseline comparisons", error);
+    renderMockComparison(profileId);
+  }
+}
+
+function renderComparisonChart(data) {
+  chartSvg.innerHTML = '';
+  const width = chartSvg.clientWidth || 300;
+  const height = chartSvg.clientHeight || 120;
+  
+  const baselines = data.baselines || [];
+  const comparisons = data.comparisons || [];
+  
+  if (baselines.length === 0) {
+    renderMockComparison(data.profile_id);
+    return;
+  }
+
+  let allVals = baselines.map(b => b.baseline_value);
+  if (comparisons.length > 0) {
+    allVals = allVals.concat(comparisons.map(c => c.live_value));
+  }
+  
+  const minVal = Math.max(0, Math.min(...allVals) - 2);
+  const maxVal = Math.max(...allVals) + 2;
+  const valSpan = maxVal - minVal || 1;
+
+  const getX = (hour) => (hour / 23) * (width - 20) + 10;
+  const getY = (val) => height - 10 - ((val - minVal) / valSpan) * (height - 20);
+
+  let baselinePath = "";
+  baselines.forEach((b, i) => {
+    const x = getX(b.hour_of_day);
+    const y = getY(b.baseline_value);
+    baselinePath += (i === 0 ? "M" : "L") + `${x},${y}`;
+  });
+  
+  const pathElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  pathElement.setAttribute("d", baselinePath);
+  pathElement.setAttribute("fill", "none");
+  pathElement.setAttribute("stroke", "#ffaa55");
+  pathElement.setAttribute("stroke-width", "2");
+  pathElement.setAttribute("stroke-dasharray", "3,3");
+  chartSvg.appendChild(pathElement);
+
+  if (comparisons.length > 0) {
+    let livePath = "";
+    let isActuating = false;
+    
+    const sorted = [...comparisons].sort((a, b) => new Date(a.event_time) - new Date(b.event_time));
+    
+    sorted.forEach((c, i) => {
+      const date = new Date(c.event_time);
+      const hour = date.getHours();
+      const x = getX(hour);
+      const y = getY(c.live_value);
+      livePath += (i === 0 ? "M" : "L") + `${x},${y}`;
+      if (c.actuation_active) {
+        isActuating = true;
+      }
+    });
+
+    const liveElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    liveElement.setAttribute("d", livePath);
+    liveElement.setAttribute("fill", "none");
+    liveElement.setAttribute("stroke", "#4f8cff");
+    liveElement.setAttribute("stroke-width", "2");
+    chartSvg.appendChild(liveElement);
+
+    sorted.forEach((c) => {
+      if (c.actuation_active) {
+        const date = new Date(c.event_time);
+        const hour = date.getHours();
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", getX(hour));
+        circle.setAttribute("cy", getY(c.live_value));
+        circle.setAttribute("r", "4");
+        circle.setAttribute("fill", "#ef4444");
+        chartSvg.appendChild(circle);
+      }
+    });
+
+    if (isActuating) {
+      actuatorStatus.textContent = "Triggered (Alert)";
+      actuatorStatus.style.color = "#ef4444";
+    } else {
+      actuatorStatus.textContent = "Inactive (Ok)";
+      actuatorStatus.style.color = "#22c55e";
+    }
+  } else {
+    actuatorStatus.textContent = "No Live Telemetry";
+    actuatorStatus.style.color = "#8ea2c9";
+  }
+}
+
+function renderMockComparison(profileId) {
+  const isCrop = profileId === "crop_moisture";
+  const baseline = isCrop 
+    ? [45, 45, 45, 45, 46, 46, 48, 50, 52, 55, 58, 60, 60, 60, 58, 55, 52, 50, 48, 46, 46, 45, 45, 45]
+    : [1.2, 1.0, 0.9, 0.9, 1.0, 1.5, 2.2, 3.5, 4.2, 3.8, 3.0, 2.8, 3.2, 3.5, 3.0, 2.8, 3.2, 4.5, 5.5, 5.8, 5.0, 3.8, 2.5, 1.8];
+
+  const actuals = baseline.map((b, i) => {
+    const variance = (Math.sin(i / 2) * (isCrop ? 4 : 0.8));
+    return b + variance;
+  });
+
+  chartSvg.innerHTML = '';
+  const width = chartSvg.clientWidth || 300;
+  const height = chartSvg.clientHeight || 120;
+  
+  const minVal = Math.max(0, Math.min(...baseline, ...actuals) - 2);
+  const maxVal = Math.max(...baseline, ...actuals) + 2;
+  const valSpan = maxVal - minVal || 1;
+
+  const getX = (hour) => (hour / 23) * (width - 20) + 10;
+  const getY = (val) => height - 10 - ((val - minVal) / valSpan) * (height - 20);
+
+  let baselinePath = "";
+  baseline.forEach((val, hour) => {
+    const x = getX(hour);
+    const y = getY(val);
+    baselinePath += (hour === 0 ? "M" : "L") + `${x},${y}`;
+  });
+  const pathElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  pathElement.setAttribute("d", baselinePath);
+  pathElement.setAttribute("fill", "none");
+  pathElement.setAttribute("stroke", "#ffaa55");
+  pathElement.setAttribute("stroke-width", "1.5");
+  pathElement.setAttribute("stroke-dasharray", "3,3");
+  chartSvg.appendChild(pathElement);
+
+  let actualsPath = "";
+  actuals.forEach((val, hour) => {
+    const x = getX(hour);
+    const y = getY(val);
+    actualsPath += (hour === 0 ? "M" : "L") + `${x},${y}`;
+  });
+  const actualsElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  actualsElement.setAttribute("d", actualsPath);
+  actualsElement.setAttribute("fill", "none");
+  actualsElement.setAttribute("stroke", "#4f8cff");
+  actualsElement.setAttribute("stroke-width", "2");
+  chartSvg.appendChild(actualsElement);
+
+  actuatorStatus.textContent = "Offline (Mock Data)";
+  actuatorStatus.style.color = "#8ea2c9";
+}
+
+setInterval(() => {
+  loadPersonalComparison().catch(console.warn);
+}, 3000);
 
 boot();

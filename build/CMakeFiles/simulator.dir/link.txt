@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/simulator.dir/simulator/main.cpp.o -o simulator  /usr/lib/x86_64-linux-gnu/libcurl.so 
+/usr/bin/c++ CMakeFiles/simulator.dir/simulator/main.cpp.o -o simulator  libsocket.a /usr/lib/x86_64-linux-gnu/libcurl.so 
